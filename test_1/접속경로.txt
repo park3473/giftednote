@@ -1,0 +1,17 @@
+/NCIS/WebApp/deploy/file/
+/NCIS/JBOSS/domains/fire21/bin
+
+NCIS/webApp/deploy/file
+
+http://www.nfa.go.kr/fire/index.jsp
+
+내부포트 8280
+
+디비 10.175.156.10
+포트 1521
+아이디 fire
+패스워드 fire123#
+SSID;NFA
+
+cd /NCIS/WebApp/deploy/
+./kill.sh
