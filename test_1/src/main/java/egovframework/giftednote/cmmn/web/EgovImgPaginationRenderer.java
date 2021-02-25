@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egovframework.firequiz.cmmn.web;
+package egovframework.giftednote.cmmn.web;
 
 import egovframework.rte.ptl.mvc.tags.ui.pagination.AbstractPaginationRenderer;
 

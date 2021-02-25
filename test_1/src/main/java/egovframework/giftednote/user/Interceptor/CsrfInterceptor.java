@@ -1,4 +1,4 @@
-package egovframework.firequiz.user.Interceptor;
+package egovframework.giftednote.user.Interceptor;
 
 import java.util.UUID;
 

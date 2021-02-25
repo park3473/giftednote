@@ -1,4 +1,4 @@
-package egovframework.firequiz.user.Interceptor;
+package egovframework.giftednote.user.Interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

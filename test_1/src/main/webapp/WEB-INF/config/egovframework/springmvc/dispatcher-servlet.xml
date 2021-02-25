@@ -32,7 +32,7 @@
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/resources/**" />
 			<beans:bean id="LoginInterceptor"
-				class="egovframework.firequiz.user.Interceptor.LoginInterceptor"></beans:bean>
+				class="egovframework.giftednote.user.Interceptor.LoginInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
@@ -41,7 +41,7 @@
 		<mvc:mapping path="/admin/**" />
 			<mvc:exclude-mapping path="/resources/**" />
 			<beans:bean id="LoginAdminInterceptor"
-				class="egovframework.firequiz.admin.Interceptor.LoginInterceptor"></beans:bean>
+				class="egovframework.giftednote.admin.Interceptor.LoginInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
@@ -55,7 +55,7 @@
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="webBindingInitializer">
 			<bean
-				class="egovframework.firequiz.cmmn.web.EgovBindingInitializer" />
+				class="egovframework.giftednote.cmmn.web.EgovBindingInitializer" />
 		</property>
 	</bean>
 

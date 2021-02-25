@@ -1,4 +1,4 @@
-package egovframework.firequiz.user;
+package egovframework.giftednote.user;
 
 public class StudyOfAnnotation {/*
  

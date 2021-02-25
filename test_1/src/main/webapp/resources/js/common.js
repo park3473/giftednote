@@ -28,6 +28,7 @@ $(function() {
 });
 */
 // �˾��ҽ�
+/*
 function popup_content(hideOrshow) {
 	if (hideOrshow == 'hide')
 		document.getElementById('popup_content_wrap').style.display = "none";
@@ -40,3 +41,4 @@ window.onload = function() {
 	}, 100);
 }
 popup_content();
+*/

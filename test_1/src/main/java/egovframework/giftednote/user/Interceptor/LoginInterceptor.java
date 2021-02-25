@@ -1,4 +1,4 @@
-package egovframework.firequiz.user.Interceptor;
+package egovframework.giftednote.user.Interceptor;
 
 import java.util.Locale;
 
@@ -14,7 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import egovframework.firequiz.manager.accept_log.service.UserAcceptLogService;
+
+import egovframework.giftednote.manager.accept_log.service.UserAcceptLogService;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 

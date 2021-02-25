@@ -15,11 +15,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta property="og:image" content="${pageContext.request.contextPath}/resources/img/kakao_bg.png" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/default.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sub_2.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/ox.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sub_add.css">
 <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>

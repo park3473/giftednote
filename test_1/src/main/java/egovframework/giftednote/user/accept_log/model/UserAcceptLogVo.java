@@ -1,4 +1,4 @@
-package egovframework.firequiz.user.accept_log.model;
+package egovframework.giftednote.user.accept_log.model;
 
 import com.system.util.SUtil;
 

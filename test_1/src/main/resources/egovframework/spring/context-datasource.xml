@@ -33,10 +33,18 @@
 			</bean>
 		</property>
 	</bean> -->
-      
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+ 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/> 
+		<property name="url" value="jdbc:mysql://localhost:3306/giftednote?useSSL=false&amp;serverTimezone=Asia/Seoul" /> 
+		<property name="username" value="root"/>
+		<property name="password" value="inct"/> 
+		<property name="validationQuery" value="select 1"/>
+		<property name="testWhileIdle" value="true"/>
+		<property name="timeBetweenEvictionRunsMillis" value="10800000"/>
+</bean>     
 
 	
-
+<!--
  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
   destroy-method="close">
   <property name="driverClassName" value="cubrid.jdbc.driver.CUBRIDDriver" />
@@ -44,7 +52,7 @@
   <property name="username" value="dba" />
   <property name="password" value="1234" />
  </bean>
-
+-->
 
 
 

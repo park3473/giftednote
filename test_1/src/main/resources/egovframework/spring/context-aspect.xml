@@ -62,8 +62,8 @@
 	</bean>
 
 <!-- 	egovHandler는 EgovSampleExcepHndlr.java 클래스이고 익셉션시 로거를 뿌려줘서 알리도록 되어있음 -->
-	<bean id="egovHandler" class="egovframework.firequiz.cmmn.EgovExcepHndlr" />
+	<bean id="egovHandler" class="egovframework.giftednote.cmmn.EgovExcepHndlr" />
 <!-- 	otherHandler는 EgovOthersExcepHndlr..java 클래스이고 또한 익셉션시 로거를 뿌려줘 알리도록 되어있음 -->
-	<bean id="otherHandler" class="egovframework.firequiz.cmmn.EgovOthersExcepHndlr" />	
+	<bean id="otherHandler" class="egovframework.giftednote.cmmn.EgovOthersExcepHndlr" />	
 	 
 </beans>

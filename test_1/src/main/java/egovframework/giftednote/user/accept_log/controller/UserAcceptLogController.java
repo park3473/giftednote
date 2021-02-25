@@ -1,4 +1,4 @@
-package egovframework.firequiz.user.accept_log.controller;
+package egovframework.giftednote.user.accept_log.controller;
 
 import java.io.IOException;
 
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import egovframework.firequiz.manager.accept_log.service.UserAcceptLogService;
-import egovframework.firequiz.user.accept_log.model.UserAcceptLogVo;
+import egovframework.giftednote.manager.accept_log.service.UserAcceptLogService;
+import egovframework.giftednote.user.accept_log.model.UserAcceptLogVo;
 
 @Controller
 public class UserAcceptLogController {
