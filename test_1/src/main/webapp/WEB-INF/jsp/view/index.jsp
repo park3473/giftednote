@@ -14,16 +14,11 @@
 <c:if test="${ssion_langage == 'kr'}">자가진단</c:if>
 <c:if test="${ssion_langage != 'kr'}">자가진단(영어)</c:if>
 <div>
-	<form action="./user/member/login.do" method="post" id="member_login_form" name="member_login_form" >
+	<form action="${pageContext.request.contextPath}/user/member/login.do" method="post" id="member_login_form" name="member_login_form" >
 		<input type="text" id="ID" name="EMAIL">
 		<input type="password" id="PW" name="MEMBER_PW">
 		<input type="submit" id="LOGIN" value="로그인">
 	</form>
-</div>
-<div>
-로그인 테스트
-<c:if test="${session_login == 'ok'}">로그인 온</c:if>
-<p>${session_email}</p>
 </div>
 <!--공통상단-->
 <%@ include file="./include/header.jsp" %>
