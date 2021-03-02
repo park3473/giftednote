@@ -16,9 +16,23 @@
 <div>
 	<form action="${pageContext.request.contextPath}/user/member/login.do" method="post" id="member_login_form" name="member_login_form" >
 		<input type="text" id="ID" name="EMAIL">
-		<input type="password" id="PW" name="MEMBER_PW">
+		<input type="password" id="PASSWORD" name="PASSWORD">
 		<input type="submit" id="LOGIN" value="로그인">
 	</form>
+</div>
+<div>
+	<div>비밀번호 찾기</div>
+</div>
+<div>
+	<div>
+		<form action="${pageContext.request.contextPath}/user/member/pw_re.do" method="post" id="member_pw_re_form" name="member_pw_re_form">
+			<input type="text" id="ID" name="EMAIL">
+			<input type="submit" id="pw_re" value="비밀번호 찾기">
+		</form>
+	</div>
+</div>
+<div>
+	${PASSWORD }
 </div>
 <!--공통상단-->
 <%@ include file="./include/header.jsp" %>
@@ -70,5 +84,10 @@
 <!-- js 시작 -->
 <script type="text/javascript">
 alert('${ip_session}');
+if('${check}' == 'fail'){
+	alert("실패");
+}else{
+	alert("성공")
+}
 </script>
 <!-- js 끝 -->
