@@ -6,7 +6,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!--삭제금지-->
-<script src="${pageContext.request.contextPath}/resources/sweetalert/jquery-1.12.4.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 
 <!--삭제금지-->
@@ -21,9 +20,12 @@
 	</form>
 </div>
 <div>
-	<div>비밀번호 찾기</div>
+	<a href="${pageContext.request.contextPath}/user/member/register.do" style="color:black !important">회원가입</a>
 </div>
 <div>
+	<div id="bt_pw" onclick="javascript:bt_pw()">비밀번호 찾기</div>
+</div>
+<div style="display:none" id="ff">
 	<div>
 		<form action="${pageContext.request.contextPath}/user/member/pw_re.do" method="post" id="member_pw_re_form" name="member_pw_re_form">
 			<input type="text" id="ID" name="EMAIL">
@@ -32,7 +34,7 @@
 	</div>
 </div>
 <div>
-	${PASSWORD }
+	${PASSWORD}
 </div>
 <!--공통상단-->
 <%@ include file="./include/header.jsp" %>
@@ -84,10 +86,9 @@
 <!-- js 시작 -->
 <script type="text/javascript">
 alert('${ip_session}');
-if('${check}' == 'fail'){
-	alert("실패");
-}else{
-	alert("성공")
+function bt_pw(){
+	$('#ff').css('display','block');
+	
 }
 </script>
 <!-- js 끝 -->
