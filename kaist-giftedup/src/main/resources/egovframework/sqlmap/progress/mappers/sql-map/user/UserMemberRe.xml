@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.user.member_re.service.impl.UserMemberReMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT /*UserMemberReMapper*/ * FROM TBL_MEMBER_RE order by CREATE_TM desc
+	</select>
+
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+		SELECT /*UserMemberReMapper*/ * FROM TBL_MEMBER_RE
+		WHERE 1=1 
+		AND 
+		NAME LIKE '%${SEARCH_TEXT}%'
+		order by UPDATE_TM desc
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+		SELECT /*UserMemberReMapper*/ count(*) FROM TBL_MEMBER_RE
+		WHERE 1=1 
+
+	</select>
+
+	<select id="getView" resultType="egovframework.kaist.user.member_re.model.UserMemberReVo" parameterType="String">
+		SELECT /*UserMemberReMapper*/ * FROM TBL_MEMBER_RE where IDX = #{value};
+	</select>
+
+	<insert id="setInsert"	parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+		INSERT INTO /*UserMemberReMapper*/ TBL_MEMBER_RE (
+		 	MEMBER_ID, 
+			PASSWORD, 
+			NAME, 
+			PHONE, 
+			EMAIL, 
+			JOIN_TM, 
+			CREATE_TM, 
+			TYPE, 
+			TYPE_SUB, 
+			NAME_ENG, 
+			NAME_HANJA, 
+			ADDRESS_LOCAL, 
+			SCHOOL_NAME, 
+			BIRTH, 
+			SEX, 
+			ZIPCODE, 
+			ADDRESS, 
+			ADDRESS_DETAIL, 
+			LOGIN_TM, 
+			UPDATE_TM, 
+			TEACHER_NAME, 
+			TEL, 
+			FILES,
+			SCHOOL_YEAR,
+			SCHOOL_GROUP,
+			ELIGIBILITY,
+			EXP,
+			EXP_TYPE,
+			EXP_DATA,
+			SUPPORT_AREA,
+
+			TEACHER_TYPE,
+			
+			TEACHER_SEX,
+			
+			TEACHER_BIRTH,
+			TEACHER_SCHOOL_NAME,
+			TEACHER_SIDO_NAME,
+			TEACHER_MAJOR,
+			TEACHER_PHONE,
+			TEACHER_EMAIL,
+			TEACHER_PASS,
+			SCHOOL_TYPE,
+			SELF_INTR_1,
+			SELF_INTR_2,
+			SELF_INTR_3
+			
+			
+
+		) VALUES (
+			#{MEMBER_ID}, 
+			#{PASSWORD}, 
+			#{NAME}, 
+			#{PHONE}, 
+			#{EMAIL}, 
+			now(), 
+			now(), 
+			#{TYPE}, 
+			#{TYPE_SUB}, 
+			#{NAME_ENG}, 
+			#{NAME_HANJA}, 
+			#{ADDRESS_LOCAL}, 
+			#{SCHOOL_NAME}, 
+			#{BIRTH}, 
+			#{SEX}, 
+			#{ZIPCODE}, 
+			#{ADDRESS}, 
+			#{ADDRESS_DETAIL}, 
+			#{LOGIN_TM}, 
+			now(), 
+			#{TEACHER_NAME}, 
+
+			#{TEL}, 
+			#{FILES},
+			#{SCHOOL_YEAR},
+			#{SCHOOL_GROUP},
+			#{ELIGIBILITY},
+			#{EXP},
+			#{EXP_TYPE},
+			#{EXP_DATA} ,
+			#{SUPPORT_AREA},
+			
+			#{TEACHER_TYPE},
+			#{TEACHER_SEX},
+			#{TEACHER_BIRTH},
+			#{TEACHER_SCHOOL_NAME},
+			#{TEACHER_SIDO_NAME},
+			#{TEACHER_MAJOR},
+			#{TEACHER_PHONE},
+			#{TEACHER_EMAIL},
+			#{TEACHER_PASS},
+			#{SCHOOL_TYPE},
+			#{SELF_INTR_1},
+			#{SELF_INTR_2},
+			#{SELF_INTR_3}
+
+		) 
+	</insert>
+
+	<update id="setUpdate"	parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+		UPDATE /*USERMEMBERREMAPPER*/ TBL_MEMBERRE SET 
+			MEMBER_ID= #{MEMBER_ID}, 
+			PASSWORD= #{PASSWORD}, 
+			NAME= #{NAME}, 
+			PHONE= #{PHONE}, 
+			EMAIL= #{EMAIL}, 
+			JOIN_TM= #{JOIN_TM}, 
+			CREATE_TM= #{CREATE_TM}, 
+			TYPE= #{TYPE}, 
+			TYPE_SUB= #{TYPE_SUB}, 
+			NAME_ENG= #{NAME_ENG}, 
+			NAME_HANJA= #{NAME_HANJA}, 
+			ADDRESS_LOCAL= #{ADDRESS_LOCAL}, 
+			SCHOOL_NAME= #{SCHOOL_NAME}, 
+			BIRTH= #{BIRTH}, 
+			SEX= #{SEX}, 
+			ZIPCODE= #{ZIPCODE}, 
+			ADDRESS= #{ADDRESS}, 
+			ADDRESS_DETAIL= #{ADDRESS_DETAIL}, 
+			LOGIN_TM= #{LOGIN_TM}, 
+			UPDATE_TM= #{UPDATE_TM}, 
+			TEACHER_NAME= #{TEACHER_NAME}, 
+			TEL= #{TEL}, 
+			SUPPORT_AREA = #{SUPPORT_AREA},
+			<if test="FILES != ''"> 
+			FILES= #{FILES} 
+			</if>
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<delete id="setDelete"	parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+		DELETE FROM /*UserMemberReMapper*/ TBL_MEMBER_RE
+		WHERE IDX =  #{IDX} 
+	</delete>
+	<!-- 11-16 신입생 학교 검색 지원 시스템 개발 -->
+	<select id="getschool" resultType="egovframework.kaist.user.school.model.UserSchoolVo" parameterType="egovframework.kaist.user.school.model.UserSchoolVo">
+		SELECT * FROM /*UserMemberReMapper*/ TBL_SCHOOL
+		WHERE SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+	</select>
+    <select id="getStudent" resultType="egovframework.kaist.user.member_re.model.UserMemberReVo" parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+    	SELECT * FROM /*UserMemberReMapper*/ TBL_MEMBER_RE
+    	WHERE NAME = #{NAME} AND PASSWORD = #{PASSWORD}
+    </select>
+    
+    <select id="getMentor" resultType="egovframework.kaist.user.member_re.model.UserMemberReVo" parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+    	SELECT * FROM /*UserMemberReMapper*/ TBL_MEMBER_RE
+    	WHERE NAME = #{NAME} AND TEACHER_PASS = #{TEACHER_PASS}
+    </select>
+    
+    <update id="Update"	parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+		UPDATE /*UserMemberReMapper*/ TBL_MEMBER_RE SET 
+			PASSWORD= #{PASSWORD}, 
+			NAME= #{NAME}, 
+			PHONE= #{PHONE}, 
+			EMAIL= #{EMAIL},
+			TYPE= #{TYPE}, 
+			TYPE_SUB= #{TYPE_SUB},
+			ADDRESS_LOCAL= #{ADDRESS_LOCAL}, 
+			SCHOOL_NAME= #{SCHOOL_NAME}, 
+			BIRTH= #{BIRTH}, 
+			SEX= #{SEX},
+			ZIPCODE= #{ZIPCODE}, 
+			ADDRESS= #{ADDRESS}, 
+			ADDRESS_DETAIL= #{ADDRESS_DETAIL},
+			UPDATE_TM= now(),
+			TEL= #{TEL}, 
+			TEACHER_NAME= #{TEACHER_NAME}, 
+			TEACHER_PHONE= #{TEACHER_PHONE},
+			SCHOOL_YEAR= #{SCHOOL_YEAR},
+			SCHOOL_GROUP= #{SCHOOL_GROUP},
+			ELIGIBILITY= #{ELIGIBILITY},
+			EXP= #{EXP},
+			EXP_TYPE= #{EXP_TYPE},
+			EXP_DATA= #{EXP_DATA},
+			SUPPORT_AREA = #{SUPPORT_AREA},
+			SCHOOL_TYPE= #{SCHOOL_TYPE},
+			SELF_INTR_1 = #{SELF_INTR_1},
+			SELF_INTR_2 = #{SELF_INTR_2},
+			SELF_INTR_3 = #{SELF_INTR_3},
+			TEACHER_TYPE =#{TEACHER_TYPE},
+			TEACHER_SEX = #{TEACHER_SEX},
+			TEACHER_BIRTH = #{TEACHER_BIRTH},
+			TEACHER_SCHOOL_NAME = #{TEACHER_SCHOOL_NAME},
+			TEACHER_EMAIL = #{TEACHER_EMAIL},
+			TEACHER_MAJOR = #{TEACHER_MAJOR},
+			TEACHER_MTV =#{TEACHER_MTV},
+			LETER_RCMND =#{LETER_RCMND}
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	<update id="completion"	parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+		UPDATE /*UserMemberReMapper*/ TBL_MEMBER_RE SET
+			RESULT = "wating"
+		WHERE
+			IDX = #{IDX}
+	</update>
+	
+	<select id="pass_check" resultType="String" parameterType="egovframework.kaist.user.member_re.model.UserMemberReVo">
+		SELECT RESULT FROM /*UserMemberReMapper*/ TBL_MEMBER_RE
+		WHERE NAME = #{NAME} AND PASSWORD = #{PASSWORD}
+	</select>
+	
+</mapper>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.kaist.admin.member_re.service.impl.AdminMemberReMapper">
+	 
+	<select id="getListAll" resultType="hashMap" >
+		SELECT * 
+		FROM TBL_MEMBER_RE 
+		order by CREATE_TM desc
+	</select>
+	
+	<select id="getDcmnt" resultType="egovframework.kaist.admin.member_re.model.AdminDcmntVo" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT DCMNT_NAME FROM TBL_DCMNT WHERE DCMNT_TYPE =#{DCMNT_TYPE}
+	</select>
+	<select id="getListPass" resultType="hashMap" >
+		SELECT * FROM TBL_MEMBER_RE  WHERE result = "pass" order by CREATE_TM desc
+	</select>
+	
+	<select id="getList" resultType="hashMap" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT * FROM TBL_MEMBER_RE
+		WHERE 1=1 
+
+<!-- 		SELECT * -->
+<!-- 		FROM TBL_MEMBER_RE JOIN TBL_DCMNT ON TBL_MEMBER_RE.IDX = TBL_DCMNT.MEMBER_IDX  -->
+<!-- 		WHERE 1=1 -->
+	     	
+		<if test="RESULT != ''">
+	    	AND RESULT = #{RESULT}
+	    </if>
+	    
+	    <if test="ADDRESS_LOCAL != ''">
+	    	AND ADDRESS_LOCAL = #{ADDRESS_LOCAL}
+	    </if>
+
+	    <if test="SCHOOL_TYPE != ''">
+	    	AND SCHOOL_TYPE = #{SCHOOL_TYPE}
+	    </if>
+	    
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>
+	    
+	     <if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  SEX LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		OR  SUPPORT_AREA LIKE '%${SEARCH_TEXT}%'
+		    		OR  ELIGIBILITY LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    	
+	    </if>
+	    <if test="UP != ''">
+	    	<if test="UP == 'SCHOOL_YEAR'">
+	    		order by ABS(${UP}) asc
+	    	</if>
+	    	<if test="UP != 'SCHOOL_YEAR'">
+	    		order by ${UP} asc
+	    	</if>
+	    </if>
+	    <if test="DOWN != ''">
+	    	<if test="DOWN == 'SCHOOL_YEAR'">
+	    		order by ABS(${DOWN}) desc
+	    	</if>
+	    	<if test="DOWN != 'SCHOOL_YEAR'">
+	    		order by ${DOWN} desc
+	    	</if>
+	    </if>
+	    <if test="DOWN == '' and UP == ''">
+	    	order by CREATE_TM desc
+	    </if>
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+		
+	<select id="getListCnt" resultType="int" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		SELECT count(*) FROM TBL_MEMBER_RE
+		WHERE 1=1 
+
+		<if test="RESULT != ''">
+	    	AND RESULT = #{RESULT}
+	    </if>
+	    
+	    <if test="ADDRESS_LOCAL != ''">
+	    	AND ADDRESS_LOCAL = #{ADDRESS_LOCAL}
+	    </if>
+
+	    <if test="SCHOOL_TYPE != ''">
+	    	AND SCHOOL_TYPE = #{SCHOOL_TYPE}
+	    </if>
+	    
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>
+	    
+	     <if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  SEX LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		OR  SUPPORT_AREA LIKE '%${SEARCH_TEXT}%'
+		    		OR  ELIGIBILITY LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    </if>
+	</select>
+	
+	<select id="getView" resultType="egovframework.kaist.admin.member_re.model.AdminMemberReVo" parameterType="String">
+		SELECT * FROM TBL_MEMBER_RE where IDX = #{IDX}
+	</select>
+	
+
+	<update id="setUpdate" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER_RE 
+		SET 
+			NAME= #{NAME}, 
+			SEX= #{SEX}, 
+			SCHOOL_TYPE= #{SCHOOL_TYPE},
+			SCHOOL_NAME= #{SCHOOL_NAME}, 
+			SCHOOL_YEAR= #{SCHOOL_YEAR},
+			SCHOOL_GROUP= #{SCHOOL_GROUP},
+			
+			BIRTH= #{BIRTH}, 
+			ZIPCODE= #{ZIPCODE}, 
+			ADDRESS= #{ADDRESS}, 
+			ADDRESS_DETAIL= #{ADDRESS_DETAIL}, 
+			
+			PHONE= #{PHONE},
+			TEL= #{TEL},
+			EMAIL= #{EMAIL}, 
+
+			SUPPORT_AREA = #{SUPPORT_AREA},
+			ELIGIBILITY= #{ELIGIBILITY},
+			EXP= #{EXP},
+			EXP_TYPE= #{EXP_TYPE},
+			EXP_DATA= #{EXP_DATA},
+			SELF_INTR_1= #{SELF_INTR_1},
+			SELF_INTR_2= #{SELF_INTR_2},
+			SELF_INTR_3= #{SELF_INTR_3},
+			LETER_RCMND= #{LETER_RCMND},
+			
+			TEACHER_NAME= #{TEACHER_NAME},
+			TEACHER_PHONE= #{TEACHER_PHONE},
+			TEACHER_SEX= #{TEACHER_SEX},
+			TEACHER_BIRTH= #{TEACHER_BIRTH},
+			TEACHER_SCHOOL_NAME= #{TEACHER_SCHOOL_NAME},
+			TEACHER_EMAIL= #{TEACHER_EMAIL},
+			TEACHER_MAJOR= #{TEACHER_MAJOR},
+			TEACHER_SIDO_NAME= #{TEACHER_SIDO_NAME},
+			TEACHER_PASS= #{TEACHER_PASS},
+			
+			TEACHER_MTV= #{TEACHER_MTV},
+			LETER_RCMND= #{LETER_RCMND},
+			
+			DCMNT_CHECK= #{DCMNT_CHECK},
+			 
+			SCORE= #{SCORE}
+		WHERE
+			IDX= #{IDX} 
+	</update>
+	
+	<!-- 결과 일괄변경 -->
+	<update id="setUpdateTypeToText" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER_RE 
+		SET 
+		${SEARCH_TYPE} = #{SEARCH_TEXT},
+	    	<if test="RESULT == 'pass'">
+	    		RESULT= "합격",
+	   		</if>
+	   		<if test="RESULT == 'fail'">
+	    		RESULT= "불합격",
+	   		</if>
+	   		<if test="RESULT == 'wating'">
+	    		RESULT= "대기",
+	   		</if>
+	   		UPDATE_TM = now()
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	<!-- 서류확인 -->
+	<update id="setDcmntUpdate" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReVo">
+		UPDATE TBL_MEMBER_RE 
+		SET
+			DCMNT_CHECK= #{DCMNT_CHECK},
+		WHERE
+			IDX = #{IDX} 
+	</update>
+	
+	
+	<update id="setDcmntCheck" parameterType="egovframework.kaist.admin.dcmnt.model.DcmntVo">
+		UPDATE TBL_MEMBER_RE
+		SET DCMNT_CHECK =#{DCMNT_CHECK}
+		WHERE IDX =#{MEMBER_IDX}
+	</update>
+	
+	<update id="setAllComplete">
+		UPDATE TBL_MEMBER_RE
+		SET RESULT= "wating"
+		WHERE RESULT="" or RESULT="nomento"
+	</update>
+	
+	
+	<!-- 신입생 지원 통계 -->
+	<select id="getStat" resultType="egovframework.kaist.admin.member_re.model.AdminMemberReStatVo" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReStatVo">
+		SELECT ADDRESS_LOCAL ,
+		COUNT(case when SCHOOL_YEAR = '4' then '4' END) AS SCHOOL_YEAR4 ,
+		COUNT(case when SCHOOL_YEAR = '5' then '5' END) AS SCHOOL_YEAR5 ,
+		COUNT(case when SCHOOL_YEAR = '6' then '6' END) AS SCHOOL_YEAR6 ,
+		COUNT(case when SCHOOL_YEAR = '7' then '7' END) AS SCHOOL_YEAR7 ,
+		COUNT(case when SCHOOL_YEAR = '8' then '8' END) AS SCHOOL_YEAR8 ,
+		COUNT(case when SCHOOL_YEAR = '9' then '9' END) AS SCHOOL_YEAR9 ,
+		COUNT(case when SCHOOL_YEAR = '10' then '10' END) AS SCHOOL_YEAR10 ,
+		COUNT(case when SCHOOL_YEAR = '11' then '11' END) AS SCHOOL_YEAR11 ,
+		COUNT(case when SCHOOL_YEAR = '12' then '12' END) AS SCHOOL_YEAR12 
+		FROM TBL_MEMBER_RE 
+		GROUP BY ADDRESS_LOCAL
+		ORDER BY FIELD(ADDRESS_LOCAL, '서울' , '광주' , '인천')
+	</select>
+	<!-- 신입생 지원 통계 - 멘토부분 -->
+	<select id="getMeStat" resultType="egovframework.kaist.admin.member_re.model.AdminMemberReStatVo" parameterType="egovframework.kaist.admin.member_re.model.AdminMemberReStatVo">
+		SELECT COUNT(teacher_sido_name) AS MENTO
+		FROM tbl_member_re 
+		GROUP BY teacher_sido_name 
+		ORDER BY FIELD(teacher_sido_name,'서울' , '광주' , '인천')
+	</select>
+	
+</mapper>
