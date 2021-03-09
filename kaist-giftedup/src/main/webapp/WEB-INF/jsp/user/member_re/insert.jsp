@@ -834,7 +834,8 @@
 			return;
 		}
 		//연락처 자리수 11자리가 맞는지 확인
-		if($('#PHONE').val != ''){
+		var phone_val = $('#PHONE').val();
+		if(phone_val != ''){
 			if ($('#PHONE').val().length != 11) {
 				alert('연락처 11자리를 제대로 기입하였는지 확인하여주십쇼');
 				return;

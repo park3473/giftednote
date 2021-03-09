@@ -483,8 +483,8 @@ function pageChanged(page, endpage)
 		URL = URL + "&ADDRESS_LOCAL=" + '${model.beforeDomain.ADDRESS_LOCAL}';
 	}
 	
-	var haha = '';
-	haha = '${model.beforeDomain.BIRTH}';
+	var birth = '';
+	birth = '${model.beforeDomain.BIRTH}';
 	if('${model.beforeDomain.BIRTH}' != ''){
 		URL = URL + "&BIRTH=" + '${model.beforeDomain.BIRTH}';
 	}

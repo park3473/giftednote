@@ -142,7 +142,7 @@ public class UserMemberReController {
 			String message = userSmsLogDomain.getMESSAGE();
 			System.out.println("멘토 연락처"+phone);
 			System.out.println("멘토에게 보낼 메세지"+userSmsLogDomain.getMESSAGE());
-			//adminSmsLogService.smsSend(userSmsLogDomain);
+			adminSmsLogService.smsSend(userSmsLogDomain);
 		}
 		phone = userMember_reVo.getPHONE();
 		if(phone.equals("")) {
@@ -164,7 +164,7 @@ public class UserMemberReController {
 		
 		userSmsLogDomain.setPHONE(phone);
 		//adminSmsLogService.setInsert(userSmsLogDomain);
-		//adminSmsLogService.smsSend(userSmsLogDomain);
+		adminSmsLogService.smsSend(userSmsLogDomain);
 		
 		//서류 제출해야되는 내용 가져오기
 		
