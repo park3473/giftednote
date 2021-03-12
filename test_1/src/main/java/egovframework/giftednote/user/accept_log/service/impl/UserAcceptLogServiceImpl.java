@@ -2,18 +2,13 @@ package egovframework.giftednote.user.accept_log.service.impl;
  
 
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
-
 import egovframework.giftednote.manager.accept_log.service.UserAcceptLogService;
-import egovframework.giftednote.user.accept_log.model.UserAcceptLogVo;
 
 
 @Service("UserAcceptLogService")

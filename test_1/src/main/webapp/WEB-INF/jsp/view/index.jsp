@@ -13,10 +13,10 @@
 <c:if test="${ssion_langage == 'kr'}">자가진단</c:if>
 <c:if test="${ssion_langage != 'kr'}">자가진단(영어)</c:if>
 <div>
-	<form action="${pageContext.request.contextPath}/user/member/login.do" method="post" id="member_login_form" name="member_login_form" >
+	<form action="#" method="post" id="member_login_form" name="member_login_form" >
 		<input type="text" id="ID" name="EMAIL">
 		<input type="password" id="PASSWORD" name="PASSWORD">
-		<input type="submit" id="LOGIN" value="로그인">
+		<button type="button" onclick="javascript:login()">로그인</button>
 	</form>
 </div>
 <div>
@@ -85,10 +85,46 @@
 <!--공통하단 끝-->
 <!-- js 시작 -->
 <script type="text/javascript">
-alert('${ip_session}');
-function bt_pw(){
-	$('#ff').css('display','block');
+	alert('${ip_session}');
+	function bt_pw(){
+		$('#ff').css('display','block');
+		
+	}
+	function login() {
+	    if ($('#ID').val() == '') {
+	        alert('아이디를 입력 해주세요');
+	        return;
+	    }
+	    if ($('#PASSWORD').val() == '') {
+	        alert('패스워드 입력 해주세요');
+	        return;
+	    }
 	
-}
+	    var URL = '${pageContext.request.contextPath}/user/member/login.do'
+	    var formData = $("#member_login_form").serialize();
+	
+	    console.log(formData);
+	
+	    $.ajax({
+	        type: "POST",
+	        url: URL,
+	        cache: false,
+	        data: formData,
+	        success: function(result) {
+	            var s = result.indexOf("true");
+	            if (s > -1) {
+	                idchk = true;
+	                //location.href = '${pageContext.request.contextPath}/index.do';
+	                alert('${session_idx}');
+	                location.href = '${pageContext.request.contextPath}/note/list.do?idx='+'${session_idx}';
+	                return;
+	            } else if (result.indexOf("false:-1") > -1) {
+	                alert('이메일 혹은 패스워드를 재확인 해주십시오.');
+	                return;
+	            }      
+	        }
+	    });
+	}
+
 </script>
 <!-- js 끝 -->

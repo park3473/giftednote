@@ -6,7 +6,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!--삭제금지-->
-<script src="${pageContext.request.contextPath}/resources/sweetalert/jquery-1.12.4.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 
 <!--삭제금지-->
@@ -45,22 +44,17 @@
     }
 
 </style>
-
-<!-- 
-<a href="${pageContext.request.contextPath}/langage.do?langage=kr">한국어</a>
-<a href="${pageContext.request.contextPath}/langage.do?langage=us">영어</a> 
-테스트  : <spring:message code="index.test"/> 
-<c:if test="${ssion_langage == 'kr'}">
-한국어
-
-</c:if>
-<c:if test="${ssion_langage == 'us'}">
-영어
-</c:if>
--->
-
-<!--메인버튼 끝-->
-
+<div>
+	<div>
+		<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_1515.png">
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		
+	</div>
+</div>
 <!--공통하단-->
 <%@ include file="../include/footer.jsp" %>
 <!--공통하단 끝-->

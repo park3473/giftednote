@@ -6,8 +6,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
-
 import egovframework.giftednote.user.member.Service.UserMemberService;
 import egovframework.giftednote.user.member.model.UserMemberVo;
 

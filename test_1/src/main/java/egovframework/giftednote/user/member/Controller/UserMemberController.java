@@ -1,6 +1,8 @@
 package egovframework.giftednote.user.member.Controller;
 
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +30,7 @@ public class UserMemberController {
 	private static final Logger Logger = LoggerFactory.getLogger(UserMemberController.class);
 	
 	@RequestMapping(value="/user/member/login.do" , method = RequestMethod.POST)
-	public ModelAndView MemberLogin(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) {
+	public void MemberLogin(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) {
 		System.out.println(userMembervo.getEMAIL());
 		System.out.println(userMembervo.getPASSWORD());
 		ModelMap model = new ModelMap();
@@ -36,14 +38,25 @@ public class UserMemberController {
 		UserMemberVo userMembervo2 = UserMemberService.getView(userMembervo);
 		//System.out.println(userMembervo2);
 		if(userMembervo2 == null) {
-			System.out.println("로그인 실패");
-			return new ModelAndView("view/index" , "check" , "fail");
+			Logger.debug("이메일 혹은 패스워드를 재확인 해주십시오.");
+			try {
+				response.getWriter().println("false:-1");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else {
+			System.out.println(userMembervo2.getM_IDX());
+			Logger.debug("로그인 성공 하였습니다.");
 			HttpSession session = request.getSession();
 			session.setAttribute("session_login", "ok");
-			session.setAttribute("session_email", userMembervo.getEMAIL());
-
-			return new ModelAndView("view/note/main" , "check" , "ture");
+			session.setAttribute("session_idx", userMembervo2.getM_IDX());
+			session.setAttribute("session_email", userMembervo2.getEMAIL());
+			try {
+				response.getWriter().println("true");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	@RequestMapping(value="/user/member/pw_re.do" , method = RequestMethod.POST)
