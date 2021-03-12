@@ -3,13 +3,13 @@ package egovframework.giftednote.user.member.model;
 public class UserMemberVo {
 	String EMAIL = "";
 	String PASSWORD = "";
-	String M_IDX = "";
 	String NAME = "";
 	String PHONE = "";
 	String ADDRESS= "";
 	String SCHOOL_YEAR= "";
 	String SCHOOL_NAME= "";
 	String BIRTH= "";
+	String IDX = "";
 	
 	
 	public String getNAME() {
@@ -42,12 +42,6 @@ public class UserMemberVo {
 	public void setPASSWORD(String pASSWORD) {
 		PASSWORD = pASSWORD;
 	}
-	public String getM_IDX() {
-		return M_IDX;
-	}
-	public void setM_IDX(String m_IDX) {
-		M_IDX = m_IDX;
-	}
 	public String getSCHOOL_YEAR() {
 		return SCHOOL_YEAR;
 	}
@@ -66,6 +60,13 @@ public class UserMemberVo {
 	public void setBIRTH(String bIRTH) {
 		BIRTH = bIRTH;
 	}
+	public String getIDX() {
+		return IDX;
+	}
+	public void setIDX(String iDX) {
+		IDX = iDX;
+	}
+	
 	
 	
 	

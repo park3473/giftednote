@@ -114,8 +114,8 @@
 	            var s = result.indexOf("true");
 	            if (s > -1) {
 	                idchk = true;
-	                //location.href = '${pageContext.request.contextPath}/index.do';
 	                alert('${session_idx}');
+	                alert('${session_email}');
 	                location.href = '${pageContext.request.contextPath}/note/list.do?idx='+'${session_idx}';
 	                return;
 	            } else if (result.indexOf("false:-1") > -1) {

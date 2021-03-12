@@ -25,7 +25,7 @@ public class UserMemberController {
 	
 	
 	@Autowired
-	UserMemberService UserMemberService;
+	UserMemberService userMemberService;
 	
 	private static final Logger Logger = LoggerFactory.getLogger(UserMemberController.class);
 	
@@ -35,7 +35,7 @@ public class UserMemberController {
 		System.out.println(userMembervo.getPASSWORD());
 		ModelMap model = new ModelMap();
 		
-		UserMemberVo userMembervo2 = UserMemberService.getView(userMembervo);
+		UserMemberVo userMembervo2 = userMemberService.getView(userMembervo);
 		//System.out.println(userMembervo2);
 		if(userMembervo2 == null) {
 			Logger.debug("이메일 혹은 패스워드를 재확인 해주십시오.");
@@ -46,11 +46,11 @@ public class UserMemberController {
 				e.printStackTrace();
 			}
 		}else {
-			System.out.println(userMembervo2.getM_IDX());
+			System.out.println(userMembervo2.getIDX());
 			Logger.debug("로그인 성공 하였습니다.");
 			HttpSession session = request.getSession();
 			session.setAttribute("session_login", "ok");
-			session.setAttribute("session_idx", userMembervo2.getM_IDX());
+			session.setAttribute("session_idx", userMembervo2.getIDX());
 			session.setAttribute("session_email", userMembervo2.getEMAIL());
 			try {
 				response.getWriter().println("true");
@@ -62,7 +62,7 @@ public class UserMemberController {
 	@RequestMapping(value="/user/member/pw_re.do" , method = RequestMethod.POST)
 	public ModelAndView MemberPwRe(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) {
 		ModelMap model = new ModelMap();
-		String pw = UserMemberService.getPW(userMembervo);
+		String pw = userMemberService.getPW(userMembervo);
 		System.out.println(pw);
 		return new ModelAndView("view/index" , "PASSWORD" , pw);
 	}
@@ -73,7 +73,7 @@ public class UserMemberController {
 	@RequestMapping(value="/user/member/register.do" , method = RequestMethod.POST)
 	public ModelAndView Register(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response){
 		
-		UserMemberService.insertMember(userMembervo);
+		userMemberService.insertMember(userMembervo);
 		return new ModelAndView("view/index");
 	}
 	

@@ -34,32 +34,10 @@
 	<div>
 		<div>
 			<div>
-				<div>
-					<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li onclick="location.href='${pageContext.request.contextPath}/note/insert.do?M_IDX=${session_idx}'">추가</li>
-					</ul>
-				</div>
-			
 				<c:forEach var="item" items="${model.list}" varStatus="var">
-				<div style="width:300px;" onclick="javascript:detail(${item.N_IDX})" id="${item.N_IDX }_detail" class="test_div">
-						<img style="width:300px;"src="${pageContext.request.contextPath}/resources/upload/note_img/${item.IMAGE }.png">
-						<div id="${item.N_IDX }_idx" class="test_p">
-							<p>${item.TITLE }</p>
-							<p>${item.TOPIC }</p>
-							<p>${item.LEADER }</p>
-							<p>${item.ASSI }</p>
-							<p>${item.INTRO }</p>
-							<p>${item.START_TM }</p>
-							<p>${item.END_TM }</p>
-						</div>
-				</div>
+					<p>${item.SCHOOL_YEAR }</p>
+					<p>${item.IDX }</p>
 				</c:forEach>
-				<div id="detail_show">
-					
-				</div>
 			</div>
 		</div>
 	</div>
