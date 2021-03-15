@@ -12,6 +12,9 @@ public interface UserNoteMapper {
 
 	public int getListCnt(UserNoteVo userNoteVo);
 
+	public void setNote(UserNoteVo userNoteVo);
+
+
 	
 
 }

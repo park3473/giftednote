@@ -44,4 +44,10 @@ public class UserNoteServiceImpl implements UserNoteService {
 		return modelMap;
 	}
 
+	@Override
+	public void setNote(UserNoteVo userNoteVo) {
+		// TODO Auto-generated method stub
+		usernotemapper.setNote(userNoteVo);
+	}
+
 }

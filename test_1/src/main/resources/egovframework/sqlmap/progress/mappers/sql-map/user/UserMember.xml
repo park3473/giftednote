@@ -19,4 +19,9 @@
 		SELECT *
 		FROM TBL_MEMBER
 	</select>
+	<select id="getList" parameterType="egovframework.giftednote.user.member.model.UserMemberVo" resultType="egovframework.giftednote.user.member.model.UserMemberVo">
+		SELECT *
+		FROM TBL_MEMBER
+		WHERE EMAIL = #{EMAIL}
+	</select>
 </mapper>

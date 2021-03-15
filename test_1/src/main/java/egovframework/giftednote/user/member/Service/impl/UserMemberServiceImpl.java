@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 
 import egovframework.giftednote.user.member.Service.UserMemberService;
 import egovframework.giftednote.user.member.model.UserMemberVo;
+import egovframework.giftednote.user.note.model.UserNoteVo;
 
 
 @Service("userMemberService")
@@ -43,6 +44,11 @@ public class UserMemberServiceImpl implements UserMemberService {
 		List<?> list = userMemberMapper.getListAll();
 		modelMap.addAttribute("list",list);
 		return modelMap;
+	}
+	@Override
+	public List<?> getList(UserMemberVo userMembervo) {
+		// TODO Auto-generated method stub
+		return userMemberMapper.getList(userMembervo);
 	}
 	
 

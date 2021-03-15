@@ -2,6 +2,7 @@ package egovframework.giftednote.user.member.Controller;
 
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import egovframework.giftednote.user.member.Service.UserMemberService;
 import egovframework.giftednote.user.member.model.UserMemberVo;
@@ -50,8 +55,10 @@ public class UserMemberController {
 			Logger.debug("로그인 성공 하였습니다.");
 			HttpSession session = request.getSession();
 			session.setAttribute("session_login", "ok");
+			System.out.println(userMembervo2.getIDX());
 			session.setAttribute("session_idx", userMembervo2.getIDX());
 			session.setAttribute("session_email", userMembervo2.getEMAIL());
+			model.addAttribute("IDX", userMembervo2.getIDX());
 			try {
 				response.getWriter().println("true");
 			} catch (IOException e) {
@@ -80,6 +87,14 @@ public class UserMemberController {
 	@RequestMapping(value="/user/member/view.do" ,  method = RequestMethod.POST)
 	public ModelAndView MemberView(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("view/index");
+	}
+	@RequestMapping(value="/user/member/search.do" ,  method = RequestMethod.POST,produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String search(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+		List<?> list = userMemberService.getList(userMembervo);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(list);
+		return jsonStr;
 	}
 	
 }

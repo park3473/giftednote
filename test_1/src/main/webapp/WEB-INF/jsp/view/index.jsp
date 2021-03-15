@@ -116,6 +116,7 @@
 	                idchk = true;
 	                alert('${session_idx}');
 	                alert('${session_email}');
+	                alert('${model.IDX}');
 	                location.href = '${pageContext.request.contextPath}/note/list.do?idx='+'${session_idx}';
 	                return;
 	            } else if (result.indexOf("false:-1") > -1) {

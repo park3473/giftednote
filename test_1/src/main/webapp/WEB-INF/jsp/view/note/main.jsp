@@ -39,7 +39,7 @@
 						<li></li>
 						<li></li>
 						<li></li>
-						<li onclick="location.href='${pageContext.request.contextPath}/note/insert.do?M_IDX=${session_idx}'">추가</li>
+						<li onclick="location.href='${pageContext.request.contextPath}/note/insert.do?IDX=${session_idx}'">추가</li>
 					</ul>
 				</div>
 			

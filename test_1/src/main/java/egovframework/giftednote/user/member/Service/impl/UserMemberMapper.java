@@ -11,4 +11,5 @@ public interface UserMemberMapper {
 	public String getPW(UserMemberVo userMemberVo);
 	public void insertMember(UserMemberVo userMemberVo);
 	public List<?> getListAll();
+	public List<?> getList(UserMemberVo userMembervo);
 }

@@ -4,21 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.giftednote.user.note.service.impl.UserNoteMapper">
 	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
-		SELECT * FROM TBL_NOTE
-		WHERE 1=1 
+		SELECT * FROM TBL_NOTE N JOIN TBL_TEAM T
+		WHERE N.N_IDX = T.N_IDX 
+			AND 1=1 
 <!-- 		SELECT * -->
 <!-- 		FROM TBL_MEMBER_RE JOIN TBL_DCMNT ON TBL_MEMBER_RE.IDX = TBL_DCMNT.MEMBER_IDX  -->
 <!-- 		WHERE 1=1 -->
 	     	
-		<if test="M_IDX != ''">
-	    	AND M_IDX = #{M_IDX}
+		<if test="IDX != ''">
+	    	AND T.IDX = #{IDX}
 	    </if>
 	</select>
 	<select id="getListCnt" resultType="int" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
 		SELECT count(*) FROM TBL_NOTE
 		WHERE 1=1
-		<if test="M_IDX != ''">
-	    	AND M_IDX = #{M_IDX}
+		<if test="IDX != ''">
+	    	AND IDX = #{IDX}
 	    </if>
 	</select>
+	<insert id="setNote" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		INSERT INTO TBL_NOTE 
+		(IMAGE , TITLE , TOPIC , LEADER , ASSI , INTRO) 
+		VALUES 
+		(#{IMAGE} , #{TITLE} , #{TOPIC} , #{LEADER} , #{ASSI} , #{INTRO})
+	</insert>
 </mapper>

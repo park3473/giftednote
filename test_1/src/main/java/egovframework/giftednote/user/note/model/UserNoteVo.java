@@ -13,7 +13,7 @@ public class UserNoteVo extends SearchVo{
 	String START_TM= "";
 	String END_TM= "";
 	String DEAD= "";
-	String M_IDX = "";
+	String IDX = "";
 	
 	String SEARCH_TYPE = "";
 	String SEARCH_TEXT = "";
@@ -103,12 +103,13 @@ public class UserNoteVo extends SearchVo{
 	public void setOFFSET(int oFFSET) {
 		OFFSET = oFFSET;
 	}
-	public String getM_IDX() {
-		return M_IDX;
+	public String getIDX() {
+		return IDX;
 	}
-	public void setM_IDX(String m_IDX) {
-		M_IDX = m_IDX;
+	public void setIDX(String iDX) {
+		IDX = iDX;
 	}
+	
 	
 	
 	

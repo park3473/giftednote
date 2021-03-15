@@ -8,4 +8,6 @@ public interface UserNoteService {
 
 	ModelMap getList(UserNoteVo userNoteVo);
 
+	void setNote(UserNoteVo userNoteVo);
+
 }

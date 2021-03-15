@@ -60,7 +60,7 @@ public class UserNoteController {
 		
 		UserNoteVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
 		UserNoteVo.setOFFSET(pagelimit);
-		UserNoteVo.setM_IDX(request.getParameter("idx"));
+		UserNoteVo.setIDX(request.getParameter("idx"));
 		model = userNoteService.getList(UserNoteVo);
 		
 		
@@ -75,12 +75,17 @@ public class UserNoteController {
 	@RequestMapping(value="/note/insert.do" , method = RequestMethod.GET)
 	public ModelAndView InsertView(@ModelAttribute("UserNoteVo") UserNoteVo UserNoteVo, HttpServletRequest request, HttpServletResponse response) {
 		ModelMap model = new ModelMap();
-		String idx = request.getParameter("M_IDX");
+		String idx = request.getParameter("IDX");
 		
 		
 		model = userMemberService.getListAll();
 		
 		return new ModelAndView("view/note/insert" , "model", model);
 	}
+	@RequestMapping(value="/note/insert.do" , method = RequestMethod.POST)
+	public void InsertNote(@ModelAttribute("UserNoteVo") UserNoteVo UserNoteVo, HttpServletRequest request, HttpServletResponse response) {
+		userNoteService.setNote(UserNoteVo);
+	}
+	
 	
 }
