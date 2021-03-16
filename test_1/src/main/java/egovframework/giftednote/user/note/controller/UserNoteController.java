@@ -1,6 +1,7 @@
 package egovframework.giftednote.user.note.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.system.util.SUtil;
 
 import egovframework.giftednote.user.member.Service.UserMemberService;
 import egovframework.giftednote.user.note.model.UserNoteVo;
 import egovframework.giftednote.user.note.service.UserNoteService;
+import egovframework.giftednote.user.note_detail.model.UserNoteDetailVo;
 import egovframework.giftednote.user.team.model.UserTeamVo;
 
 @Controller
@@ -99,13 +103,22 @@ public class UserNoteController {
 	}
 	
 	//detail 페이지 가기
-	@RequestMapping(value="/note/insert.do" , method = RequestMethod.GET)
-	public ModelAndView Detail(@ModelAttribute("UserNoteVo") UserNoteVo UserNoteVo, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value="/note/detail.do" , method = RequestMethod.GET)
+	public ModelAndView Detail(@ModelAttribute("UserNoteDetailVo") UserNoteDetailVo UserNoteDetailVo, HttpServletRequest request, HttpServletResponse response) {
 		ModelMap model = new ModelMap();
-		String idx = request.getParameter("IDX");
+		String n_idx = request.getParameter("N_IDX");
+		UserNoteDetailVo.setN_IDX(n_idx);
+		model = userNoteService.getDetail(UserNoteDetailVo);
 		
-		
-		return new ModelAndView("view/note/insert" , "model", model);
+		return new ModelAndView("view/note/detail" , "model", model);
 	}
+	//detail 페이지 content불러오기
+		@RequestMapping(value="/note/detail.do" , method = RequestMethod.POST)
+		public String DetailContent(@ModelAttribute("UserNoteDetailVo") UserNoteDetailVo UserNoteDetailVo, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+			List<?> list = userNoteService.getContent(UserNoteDetailVo);
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonStr = mapper.writeValueAsString(list);
+			return jsonStr;
+		}
 	
 }

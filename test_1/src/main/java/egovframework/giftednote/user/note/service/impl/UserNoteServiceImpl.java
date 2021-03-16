@@ -11,6 +11,7 @@ import com.system.util.PageVO;
 
 import egovframework.giftednote.user.note.model.UserNoteVo;
 import egovframework.giftednote.user.note.service.UserNoteService;
+import egovframework.giftednote.user.note_detail.model.UserNoteDetailVo;
 import egovframework.giftednote.user.team.model.UserTeamVo;
 
 
@@ -57,6 +58,27 @@ public class UserNoteServiceImpl implements UserNoteService {
 	public void setTeam(UserTeamVo userTeamVo) {
 		// TODO Auto-generated method stub
 		usernotemapper.setTeam(userTeamVo);
+	}
+
+	@Override
+	public ModelMap getDetail(UserNoteDetailVo userNoteDetailVo) {
+		// TODO Auto-generated method stub
+		ModelMap modelMap = new ModelMap();
+		List<?> list = usernotemapper.getDetail(userNoteDetailVo);
+		modelMap.addAttribute("list",list);
+		int PageCount = usernotemapper.getDetailCnt(userNoteDetailVo);
+		modelMap.put("Pagecount", PageCount);
+		System.out.println(PageCount);
+		return modelMap;
+	}
+
+	@Override
+	public ModelMap getContent(UserNoteDetailVo userNoteDetailVo) {
+		// TODO Auto-generated method stub
+		ModelMap modelMap = new ModelMap();
+		List<?> list = usernotemapper.getContent();
+		modelMap.addAttribute("list",list);
+		return modelMap;
 	}
 
 }
