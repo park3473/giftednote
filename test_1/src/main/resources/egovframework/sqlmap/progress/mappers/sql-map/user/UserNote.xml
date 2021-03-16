@@ -11,21 +11,29 @@
 <!-- 		FROM TBL_MEMBER_RE JOIN TBL_DCMNT ON TBL_MEMBER_RE.IDX = TBL_DCMNT.MEMBER_IDX  -->
 <!-- 		WHERE 1=1 -->
 	     	
-		<if test="IDX != ''">
-	    	AND T.IDX = #{IDX}
+		<if test="EMAIL != ''">
+	    	AND T.EMAIL = #{EMAIL}
 	    </if>
 	</select>
 	<select id="getListCnt" resultType="int" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
-		SELECT count(*) FROM TBL_NOTE
-		WHERE 1=1
-		<if test="IDX != ''">
-	    	AND IDX = #{IDX}
+		SELECT count(*) FROM TBL_NOTE N JOIN TBL_TEAM T
+		WHERE N.N_IDX = T.N_IDX 
+		AND 1=1
+		<if test="EMAIL != ''">
+	    	AND T.EMAIL = #{EMAIL}
 	    </if>
 	</select>
-	<insert id="setNote" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+	<insert id="setNote" parameterType="egovframework.giftednote.user.note.model.UserNoteVo" useGeneratedKeys="true" keyProperty="N_IDX">
 		INSERT INTO TBL_NOTE 
-		(IMAGE , TITLE , TOPIC , LEADER , ASSI , INTRO) 
+		(IDX , IMAGE , TITLE , TOPIC , LEADER , ASSI , INTRO) 
 		VALUES 
-		(#{IMAGE} , #{TITLE} , #{TOPIC} , #{LEADER} , #{ASSI} , #{INTRO})
+		(#{IDX} , #{IMAGE} , #{TITLE} , #{TOPIC} , #{LEADER} , #{ASSI} , #{INTRO})
 	</insert>
+	<insert id="setTeam" parameterType="egovframework.giftednote.user.team.model.UserTeamVo">
+		INSERT INTO TBL_TEAM
+		(N_IDX , IDX , NAME , SCHOOL_YEAR , SCHOOL_NAME , LEVEL , EMAIL) 
+		VALUES 
+		(#{N_IDX} , #{IDX} , #{NAME} , #{SCHOOL_YEAR} , #{SCHOOL_NAME} , #{LEVEL} , #{EMAIL})
+	</insert>
+	
 </mapper>

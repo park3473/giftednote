@@ -114,10 +114,7 @@
 	            var s = result.indexOf("true");
 	            if (s > -1) {
 	                idchk = true;
-	                alert('${session_idx}');
-	                alert('${session_email}');
-	                alert('${model.IDX}');
-	                location.href = '${pageContext.request.contextPath}/note/list.do?idx='+'${session_idx}';
+	                location.href = '${pageContext.request.contextPath}/note/list.do?EMAIL='+$('#ID').val();
 	                return;
 	            } else if (result.indexOf("false:-1") > -1) {
 	                alert('이메일 혹은 패스워드를 재확인 해주십시오.');

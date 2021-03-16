@@ -14,6 +14,8 @@ public class UserNoteVo extends SearchVo{
 	String END_TM= "";
 	String DEAD= "";
 	String IDX = "";
+	String EMAIL = "";
+	
 	
 	String SEARCH_TYPE = "";
 	String SEARCH_TEXT = "";
@@ -108,6 +110,12 @@ public class UserNoteVo extends SearchVo{
 	}
 	public void setIDX(String iDX) {
 		IDX = iDX;
+	}
+	public String getEMAIL() {
+		return EMAIL;
+	}
+	public void setEMAIL(String eMAIL) {
+		EMAIL = eMAIL;
 	}
 	
 	

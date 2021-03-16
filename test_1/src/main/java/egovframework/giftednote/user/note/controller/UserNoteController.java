@@ -20,6 +20,7 @@ import com.system.util.SUtil;
 import egovframework.giftednote.user.member.Service.UserMemberService;
 import egovframework.giftednote.user.note.model.UserNoteVo;
 import egovframework.giftednote.user.note.service.UserNoteService;
+import egovframework.giftednote.user.team.model.UserTeamVo;
 
 @Controller
 public class UserNoteController {
@@ -29,6 +30,8 @@ public class UserNoteController {
 	
 	@Autowired
 	UserMemberService userMemberService;
+	
+	
 	
 	private static final Logger Logger = LoggerFactory.getLogger(UserNoteController.class);
 	
@@ -60,7 +63,7 @@ public class UserNoteController {
 		
 		UserNoteVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
 		UserNoteVo.setOFFSET(pagelimit);
-		UserNoteVo.setIDX(request.getParameter("idx"));
+		UserNoteVo.setEMAIL(request.getParameter("EMAIL"));
 		model = userNoteService.getList(UserNoteVo);
 		
 		
@@ -83,9 +86,26 @@ public class UserNoteController {
 		return new ModelAndView("view/note/insert" , "model", model);
 	}
 	@RequestMapping(value="/note/insert.do" , method = RequestMethod.POST)
-	public void InsertNote(@ModelAttribute("UserNoteVo") UserNoteVo UserNoteVo, HttpServletRequest request, HttpServletResponse response) {
+	public void InsertNote(@ModelAttribute("UserNoteVo") UserNoteVo UserNoteVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		userNoteService.setNote(UserNoteVo);
+		System.out.println(UserNoteVo.getN_IDX());
+		response.getWriter().println(UserNoteVo.getN_IDX());
 	}
 	
+	//team 인원 넣기
+	@RequestMapping(value="/user/note/team_insert.do" , method = RequestMethod.POST)
+	public void team_insert(@ModelAttribute("UserTeamVo") UserTeamVo UserTeamVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		userNoteService.setTeam(UserTeamVo);
+	}
+	
+	//detail 페이지 가기
+	@RequestMapping(value="/note/insert.do" , method = RequestMethod.GET)
+	public ModelAndView Detail(@ModelAttribute("UserNoteVo") UserNoteVo UserNoteVo, HttpServletRequest request, HttpServletResponse response) {
+		ModelMap model = new ModelMap();
+		String idx = request.getParameter("IDX");
+		
+		
+		return new ModelAndView("view/note/insert" , "model", model);
+	}
 	
 }

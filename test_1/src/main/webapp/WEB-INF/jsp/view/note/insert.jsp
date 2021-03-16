@@ -47,9 +47,9 @@
 <div>
 	<div>
 		<div>
-			<form action="${pageContext.request.contextPath}/note/insert.do" id="f_insert_note" method="POST">
+			<form action="#" id="f_insert_note" method="POST">
 				<div>
-					
+					<input type="hidden" name="IDX" value="${session_idx}">
 				</div>
 				<div>
 					<img id="img_check" src="#" alt="ddd">
@@ -80,7 +80,7 @@
 						<p>추가 전 학생</p>
 					<ul id="no_check_list_team">
 						<c:forEach var="item" items="${model.list}" varStatus="var">
-							<li id="check_${item.IDX }" ondblclick="javascript:check_id('${item.IDX}')" value="${item.IDX }" name="${item.NAME }" idx="${item.IDX }" school_name="${item.SCHOOL_NAME }" school_year="${item.SCHOOL_YEAR }"><span>${item.NAME }</span></li>
+							<li id="check_${item.IDX }" ondblclick="javascript:check_id('${item.IDX}')" value="${item.IDX }" name="${item.NAME }" idx="${item.IDX }" school_name="${item.SCHOOL_NAME }" email="${item.EMAIL }"school_year="${item.SCHOOL_YEAR }"><span>${item.NAME }</span></li>
 						</c:forEach>
 					</ul>
 					</div>
@@ -106,6 +106,12 @@
 		<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_5555.png" ondblclick="javascript:check_img('1_5555')">
 	</div>
 <!-- img_modal end -->
+<!-- 교수 , 조교 추가 modal start-->
+<div>
+	<input type="hidden" id="team_leader" name="" school_name="" school_year="" email="" idx="" >
+	<input type="hidden" id="team_assi" name="" school_name="" school_year="" email="" idx="" >
+</div>
+<!-- 교수 , 조교 추가 modal end -->
 <!--공통하단-->
 <%@ include file="../include/footer.jsp" %>
 <!--공통하단 끝-->
@@ -133,23 +139,25 @@ if('${check}' == 'fail'){
 	}
 	
 	function check_id(e){
-		console.log(e);
+		//console.log(e);
 		var name = $('#check_'+e).attr('name');
 		var school_name = $('#check_'+e).attr('school_name');
 		var school_year = $('#check_'+e).attr('school_year');
+		var email = $('#check_'+e).attr('email');
 		var idx = $('#check_'+e).val();
 		$('#check_'+e).remove();
-		$('#check_list_team').append('<li id=checking_'+idx+' name='+name+' school_name='+school_name+' school_year='+school_year+' value='+idx+' ondblclick="javascript:no_check_id('+idx+')">'+name+'</li>');
+		$('#check_list_team').append('<li id=checking_'+idx+' name='+name+' school_name='+school_name+' school_year='+school_year+' email='+email+' value='+idx+' ondblclick="javascript:no_check_id('+idx+')">'+name+'</li>');
 	}
 	
 	function no_check_id(e){
-		console.log(e);
+		//console.log(e);
 		var name = $('#checking_'+e).attr('name');
 		var school_name = $('#checking_'+e).attr('school_name');
 		var school_year = $('#checking_'+e).attr('school_year');
+		var email = $('#checking_'+e).attr('email');
 		var idx = $('#checking_'+e).val();
 		$('#checking_'+e).remove();
-		$('#no_check_list_team').append('<li id=check_'+idx+' name='+name+' school_name='+school_name+' school_year='+school_year+' value='+idx+' ondblclick="javascript:check_id('+idx+')">'+name+'</li>');
+		$('#no_check_list_team').append('<li id=check_'+idx+' name='+name+' school_name='+school_name+' school_year='+school_year+' email='+email+' value='+idx+' ondblclick="javascript:check_id('+idx+')">'+name+'</li>');
 	}
 	
 	$(document).ready(function (){
@@ -171,6 +179,19 @@ if('${check}' == 'fail'){
 						if(data.length > 0){
 							for(i = 0; i<data.length; i++){
 								$('#'+what_id).val(data[i].name);
+								if(what_id == 'leader'){
+									$('#team_leader').attr('name',data[i].name);
+									$('#team_leader').attr('school_year',data[i].school_YEAR);
+									$('#team_leader').attr('school_name',data[i].school_NAME);
+									$('#team_leader').attr('email',data[i].email);
+									$('#team_leader').attr('idx',data[i].idx);
+								}else if(what_id == 'assi'){
+									$('#team_assi').attr('name',data[i].name);
+									$('#team_assi').attr('school_year',data[i].school_YEAR);
+									$('#team_assi').attr('school_name',data[i].school_NAME);
+									$('#team_assi').attr('email',data[i].email);
+									$('#team_assi').attr('idx',data[i].idx);
+								}
 							}
 						}
 					}
@@ -189,7 +210,7 @@ if('${check}' == 'fail'){
 						if(data.length > 0){
 							for(i = 0; i<data.length; i++){
 								$('#no_check_list_team').html('');
-								$('#no_check_list_team').append('<li id=checking_'+data[i].idx+' name='+data[i].name+' school_name='+data[i].school_name+' school_year='+data[i].school_year+' value='+data[i].idx+' ondblclick="javascript:check_id('+data[i].idx+')">'+data[i].name+'</li>');
+								$('#no_check_list_team').append('<li id=checking_'+data[i].idx+' name='+data[i].name+' school_name='+data[i].school_name+' school_year='+data[i].school_year+' email='+data[i].email+' value='+data[i].idx+' ondblclick="javascript:check_id('+data[i].idx+')">'+data[i].name+'</li>');
 							}
 						}
 					}
@@ -200,7 +221,98 @@ if('${check}' == 'fail'){
 	
 	
 	function insert_note(){
-		$('#f_insert_note').submit();
+		//note 내용 보내기
+		var formData = $('#f_insert_note').serialize();
+		console.log(formData);
+		$.ajax({
+			type : "POST",
+			url : "/note/insert.do?",
+			cache : false,
+			data : formData,
+			dataType : "json",
+			success : function(data,status,xhr){
+				//console.log(data);
+				//학생 team 보내기
+				$('#check_list_team').children();
+				console.log($('#check_list_team').children().length);
+				var list_size = $('#check_list_team').children().length;
+				var last_n_idx = data;
+				alert(last_n_idx);
+				for(i = 0; i<list_size; i++){
+					var team = $('#check_list_team').children().eq(i);
+					console.log(team.attr('name'));
+					$.ajax({
+						type : "POST",
+						url : "/user/note/team_insert.do?",
+						cache : false,
+						data : ({
+							EMAIL : team.attr('email'),
+							NAME : team.attr('name'),
+							IDX : team.val(),
+							SCHOOL_YEAR : team.attr('school_year'),
+							SCHOOL_NAME : team.attr('school_name'),
+							LEVEL : '1',
+							N_IDX : last_n_idx
+						}),
+						dataType : "json",
+						success: function(data , status, xhr){
+							//console.log(data);
+							}
+						})
+					}
+					//leader team 보내기
+					var leader = $('#team_leader')
+					$.ajax({
+						type : "POST",
+						url : "/user/note/team_insert.do?",
+						cache : false,
+						data : ({
+							EMAIL : leader.attr('email'),
+							NAME : leader.attr('name'),
+							IDX : leader.attr('idx'),
+							SCHOOL_YEAR : leader.attr('school_year'),
+							SCHOOL_NAME : leader.attr('school_name'),
+							LEVEL : '2',
+							N_IDX : last_n_idx
+						}),
+						dataType : "json",
+						success: function(data , status, xhr){
+							//console.log(data);
+							}
+					})
+					//assi team 보내기
+					var assi = $('#team_assi')
+					$.ajax({
+						type : "POST",
+						url : "/user/note/team_insert.do?",
+						cache : false,
+						data : ({
+							EMAIL : assi.attr('email'),
+							NAME : assi.attr('name'),
+							IDX : assi.attr('idx'),
+							SCHOOL_YEAR : assi.attr('school_year'),
+							SCHOOL_NAME : assi.attr('school_name'),
+							LEVEL : '2',
+							N_IDX : last_n_idx
+						}),
+						dataType : "json",
+						success: function(data , status, xhr){
+							//console.log(data);
+							}
+					})
+					wrap_list();
+			},
+			error : function(xhr,status,error){
+				if(xhr.status == 404){
+					alert('오류');
+				}
+			}
+		})
+	}
+	
+	function wrap_list(){
+		alert('노트가 저장되었습니다.');
+		location.href = '${pageContext.request.contextPath}/note/list.do?EMAIL=${session_email}';
 	}
 </script>
 <!-- js 끝 -->

@@ -57,8 +57,13 @@
 						</div>
 				</div>
 				</c:forEach>
-				<div id="detail_show">
+				<div>
+					<div id="detail_show">
 					
+					</div>
+					<div id="detail_wrap" style="display:none">
+						<div id="detail_wrap_bt">작성하러가기</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -79,8 +84,10 @@ if('${check}' == 'fail'){
 */
 	function detail(idx){
 		const element = document.getElementById(idx+'_detail');
-		  alert(element.innerHTML);
+		  //alert(element.innerHTML);
 		  $('#detail_show').html(element.innerHTML);
+		  $('#detail_wrap').show();
+		  $('#detail_wrap_bt').attr('ondblclick','location.href="/note/detail.do?N_IDX='+idx+'"');
 	}
 </script>
 <!-- js 끝 -->
