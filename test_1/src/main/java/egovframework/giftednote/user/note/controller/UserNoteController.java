@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -92,7 +93,7 @@ public class UserNoteController {
 	@RequestMapping(value="/note/insert.do" , method = RequestMethod.POST)
 	public void InsertNote(@ModelAttribute("UserNoteVo") UserNoteVo UserNoteVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		userNoteService.setNote(UserNoteVo);
-		System.out.println(UserNoteVo.getN_IDX());
+		//System.out.println(UserNoteVo.getN_IDX());
 		response.getWriter().println(UserNoteVo.getN_IDX());
 	}
 	
@@ -113,12 +114,23 @@ public class UserNoteController {
 		return new ModelAndView("view/note/detail" , "model", model);
 	}
 	//detail 페이지 content불러오기
-		@RequestMapping(value="/note/detail.do" , method = RequestMethod.POST)
-		public String DetailContent(@ModelAttribute("UserNoteDetailVo") UserNoteDetailVo UserNoteDetailVo, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
-			List<?> list = userNoteService.getContent(UserNoteDetailVo);
-			ObjectMapper mapper = new ObjectMapper();
-			String jsonStr = mapper.writeValueAsString(list);
-			return jsonStr;
-		}
+	@RequestMapping(value="user/note/detail.do" , method = RequestMethod.POST ,produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String DetailContent(@ModelAttribute("UserNoteDetailVo") UserNoteDetailVo UserNoteDetailVo, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+		List<?> list = userNoteService.getContent(UserNoteDetailVo);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(list);
+		return jsonStr;
+	}
+		
+	@RequestMapping(value="/user/note/detail_update.do" , method = RequestMethod.POST)
+	public void DetailUpdate(@ModelAttribute("UserNoteDetailVo") UserNoteDetailVo UserNoteDetailVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		userNoteService.setDetail(UserNoteDetailVo);
+	}
+	
+	@RequestMapping(value="/user/note/detail_insert.do" , method = RequestMethod.POST)
+	public void DetailInsert(@ModelAttribute("UserNoteDetailVo") UserNoteDetailVo UserNoteDetailVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		userNoteService.InsertPage(UserNoteDetailVo);
+	}
 	
 }

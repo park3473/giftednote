@@ -58,6 +58,7 @@ public class UserMemberController {
 			System.out.println(userMembervo2.getIDX());
 			session.setAttribute("session_idx", userMembervo2.getIDX());
 			session.setAttribute("session_email", userMembervo2.getEMAIL());
+			session.setAttribute("session_name", userMembervo2.getNAME());
 			try {
 				response.getWriter().println("true");
 			} catch (IOException e) {

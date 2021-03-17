@@ -22,7 +22,13 @@ public interface UserNoteMapper {
 
 	public int getDetailCnt(UserNoteDetailVo userNoteDetailVo);
 
-	public List<?> getContent();
+	public List<?> getContent(UserNoteDetailVo userNoteDetailVo);
+
+	public void setDetail(UserNoteDetailVo userNoteDetailVo);
+
+	public void InsertPage(UserNoteDetailVo userNoteDetailVo);
+
+	public List<?> getComment();
 
 
 	

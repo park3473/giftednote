@@ -55,4 +55,28 @@
 		WHERE N_IDX = #{N_IDX}
 	</select>
 	
+	<select id="getContent" resultType="hashMap" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		SELECT CONTENT
+		FROM TBL_NOTE_DETAIL
+		WHERE N_IDX = #{N_IDX} AND P_IDX = #{P_IDX}
+	</select>
+	
+	<update id="setDetail" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		UPDATE TBL_NOTE_DETAIL
+		SET N_IDX = #{N_IDX} , P_IDX =#{P_IDX} , CONTENT =#{CONTENT}
+		WHERE N_IDX = #{N_IDX} AND P_IDX = #{P_IDX}
+	</update>
+	
+	<insert id="InsertPage" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		INSERT INTO TBL_NOTE_DETAIL
+		(N_IDX , P_IDX , CONTENT) 
+		VALUES 
+		(#{N_IDX} , #{P_IDX} , #{CONTENT})
+	</insert>
+	
+	<select id="getComment" resultType="hashMap">
+		SELECT *
+		FROM TBL_COMMENT
+	</select>
+	
 </mapper>

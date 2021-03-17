@@ -68,17 +68,29 @@ public class UserNoteServiceImpl implements UserNoteService {
 		modelMap.addAttribute("list",list);
 		int PageCount = usernotemapper.getDetailCnt(userNoteDetailVo);
 		modelMap.put("Pagecount", PageCount);
-		System.out.println(PageCount);
+		
+		List<?> colist = usernotemapper.getComment();
+		modelMap.addAttribute("colist",colist);
+		
 		return modelMap;
 	}
 
 	@Override
-	public ModelMap getContent(UserNoteDetailVo userNoteDetailVo) {
+	public List<?> getContent(UserNoteDetailVo userNoteDetailVo) {
 		// TODO Auto-generated method stub
-		ModelMap modelMap = new ModelMap();
-		List<?> list = usernotemapper.getContent();
-		modelMap.addAttribute("list",list);
-		return modelMap;
+		return usernotemapper.getContent(userNoteDetailVo);
+	}
+
+	@Override
+	public void setDetail(UserNoteDetailVo userNoteDetailVo) {
+		// TODO Auto-generated method stub
+		usernotemapper.setDetail(userNoteDetailVo);
+	}
+
+	@Override
+	public void InsertPage(UserNoteDetailVo userNoteDetailVo) {
+		// TODO Auto-generated method stub
+		usernotemapper.InsertPage(userNoteDetailVo);
 	}
 
 }

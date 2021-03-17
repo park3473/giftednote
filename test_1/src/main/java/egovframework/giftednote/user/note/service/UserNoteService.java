@@ -10,14 +10,18 @@ import egovframework.giftednote.user.team.model.UserTeamVo;
 
 public interface UserNoteService {
 
-	ModelMap getList(UserNoteVo userNoteVo);
+	public ModelMap getList(UserNoteVo userNoteVo);
 
-	void setNote(UserNoteVo userNoteVo);
+	public void setNote(UserNoteVo userNoteVo);
 
-	void setTeam(UserTeamVo userTeamVo);
+	public void setTeam(UserTeamVo userTeamVo);
 
-	ModelMap getDetail(UserNoteDetailVo userNoteDetailVo);
+	public ModelMap getDetail(UserNoteDetailVo userNoteDetailVo);
 
-	ModelMap getContent(UserNoteDetailVo userNoteDetailVo);
+	public List<?> getContent(UserNoteDetailVo userNoteDetailVo);
+
+	public void setDetail(UserNoteDetailVo userNoteDetailVo);
+
+	public void InsertPage(UserNoteDetailVo userNoteDetailVo);
 
 }
