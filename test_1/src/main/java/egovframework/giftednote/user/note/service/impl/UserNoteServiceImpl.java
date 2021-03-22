@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 
 import com.system.util.PageVO;
 
+import egovframework.giftednote.user.comment.model.UserCommentVo;
 import egovframework.giftednote.user.note.model.UserNoteVo;
 import egovframework.giftednote.user.note.service.UserNoteService;
 import egovframework.giftednote.user.note_detail.model.UserNoteDetailVo;
@@ -69,7 +70,7 @@ public class UserNoteServiceImpl implements UserNoteService {
 		int PageCount = usernotemapper.getDetailCnt(userNoteDetailVo);
 		modelMap.put("Pagecount", PageCount);
 		
-		List<?> colist = usernotemapper.getComment();
+		List<?> colist = usernotemapper.getComment(userNoteDetailVo);
 		modelMap.addAttribute("colist",colist);
 		
 		return modelMap;
@@ -91,6 +92,30 @@ public class UserNoteServiceImpl implements UserNoteService {
 	public void InsertPage(UserNoteDetailVo userNoteDetailVo) {
 		// TODO Auto-generated method stub
 		usernotemapper.InsertPage(userNoteDetailVo);
+	}
+
+	@Override
+	public void CommentSet(UserCommentVo userCommentVo) {
+		// TODO Auto-generated method stub
+		usernotemapper.CommentSet(userCommentVo);
+	}
+
+	@Override
+	public void CommentUpdate(UserCommentVo userCommentVo) {
+		// TODO Auto-generated method stub
+		usernotemapper.CommentUpdate(userCommentVo);
+	}
+
+	@Override
+	public void CommentDelete(UserCommentVo userCommentVo) {
+		// TODO Auto-generated method stub
+		usernotemapper.CommentDelete(userCommentVo);
+	}
+
+	@Override
+	public void NoteComplete(UserNoteVo userNoteVo) {
+		// TODO Auto-generated method stub
+		usernotemapper.NoteComplete(userNoteVo);
 	}
 
 }

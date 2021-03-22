@@ -80,7 +80,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	        System.out.println("접속 한 아이피"+clientIp);
 	        AcceptLogService.setLog(clientIp);
 	        session.setAttribute("ip_session", clientIp);
-	        System.out.println("갔다가 다시 오는겨??");
 	        return true;
 		}
 		

@@ -23,5 +23,8 @@
 		SELECT *
 		FROM TBL_MEMBER
 		WHERE EMAIL = #{EMAIL}
+		<if test="LEVEL != ''">
+	    	AND LEVEL = #{LEVEL}
+	    </if>
 	</select>
 </mapper>

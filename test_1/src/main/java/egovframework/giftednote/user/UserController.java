@@ -2,6 +2,7 @@ package egovframework.giftednote.user;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,14 @@ public class UserController {
 	@RequestMapping(value = {"/view/index.do", "/index.do", "/"}, method = RequestMethod.GET)
 	public String buseo(HttpServletRequest request, HttpServletResponse response
 			 ) {
+		HttpSession session = request.getSession();
+		//로그인 테스트
+		String session_login = (String) session.getAttribute("session_login");
+		String session_email = (String) session.getAttribute("session_email");
+		if(session_login == "ok") {
+			return "redirect:/note/list.do?EMAIL="+session_email;
+		}
 		
-		
-		System.out.println("????");
 		return "view/index";
 	}
 	

@@ -10,6 +10,7 @@ public class UserMemberVo {
 	String SCHOOL_NAME= "";
 	String BIRTH= "";
 	String IDX = "";
+	String LEVEL = "";
 	
 	
 	public String getNAME() {
@@ -65,6 +66,12 @@ public class UserMemberVo {
 	}
 	public void setIDX(String iDX) {
 		IDX = iDX;
+	}
+	public String getLEVEL() {
+		return LEVEL;
+	}
+	public void setLEVEL(String lEVEL) {
+		LEVEL = lEVEL;
 	}
 	
 	

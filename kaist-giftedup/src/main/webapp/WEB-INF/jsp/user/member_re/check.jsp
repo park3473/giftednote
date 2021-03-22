@@ -295,9 +295,11 @@
         var check4 = $("input[name='join4']").is(":checked");
 
         if(check1 && check2 && check4){
-            $("input[name='join_all']").attr("checked", true);
+        	alert(check1 && check2 && check4);
+            $("input[name='join_all']").prop("checked", true);
         }else{
-            $("input[name='join_all']").attr("checked", false);
+        	alert(check1 && check2 && check4);
+            $("input[name='join_all']").prop("checked", false);
         }
 
     }

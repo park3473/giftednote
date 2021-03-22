@@ -9,10 +9,6 @@
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <!--삭제금지-->
-<div>
-<c:if test="${session_login == 'ok'}">로그인 온</c:if>
-<p>${session_email}</p>
-</div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
     // ckeditor setting
@@ -56,9 +52,9 @@
                 break;
         }
     });
-    CKEDITOR.replace('editor1',{
-    	contentsCss: '${pageContext.request.contextPath}/ckeditor/test.css'
-    });
+    //CKEDITOR.replace('editor',{
+    	//contentsCss: '${pageContext.request.contextPath}/ckeditor/test.css'
+    //});
     //CKEDITOR.config.contentsCss = '${pageContext.request.contextPath}/resources/css/startupTemplate.css';
 </script>
 <!--공통상단-->
@@ -75,6 +71,9 @@
     }
     #detail_show > .test_p{
     	display:block;
+    }
+    div{
+    	border :1px solid gray;
     }
 
 </style>
@@ -102,16 +101,17 @@
 		</div>
 		<div>
 			<c:forEach var="colist" items="${model.colist}" varStatus="var">
-				<p>${colist.N_IDX }</p>
-				<p>${colist.IDX }</p>
-				<p>${colist.NAME }</p>
-				<p>${colist.CONTENT }</p>
+				<p id="${colist.C_IDX }_conid">${colist.N_IDX }</p>
+				<p id="${colist.C_IDX }_coid">${colist.IDX }</p>
+				<p id="${colist.C_IDX }_cona">${colist.NAME }</p>
+				<p id="${colist.C_IDX }_cocom" >${colist.CONTENT }</p>
+				<p onclick="javascript:comment_up(${colist.C_IDX})">수정 버튼</p>
+				<p onclick="javascript:comment_delete(${colist.C_IDX})">삭제 버튼</p>
 			</c:forEach>
 		</div>
-		<div>
-			<p>내정보</p>
-			<p>${session_idx }</p>
-			<p>${session_name }</p>
+		<div id="comment">
+			<input type="text" name="comment_set" id="comment_set">
+			<button onclick="javascript:comment_set()">댓글 전송</button>
 		</div>
 	</div>
 <!--공통하단-->
@@ -192,7 +192,88 @@ if('${check}' == 'fail'){
 		location.reload();
 	}
 	
+	function comment_set(){
+		var N_IDX = $('#N_IDX').val();
+		var IDX = ${session_idx};
+		var NAME = '${session_name}';
+		var CONTENT = $('#comment_set').val();
+		$.ajax({
+			type : "POST",
+			url : "/user/note/comment_set.do?",
+			cache : false,
+			data : ({
+				CONTENT : CONTENT ,
+				N_IDX : N_IDX,
+				IDX : IDX,
+				NAME : NAME
+			}),
+			dataType: "json",
+			success : function(data,status,xhr){
+				
+			}
+		})
+		location.reload();
+	}
+	
+	function comment_up(c_idx){
+		var comment = document.getElementById(c_idx+'_cocom').innerText;
+		var c_idx = c_idx;
+		var html = '';
+		html += '<input type="text" name="comment_update" id="comment_update" value="'+comment+'">';
+		html += '<button onclick="javascript:comment_update('+c_idx+')">댓글 수정</button>';
+		//console.log(html);
+		$('#comment').html(html);
+	}
+	
+	function comment_update(c_idx){
+		var C_IDX = c_idx;
+		var CONTENT = $('#comment_update').val();
+		$.ajax({
+			type : "POST",
+			url : "/user/note/comment_update.do?",
+			cache : false,
+			data : ({
+				CONTENT : CONTENT ,
+				C_IDX : C_IDX,
+			}),
+			dataType: "json",
+			success : function(data,status,xhr){
+				
+			}
+		})
+		location.reload();
+	}
+	
+	function comment_delete(c_idx){
+		Swal.fire({
+			  text: "댓글을 삭제하시겠습니까?",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '삭제!',
+			  cancelButtonText: '아니요',
+			}).then((result) => {
+			  if (result.isConfirmed) {
+				  var C_IDX = c_idx;
+				  $.ajax({
+						type : "POST",
+						url : "/user/note/comment_delete.do?",
+						cache : false,
+						data : ({
+							C_IDX : C_IDX,
+						}),
+						dataType: "json",
+						success : function(data,status,xhr){
+								
+						}
+					})
+					location.reload();
+			  }
+			})
+	}
 
+/*
 $(window).load(function(){
 	
 	jQuery(function() {
@@ -200,5 +281,6 @@ $(window).load(function(){
         editor = CKEDITOR.replace("ckeditor", ckeditor_config);   
     });
 });
+*/
 </script>
 <!-- js 끝 -->

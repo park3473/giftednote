@@ -24,7 +24,6 @@ public class UserAcceptLogServiceImpl implements UserAcceptLogService {
 	@Override
 	public void setLog(String clientIp) {
 		// TODO Auto-generated method stub\
-		System.out.println("여기까지 오나??");
 		UserAcceptLogMapper.setLog(clientIp);
 		return;
 	}

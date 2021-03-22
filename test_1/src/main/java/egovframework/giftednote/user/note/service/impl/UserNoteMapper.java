@@ -2,6 +2,7 @@ package egovframework.giftednote.user.note.service.impl;
 
 import java.util.List;
 
+import egovframework.giftednote.user.comment.model.UserCommentVo;
 import egovframework.giftednote.user.note.model.UserNoteVo;
 import egovframework.giftednote.user.note_detail.model.UserNoteDetailVo;
 import egovframework.giftednote.user.team.model.UserTeamVo;
@@ -28,7 +29,15 @@ public interface UserNoteMapper {
 
 	public void InsertPage(UserNoteDetailVo userNoteDetailVo);
 
-	public List<?> getComment();
+	public List<?> getComment(UserNoteDetailVo userNoteDetailVo);
+
+	public void CommentSet(UserCommentVo userCommentVo);
+
+	public void CommentUpdate(UserCommentVo userCommentVo);
+
+	public void CommentDelete(UserCommentVo userCommentVo);
+
+	public void NoteComplete(UserNoteVo userNoteVo);
 
 
 	

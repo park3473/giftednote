@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.giftednote.user.exploring.Service.impl.UserExploringMapper">
+	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.user.exploring.model.UserExploringVo">
+		SELECT * FROM TBL_EXPLORING
+		WHERE N_IDX = #{N_IDX} AND IDX = #{IDX}
+	</select>
+</mapper>

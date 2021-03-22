@@ -15,6 +15,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta property="og:image" content="${pageContext.request.contextPath}/resources/img/kakao_bg.png" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
@@ -22,9 +23,10 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
-
-<script src="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sweetalert/sweetalert2.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.datetimepicker.css">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.datetimepicker.full.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <style type="text/css">
 	.material-icons{
 			display:block;
@@ -50,3 +52,20 @@
 <script>
 
 </script>
+<!-- 내정보 -->
+<c:if test="${session_login == 'ok'}">
+	<div>
+		<p>${session_email}</p>
+		<p>${session_idx }</p>
+		<p>${session_name }</p>
+		<p>${session_level }</p>
+	</div>
+	<div>
+		<button onclick="location.href='/user/member/logout.do'">로그아웃</button>
+	</div>
+</c:if>
+<!-- 내정보 -->
+<div>
+	<button onclick="javascript:history.back()">뒤로가기</button>
+	<button onclick="location.href='/'">홈</button>
+</div>

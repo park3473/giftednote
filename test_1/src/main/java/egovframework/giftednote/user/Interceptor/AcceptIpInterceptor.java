@@ -46,7 +46,6 @@ public class AcceptIpInterceptor extends HandlerInterceptorAdapter {
         }
         String clientIp = ip;
         System.out.println("접속 한 아이피"+clientIp);
-        System.out.println("gg");
     	
 		if (log.isDebugEnabled())
 		{
@@ -96,6 +95,7 @@ public class AcceptIpInterceptor extends HandlerInterceptorAdapter {
 	    	 }*/
 	     }
 	     System.out.println("접속한 아이피");  
+	     System.out.println("여기야??");
 	     //log.debug(" clinet accept ip true : " + acceptIpRtn);
 	     return true;
 	     /*

@@ -9,10 +9,6 @@
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 
 <!--삭제금지-->
-<div>
-<c:if test="${session_login == 'ok'}">로그인 온</c:if>
-<p>${session_email}</p>
-</div>
 <!--공통상단-->
 <%@ include file="../include/header.jsp" %>
 <!--공통상단 끝-->
@@ -28,7 +24,9 @@
     #detail_show > .test_p{
     	display:block;
     }
-
+	div{
+		border : 1px solid gray;
+	}
 </style>
 <div>
 	<div>
@@ -46,7 +44,7 @@
 				<c:forEach var="item" items="${model.list}" varStatus="var">
 				<div style="width:300px;" onclick="javascript:detail(${item.N_IDX})" id="${item.N_IDX }_detail" class="test_div">
 						<img style="width:300px;"src="${pageContext.request.contextPath}/resources/upload/note_img/${item.IMAGE }.png">
-						<div id="${item.N_IDX }_idx" class="test_p">
+						<div id="${item.N_IDX }_idx" class="test_p" dead="${item.DEAD }">
 							<p>${item.TITLE }</p>
 							<p>${item.TOPIC }</p>
 							<p>${item.LEADER }</p>
@@ -62,7 +60,16 @@
 					
 					</div>
 					<div id="detail_wrap" style="display:none">
-						<div id="detail_wrap_bt">작성하러가기</div>
+						<div id="detail_student">
+							<p id="detail_wrap_bt">작성하러가기</p>
+							<p id="detail_exploring">탐구일지</p>
+						</div>
+						<!-- 교수 , 조교 부분 -->
+						<div id="detail_mento">
+							<p id="detail_record">기록일지</p>
+							<p id="detail_complete">마감하기</p>
+							<p id="detail_srce">학생연구역량평가</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -87,7 +94,40 @@ if('${check}' == 'fail'){
 		  //alert(element.innerHTML);
 		  $('#detail_show').html(element.innerHTML);
 		  $('#detail_wrap').show();
-		  $('#detail_wrap_bt').attr('ondblclick','location.href="/note/detail.do?N_IDX='+idx+'"');
+		  $('#detail_wrap_bt').attr('onclick','location.href="/note/detail.do?N_IDX='+idx+'"');
+		  $('#detail_exploring').attr('onclick','location.href="/exploring/exploring.do?N_IDX='+idx+'&IDX='+${session_idx}+'"')
+		  if(${session_level} == '2'){
+		  		$('#detail_complete').attr('onclick','javascript:complete('+idx+')');
+		  		$('#detail_record').attr('onclick','javascript:record('+idx+')');
+		  		$('#detail_srce').attr('onclick','javascript:srce('+idx+')');
+		  }else{
+				$('#detail_mento').hide();
+		  }
 	}
+	
+	function complete(n_idx){
+		if($('#'+idx+'_idx').attr('dead') == 'COMPLETE'){
+			Swal.fire('이미 마감된 연구노트 입니다.')
+		}else{
+			Swal.fire({
+				  text: "현 연구노트 를 마감하시겠습니까?",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '예',
+				  cancelButtonText: '아니요',
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  location.href="/note/complete.do?N_IDX="+n_idx
+				  }
+				})
+		}
+	}
+	
+	function record(n_idx){
+		location.href="/record/list.do?N_IDX="+n_idx;
+	}
+	
 </script>
 <!-- js 끝 -->

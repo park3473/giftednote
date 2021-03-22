@@ -55,10 +55,10 @@ public class UserMemberController {
 			Logger.debug("로그인 성공 하였습니다.");
 			HttpSession session = request.getSession();
 			session.setAttribute("session_login", "ok");
-			System.out.println(userMembervo2.getIDX());
 			session.setAttribute("session_idx", userMembervo2.getIDX());
 			session.setAttribute("session_email", userMembervo2.getEMAIL());
 			session.setAttribute("session_name", userMembervo2.getNAME());
+			session.setAttribute("session_level", userMembervo2.getLEVEL());
 			try {
 				response.getWriter().println("true");
 			} catch (IOException e) {
@@ -73,10 +73,25 @@ public class UserMemberController {
 		System.out.println(pw);
 		return new ModelAndView("view/index" , "PASSWORD" , pw);
 	}
+	
 	@RequestMapping(value="/user/member/register.do" , method = RequestMethod.GET)
 	public ModelAndView MemberRegister(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response){
 		return new ModelAndView("view/member/register");
 	}
+	
+	@RequestMapping(value="/user/member/logout.do" , method = RequestMethod.GET)
+	public String MemberLogOut(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response){
+		HttpSession session = request.getSession();
+		session.setAttribute("session_login", null);
+		session.setAttribute("session_idx",null);
+		session.setAttribute("session_email", null);
+		session.setAttribute("session_name", null);
+		session.setAttribute("session_level", null);
+		
+		return "redirect:/";
+	}
+	
+	
 	@RequestMapping(value="/user/member/register.do" , method = RequestMethod.POST)
 	public ModelAndView Register(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response){
 		
@@ -88,6 +103,7 @@ public class UserMemberController {
 	public ModelAndView MemberView(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("view/index");
 	}
+	
 	@RequestMapping(value="/user/member/search.do" ,  method = RequestMethod.POST,produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String search(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {

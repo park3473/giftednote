@@ -9,10 +9,6 @@
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 
 <!--삭제금지-->
-<div>
-<c:if test="${session_login == 'ok'}">로그인 온</c:if>
-<p>${session_email}</p>
-</div>
 <!--공통상단-->
 <%@ include file="../include/header.jsp" %>
 <!--공통상단 끝-->
@@ -166,12 +162,14 @@ if('${check}' == 'fail'){
 			var what_id = $(this).prev().attr('id');
 			var cked = $(this).attr('cked');
 			if(cked == 'mento'){
+				var LEVEL = '2';
 				$.ajax({
 					type : "POST",
 					url : "/user/member/search.do?",
 					cache : false,
 					data : ({
-						EMAIL : EMAIL
+						EMAIL : EMAIL,
+						LEVEL : LEVEL
 					}),
 					dataType : "json",
 					success: function(data , status, xhr){
@@ -193,16 +191,20 @@ if('${check}' == 'fail'){
 									$('#team_assi').attr('idx',data[i].idx);
 								}
 							}
+						}else{
+							Swal.fire('이메일을 확인하여 주세요')
 						}
 					}
 				})
 			}else if(cked == 'student'){
+				var LEVEL = '1';
 				$.ajax({
 					type : "POST",
 					url : "/user/member/search.do?",
 					cache : false,
 					data : ({
-						EMAIL : EMAIL
+						EMAIL : EMAIL,
+						LEVEL : LEVEL
 					}),
 					dataType : "json",
 					success: function(data , status, xhr){
@@ -212,6 +214,8 @@ if('${check}' == 'fail'){
 								$('#no_check_list_team').html('');
 								$('#no_check_list_team').append('<li id=checking_'+data[i].idx+' name='+data[i].name+' school_name='+data[i].school_name+' school_year='+data[i].school_year+' email='+data[i].email+' value='+data[i].idx+' ondblclick="javascript:check_id('+data[i].idx+')">'+data[i].name+'</li>');
 							}
+						}else{
+							Swal.fire('이메일을 확인하여 주세요')
 						}
 					}
 				})	
@@ -304,14 +308,14 @@ if('${check}' == 'fail'){
 			},
 			error : function(xhr,status,error){
 				if(xhr.status == 404){
-					alert('오류');
+					Swal.fire('오류!...')
 				}
 			}
 		})
 	}
 	
 	function wrap_list(){
-		alert('노트가 저장되었습니다.');
+		Swal.fire('연구일지가 추가되었습니다!');
 		location.href = '${pageContext.request.contextPath}/note/list.do?EMAIL=${session_email}';
 	}
 </script>

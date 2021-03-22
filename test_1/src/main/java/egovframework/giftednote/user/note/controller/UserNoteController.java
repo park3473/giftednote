@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.system.util.SUtil;
 
+import egovframework.giftednote.user.comment.model.UserCommentVo;
 import egovframework.giftednote.user.member.Service.UserMemberService;
 import egovframework.giftednote.user.note.model.UserNoteVo;
 import egovframework.giftednote.user.note.service.UserNoteService;
@@ -97,6 +98,13 @@ public class UserNoteController {
 		response.getWriter().println(UserNoteVo.getN_IDX());
 	}
 	
+	@RequestMapping(value="/note/complete.do" , method = RequestMethod.GET)
+	public String NoteComplete(@ModelAttribute("UserNoteVo") UserNoteVo UserNoteVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		UserNoteVo.setN_IDX(request.getParameter("N_IDX"));
+		userNoteService.NoteComplete(UserNoteVo);
+		return "redirect:/";
+	}
+	
 	//team 인원 넣기
 	@RequestMapping(value="/user/note/team_insert.do" , method = RequestMethod.POST)
 	public void team_insert(@ModelAttribute("UserTeamVo") UserTeamVo UserTeamVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -131,6 +139,21 @@ public class UserNoteController {
 	@RequestMapping(value="/user/note/detail_insert.do" , method = RequestMethod.POST)
 	public void DetailInsert(@ModelAttribute("UserNoteDetailVo") UserNoteDetailVo UserNoteDetailVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		userNoteService.InsertPage(UserNoteDetailVo);
+	}
+	
+	@RequestMapping(value="/user/note/comment_set.do" , method = RequestMethod.POST)
+	public void COMMENTSET(@ModelAttribute("UserCommentVo") UserCommentVo UserCommentVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		userNoteService.CommentSet(UserCommentVo);
+	}
+	
+	@RequestMapping(value="/user/note/comment_update.do" , method = RequestMethod.POST)
+	public void COMMENTUPDATE(@ModelAttribute("UserCommentVo") UserCommentVo UserCommentVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		userNoteService.CommentUpdate(UserCommentVo);
+	}
+	
+	@RequestMapping(value="/user/note/comment_delete.do" , method = RequestMethod.POST)
+	public void COMMENTDELETE(@ModelAttribute("UserCommentVo") UserCommentVo UserCommentVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		userNoteService.CommentDelete(UserCommentVo);
 	}
 	
 }

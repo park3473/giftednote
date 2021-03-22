@@ -24,30 +24,30 @@ public class CkeditorController {
 	protected Log log = LogFactory.getLog(CkeditorController.class);
 	
 	@RequestMapping(value = "/ckeditor/file_upload.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String communityImageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) 
-	{
+	public void communityImageUpload2(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload) {
 
 	    OutputStream out = null;
 	    PrintWriter printWriter = null;
 	    response.setCharacterEncoding("utf-8");
 	    response.setContentType("text/html;charset=utf-8");
 	    String callback = request.getParameter("CKEditorFuncNum");
-	    String fileName = "";
+	    callback = "uploaded: 1";
 	    try{
 	    	
-	        fileName = upload.getOriginalFilename();
+	        String fileName = upload.getOriginalFilename();
 	        byte[] bytes = upload.getBytes();
+	        //String uploadPath = "저장경로/" + fileName;//저장경로
 	        
 	        String drv = request.getRealPath("");
 			
-			drv = drv.substring(0, drv.length()) + "./resources"+request.getContextPath()+"/upload/notices/";
+			drv = drv.substring(0, drv.length()) + "./resources"+request.getContextPath()+"/upload/ckeditor/";
 			
 			 File desti = new File(drv);
 		  	 if(!desti.exists())
 			 {
 				desti.mkdirs(); 
 			 }
+			
 			
 			String inDate   = new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
 			String inTime   = new java.text.SimpleDateFormat("HHmmss").format(new java.util.Date());
@@ -57,18 +57,52 @@ public class CkeditorController {
 	        out = new FileOutputStream(new File(drv+fileName));
 	        out.write(bytes);
 	       
+	        
+	        printWriter = response.getWriter();
+	        String fileUrl = drv + fileName;//url경로
+
+	        String javascriptMsg = "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
+	                + callback
+	                + ",'"+request.getContextPath()
+	                + "/resources"+request.getContextPath()+"/upload/ckeditor/"+fileName
+	                + "','파일을 업로드 하였습니다.'"
+	                + ")</script>";
+	        fileUrl = "/resources"+request.getContextPath()+"/upload/ckeditor/"+fileName;
+	        
+	        
+	        printWriter.println("{\"filename\" : \""+fileName+"\", \"uploaded\" : 1, \"url\":\""+fileUrl+"\"}");
+	        
+	        printWriter.flush();
+	        
 	        if (log.isDebugEnabled()) {
 	            log.debug(" Request drv \t:  " + drv);
 	            log.debug(" Request filename \t:  " + fileName);
 	            log.debug(" Request callback \t:  " + callback);
+	            log.debug(" Request javascriptMsg \t:  " + javascriptMsg);
 		    }
 
 	    }catch(IOException e){
 	        e.printStackTrace();
-
+	        String javascriptMsg = "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
+	                + callback
+	                + ",'"
+	                + "','이미지를 업로드 실패 하였습니다.'"
+	                + ")</script>";
+	        printWriter.println(javascriptMsg);
+	        printWriter.flush();
 	    } finally {
+	        try {
+	            if (out != null) {
+	                out.close();
+	            }
+	            if (printWriter != null) {
+	                printWriter.close();
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 	    }
-	    return "{\"uploaded\":1, \"url\":\"" + "http://localhost:8080/base/resources"+request.getContextPath()+"/upload/notices/"+fileName + "\"}";
+	    return;
 	}
 	
 }

@@ -30,6 +30,12 @@
 		(#{IDX} , #{IMAGE} , #{TITLE} , #{TOPIC} , #{LEADER} , #{ASSI} , #{INTRO})
 	</insert>
 	
+	<update id="NoteComplete" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		UPDATE TBL_NOTE
+		SET DEAD = 'COMPLETE'
+		WHERE N_IDX = #{N_IDX}
+	</update>
+	
 	<insert id="setTeam" parameterType="egovframework.giftednote.user.team.model.UserTeamVo">
 		INSERT INTO TBL_TEAM
 		(N_IDX , IDX , NAME , SCHOOL_YEAR , SCHOOL_NAME , LEVEL , EMAIL) 
@@ -74,9 +80,28 @@
 		(#{N_IDX} , #{P_IDX} , #{CONTENT})
 	</insert>
 	
-	<select id="getComment" resultType="hashMap">
+	<select id="getComment" resultType="hashMap" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
 		SELECT *
 		FROM TBL_COMMENT
+		WHERE N_IDX =#{N_IDX}
 	</select>
+	
+	<insert id="CommentSet" parameterType="egovframework.giftednote.user.comment.model.UserCommentVo">
+		INSERT INTO TBL_COMMENT
+		(N_IDX , IDX , CONTENT , CREATE_TM , NAME) 
+		VALUES 
+		(#{N_IDX} , #{IDX} , #{CONTENT} , now() , #{NAME})
+	</insert>
+	
+	<update id="CommentUpdate" parameterType="egovframework.giftednote.user.comment.model.UserCommentVo">
+		UPDATE TBL_COMMENT
+		SET CONTENT = #{CONTENT}
+		WHERE C_IDX = #{C_IDX}
+	</update>
+	
+	<delete id="CommentDelete" parameterType="egovframework.giftednote.user.comment.model.UserCommentVo">
+		DELETE FROM TBL_COMMENT
+		WHERE C_IDX = #{C_IDX}
+	</delete>
 	
 </mapper>
