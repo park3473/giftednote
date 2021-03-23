@@ -146,8 +146,9 @@ if('${check}' == 'fail'){
 	
 	
 	function update(index){
+		$('.update_list').remove();
 		var inner = document.getElementById('list_'+index).innerHTML;
-		var list = '<tr id="update_list_0">'+inner+'</tr>';
+		var list = '<tr id="update_list_'+index+'" class="update_list">'+inner+'</tr>';
 		list = list.replace('<td class="tg-0pky" id="index_list">','<td class="tg-0pky" id="index_update">');
 		list = list.replace('<td class="tg-0pky" id="create_tm_list">','<td class="tg-0pky" id="create_tm_update">');
 		list = list.replace('<td class="tg-0pky" id="class_tm_list">','<td class="tg-0pky" id="class_tm_update">');

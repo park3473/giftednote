@@ -8,4 +8,6 @@ public interface UserExploringService {
 
 	public ModelMap getList(UserExploringVo UserExploringVo);
 
+	public void setExplor(UserExploringVo userExploringVo);
+
 }

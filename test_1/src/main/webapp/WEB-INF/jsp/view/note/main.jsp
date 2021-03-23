@@ -98,8 +98,8 @@ if('${check}' == 'fail'){
 		  $('#detail_exploring').attr('onclick','location.href="/exploring/exploring.do?N_IDX='+idx+'&IDX='+${session_idx}+'"')
 		  if(${session_level} == '2'){
 		  		$('#detail_complete').attr('onclick','javascript:complete('+idx+')');
-		  		$('#detail_record').attr('onclick','javascript:record('+idx+')');
-		  		$('#detail_srce').attr('onclick','javascript:srce('+idx+')');
+		  		$('#detail_record').attr('onclick','location.href="/record/list.do?N_IDX='+idx+'"');
+		  		$('#detail_srce').attr('onclick','location.href="/srce/srce.do?N_IDX='+idx+'"');
 		  }else{
 				$('#detail_mento').hide();
 		  }
@@ -123,10 +123,6 @@ if('${check}' == 'fail'){
 				  }
 				})
 		}
-	}
-	
-	function record(n_idx){
-		location.href="/record/list.do?N_IDX="+n_idx;
 	}
 	
 </script>

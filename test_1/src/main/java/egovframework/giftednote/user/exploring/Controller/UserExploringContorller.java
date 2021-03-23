@@ -31,8 +31,14 @@ public class UserExploringContorller {
 		UserExploringVo.setN_IDX(request.getParameter("N_IDX"));
 		ModelMap model = new ModelMap();
 		model = userExploringService.getList(UserExploringVo);
-		
+		model.put("IDX", request.getParameter("IDX"));
+		model.put("N_IDX", request.getParameter("N_IDX"));
 		return new ModelAndView("/view/exploring/exploring","model",model);
+	}
+	
+	@RequestMapping(value="/exploring/setExplor.do", method=RequestMethod.POST)
+	public void setExplor(@ModelAttribute("UserExploringVo") UserExploringVo UserExploringVo ,HttpServletRequest request, HttpServletResponse response) {
+		userExploringService.setExplor(UserExploringVo);
 	}
 	
 }

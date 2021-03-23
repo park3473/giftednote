@@ -11,6 +11,7 @@ public class UserExploringVo {
 	String SCORE_UPTAKE = "";
 	String LEARN = "";
 	String FELT = "";
+	String OTHER ="";
 	
 	public String getN_IDX() {
 		return N_IDX;
@@ -72,6 +73,13 @@ public class UserExploringVo {
 	public void setFELT(String fELT) {
 		FELT = fELT;
 	}
+	public String getOTHER() {
+		return OTHER;
+	}
+	public void setOTHER(String oTHER) {
+		OTHER = oTHER;
+	}
+	
 	
 	
 }

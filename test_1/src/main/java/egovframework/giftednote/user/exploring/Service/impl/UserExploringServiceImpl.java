@@ -25,4 +25,10 @@ public class UserExploringServiceImpl implements UserExploringService {
 		
 		return modelMap;
 	}
+
+	@Override
+	public void setExplor(UserExploringVo userExploringVo) {
+		// TODO Auto-generated method stub
+		userExploringMapper.setExplor(userExploringVo);
+	}
 }

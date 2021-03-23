@@ -10,5 +10,7 @@ public interface UserExploringMapper {
 
 	public List<?> getList(UserExploringVo userExploringVo);
 
+	public void setExplor(UserExploringVo userExploringVo);
+
 
 }
