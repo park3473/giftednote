@@ -106,7 +106,7 @@ if('${check}' == 'fail'){
 	}
 	
 	function complete(n_idx){
-		if($('#'+idx+'_idx').attr('dead') == 'COMPLETE'){
+		if($('#'+n_idx+'_idx').attr('dead') == 'COMPLETE'){
 			Swal.fire('이미 마감된 연구노트 입니다.')
 		}else{
 			Swal.fire({

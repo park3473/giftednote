@@ -12,4 +12,8 @@ public interface UserSrceService {
 
 	public List<?> getListAJAX(UserSrceVo userSrceVo);
 
+	public void setInsert(UserSrceVo userSrceVo);
+
+	public void setUpdate(UserSrceVo userSrceVo);
+
 }

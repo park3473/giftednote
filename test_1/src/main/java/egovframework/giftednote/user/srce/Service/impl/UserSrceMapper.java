@@ -12,4 +12,10 @@ public interface UserSrceMapper {
 
 	public List<?> getListAJAX(UserSrceVo userSrceVo);
 
+	public int getTeamCount(UserSrceVo userSrceVo);
+
+	public void setInsert(UserSrceVo userSrceVo);
+
+	public void setUpdate(UserSrceVo userSrceVo);
+
 }

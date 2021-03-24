@@ -39,6 +39,8 @@ public interface UserNoteMapper {
 
 	public void NoteComplete(UserNoteVo userNoteVo);
 
+	public void setFirstPage(UserNoteVo userNoteVo);
+
 
 	
 

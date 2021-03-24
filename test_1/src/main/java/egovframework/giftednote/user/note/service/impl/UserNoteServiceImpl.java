@@ -52,6 +52,7 @@ public class UserNoteServiceImpl implements UserNoteService {
 	public void setNote(UserNoteVo userNoteVo) {
 		// TODO Auto-generated method stub
 		usernotemapper.setNote(userNoteVo);
+		usernotemapper.setFirstPage(userNoteVo);
 		
 	}
 

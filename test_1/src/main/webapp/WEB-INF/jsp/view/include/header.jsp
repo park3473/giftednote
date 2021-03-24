@@ -16,6 +16,7 @@
 <meta property="og:image" content="${pageContext.request.contextPath}/resources/img/kakao_bg.png" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
@@ -68,4 +69,46 @@
 <div>
 	<button onclick="javascript:history.back()">뒤로가기</button>
 	<button onclick="location.href='/'">홈</button>
+</div>
+<div id="new_hd_area" class="hd_area">
+    <div id="new_hd_con" class="hd_con">
+        <!--상단&중간 메뉴-->
+        <div class="hd_size">
+
+            <!--메인 메뉴-->
+            <nav class="main_menu">
+                <!--PC로고-->
+                <div class="logo">
+                    <a href="${pageContext.request.contextPath}/index.do">
+                        <div class="logo_img"></div>
+                    </a>
+                </div>
+                <!--PC로고 end-->
+
+                <!--메인메뉴-->
+                <ul class="nav_main row float-xl-right">
+                    <li class="col-sm-auto">
+                        <a href="${pageContext.request.contextPath}/user/member/view.do">마이페이지</a>
+                        <ul class="sub_main teacher">
+                            <li><a href="${pageContext.request.contextPath}/user/member/view.do">기본정보수정</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/portfolio/list.do">포트폴리오</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/mypage/program/list.do">프로그램 신청</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/mypage/survey/list.do">설문조사</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/activity_allowance/insert.do">활동수당 신청</a></li>
+                        </ul>
+                        <!--교사 서브메인 end -->
+                    </li>
+                </ul>
+                <!--메인메뉴end-->
+            </nav>
+            <!--메인 메뉴 end-->
+
+        </div>
+        <!--상단&중간 메뉴 end-->
+
+        <!--메뉴 bg-->
+        <div class="menu_bg"></div>
+        <div class="m_menu_bg"></div>
+        <!--메뉴 bg end-->
+    </div>
 </div>

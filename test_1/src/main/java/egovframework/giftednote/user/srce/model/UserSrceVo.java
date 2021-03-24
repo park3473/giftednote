@@ -5,7 +5,7 @@ public class UserSrceVo {
 	String IDX= "";
 	String NAME = "";
 	String SCORE = "";
-	String S_IDX = "";
+	int S_IDX ;
 	public String getN_IDX() {
 		return N_IDX;
 	}
@@ -30,10 +30,10 @@ public class UserSrceVo {
 	public void setSCORE(String sCORE) {
 		SCORE = sCORE;
 	}
-	public String getS_IDX() {
+	public int getS_IDX() {
 		return S_IDX;
 	}
-	public void setS_IDX(String s_IDX) {
+	public void setS_IDX(int s_IDX) {
 		S_IDX = s_IDX;
 	}
 	

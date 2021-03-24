@@ -31,4 +31,16 @@ public class UserSrceServiceImpl implements UserSrceService {
 		// TODO Auto-generated method stub
 		return userSrceMapper.getListAJAX(userSrceVo);
 	}
+
+	@Override
+	public void setInsert(UserSrceVo userSrceVo) {
+		// TODO Auto-generated method stub
+		userSrceMapper.setInsert(userSrceVo);
+	}
+
+	@Override
+	public void setUpdate(UserSrceVo userSrceVo) {
+		// TODO Auto-generated method stub
+		userSrceMapper.setUpdate(userSrceVo);
+	}
 }

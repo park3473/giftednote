@@ -31,7 +31,8 @@ public class UserRecordController {
 		ModelMap model = new ModelMap();
 		
 		model = userRecordService.getList(UserRecordVo);
-		
+		String N_IDX = UserRecordVo.getN_IDX();
+		model.put("N_IDX", N_IDX);
 		return new ModelAndView("/view/record/record" , "model" , model);
 	}
 	@RequestMapping(value="/user/record_insert.do" , method = RequestMethod.POST)

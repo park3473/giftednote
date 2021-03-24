@@ -71,8 +71,8 @@
 			    <td class="tg-0lax"><input type="text" name="TYPE" id="type_what"></td>
 			    <td class="tg-0lax"><select id="join"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
 			    <td class="tg-0lax"><select id="uptake"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
-			    <td class="tg-0lax"><input type="text" name="LEADER"></td>
-			    <td class="tg-0lax"><input type="text" name="LEADER"></td>
+			    <td class="tg-0lax"><input type="text" name="LEARN" id="LEARN"></td>
+			    <td class="tg-0lax"><input type="text" name="FELT" id="FELT"></td>
 			</tr>
 		</tbody>
 	</table>

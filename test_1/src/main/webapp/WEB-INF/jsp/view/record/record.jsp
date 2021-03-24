@@ -86,6 +86,7 @@
 	  </tr>
 	</thead>
 	<tbody>
+		<c:if test="${model.daycount != 0 }">
 		<c:forEach begin="0" end="${model.daycount-1 }" var="dayitem" items="${model.daylist }" varStatus="status">
 		  <tr id="list_${status.index }" onclick="javascript:update(${status.index})">
 		    <td class="tg-0pky" id="index_list">${status.index+1 }</td>
@@ -98,10 +99,11 @@
 		    <td class="tg-0pky">${dayitem.RECORD }</td>
 		  </tr>
 		 </c:forEach>
+		 </c:if>
 	</tbody>
 	</table>
 </div>
-<input type="hidden" value="${model.list[0].N_IDX }" id="n_idx">
+<input type="hidden" value="${model.N_IDX }" id="n_idx">
 <!--공통하단-->
 <%@ include file="../include/footer.jsp" %>
 <!--공통하단 끝-->
@@ -142,6 +144,7 @@ if('${check}' == 'fail'){
 					}
 			})
 		}
+		location.reload();
 	}
 	
 	

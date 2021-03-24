@@ -4,13 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.giftednote.user.srce.Service.impl.UserSrceMapper">
 	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
-		SELECT * FROM TBL_SRCE
-		WHERE N_IDX = #{N_IDX}
+		SELECT * FROM TBL_TEAM
+		WHERE N_IDX = #{N_IDX} AND LEVEL = '1'
+		ORDER BY IDX
 	</select>
 	
 	<select id="getListAJAX" resultType="hashMap" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
 		SELECT * FROM TBL_SRCE
-		WHERE N_IDX = #{N_IDX}
+		WHERE N_IDX = #{N_IDX} AND IDX = #{IDX}
+		ORDER BY S_IDX
 	</select>
+	
+	<insert id="setInsert" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
+		INSERT INTO TBL_SRCE
+		(N_IDX , IDX , S_IDX , SCORE , NAME) 
+		VALUES 
+		(#{N_IDX} , #{IDX} , #{S_IDX} , #{SCORE}, #{NAME})
+	</insert>
+	
+	<update id="setUpdate" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
+		UPDATE TBL_SRCE
+		SET SCORE = #{SCORE}
+		WHERE S_IDX = #{S_IDX} AND N_IDX = #{N_IDX} AND IDX = #{IDX}
+	</update>
 	
 </mapper>

@@ -31,8 +31,9 @@ public class UserSrceController {
 		UserSrceVo.setN_IDX(request.getParameter("N_IDX"));
 		
 		ModelMap model = new ModelMap();
-		
+		String N_IDX = UserSrceVo.getN_IDX();
 		model = userSrceService.getList(UserSrceVo);
+		model.put("N_IDX", N_IDX);
 		
 		return new ModelAndView("/view/srce/srce","model",model);
 	}
@@ -43,6 +44,16 @@ public class UserSrceController {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonStr = mapper.writeValueAsString(list);
 		return jsonStr;
+	}
+	
+	@RequestMapping(value="/srce/setInsert.do", method = RequestMethod.POST)
+	public void SrceInsert(@ModelAttribute("UserSrceVo") UserSrceVo UserSrceVo,HttpServletRequest request, HttpServletResponse response) {
+		userSrceService.setInsert(UserSrceVo);
+	}
+	
+	@RequestMapping(value="/srce/setUpdate.do", method = RequestMethod.POST)
+	public void SrceUpdate(@ModelAttribute("UserSrceVo") UserSrceVo UserSrceVo,HttpServletRequest request, HttpServletResponse response) {
+		userSrceService.setUpdate(UserSrceVo);
 	}
 	
 }

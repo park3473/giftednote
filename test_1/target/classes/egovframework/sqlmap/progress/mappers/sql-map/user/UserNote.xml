@@ -80,6 +80,13 @@
 		(#{N_IDX} , #{P_IDX} , #{CONTENT})
 	</insert>
 	
+	<insert id="setFirstPage" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		INSERT INTO TBL_NOTE_DETAIL
+		(N_IDX , P_IDX , CONTENT) 
+		VALUES 
+		(#{N_IDX} , '1' , '')
+	</insert>
+	
 	<select id="getComment" resultType="hashMap" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
 		SELECT *
 		FROM TBL_COMMENT
