@@ -10,6 +10,7 @@
    <%@ include file="./include/head.jsp" %>
 </head>
 
+
 <body>
     <header id="new_hd" class="hd_wrap">
 	    <%@ include file="./include/header.jsp" %> 

@@ -66,12 +66,12 @@ public class UserMemberController {
 			}
 		}
 	}
-	@RequestMapping(value="/user/member/pw_re.do" , method = RequestMethod.POST)
-	public ModelAndView MemberPwRe(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) {
-		ModelMap model = new ModelMap();
+	@RequestMapping(value="/user/member/pw_re.do" , method = RequestMethod.POST,produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String MemberPwRe(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) {
 		String pw = userMemberService.getPW(userMembervo);
 		System.out.println(pw);
-		return new ModelAndView("view/index" , "PASSWORD" , pw);
+		return pw;
 	}
 	
 	@RequestMapping(value="/user/member/register.do" , method = RequestMethod.GET)

@@ -1,0 +1,10 @@
+p.form_list_li{
+	font-size: 14px;
+	color : gray;
+	margin-bottom : 0.3rem;
+}
+
+p.form_list_li_p{
+	margin-bottom : 0.5rem;
+	font-weight : bold;
+}

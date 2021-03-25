@@ -28,6 +28,21 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.datetimepicker.full.min.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!--CSS-->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/all.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tail.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" type="text/css">
+<!-- fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+<!-- fontawasome/lineawasome -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fontawasome/all.css">
+<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+<!--공통상단 끝-->
+
+
 <style type="text/css">
 	.material-icons{
 			display:block;
@@ -54,61 +69,105 @@
 
 </script>
 <!-- 내정보 -->
-<c:if test="${session_login == 'ok'}">
+<div style="display:none">
+	<c:if test="${session_login == 'ok'}">
+		<div>
+			<p>${session_email}</p>
+			<p>${session_idx }</p>
+			<p>${session_name }</p>
+			<p>${session_level }</p>
+		</div>
+		<div>
+			<button onclick="location.href='/user/member/logout.do'">로그아웃</button>
+		</div>
+	</c:if>
+	<!-- 내정보 -->
 	<div>
-		<p>${session_email}</p>
-		<p>${session_idx }</p>
-		<p>${session_name }</p>
-		<p>${session_level }</p>
+		<button onclick="javascript:history.back()">뒤로가기</button>
+		<button onclick="location.href='/'">홈</button>
 	</div>
 	<div>
-		<button onclick="location.href='/user/member/logout.do'">로그아웃</button>
+		<div>
+			<ul>
+				<li>톱니</li>
+				<li>노트</li>
+				<li>사람</li>
+				<li></li>
+			</ul>
+		</div>
 	</div>
-</c:if>
-<!-- 내정보 -->
-<div>
-	<button onclick="javascript:history.back()">뒤로가기</button>
-	<button onclick="location.href='/'">홈</button>
 </div>
-<div id="new_hd_area" class="hd_area">
-    <div id="new_hd_con" class="hd_con">
-        <!--상단&중간 메뉴-->
-        <div class="hd_size">
-
-            <!--메인 메뉴-->
-            <nav class="main_menu">
-                <!--PC로고-->
-                <div class="logo">
-                    <a href="${pageContext.request.contextPath}/index.do">
-                        <div class="logo_img"></div>
-                    </a>
-                </div>
-                <!--PC로고 end-->
-
-                <!--메인메뉴-->
-                <ul class="nav_main row float-xl-right">
-                    <li class="col-sm-auto">
-                        <a href="${pageContext.request.contextPath}/user/member/view.do">마이페이지</a>
-                        <ul class="sub_main teacher">
-                            <li><a href="${pageContext.request.contextPath}/user/member/view.do">기본정보수정</a></li>
-                            <li><a href="${pageContext.request.contextPath}/user/portfolio/list.do">포트폴리오</a></li>
-                            <li><a href="${pageContext.request.contextPath}/user/mypage/program/list.do">프로그램 신청</a></li>
-                            <li><a href="${pageContext.request.contextPath}/user/mypage/survey/list.do">설문조사</a></li>
-                            <li><a href="${pageContext.request.contextPath}/user/activity_allowance/insert.do">활동수당 신청</a></li>
+<header id="new_hd" class="hd_wrap">
+        <div class="hd_area">
+            <div class="hd_con">
+                <div class="hd_size">
+                    <div class="menu_bar">
+                        <ul class="main_menu">
+                            <li class="main_menu_ob main_menu_ob_01 menu_active">
+                                <a href="#"></a>
+                                <div class="sub_menu_con">
+                                    <div class="sub_menu_title">
+                                        <h2>회의관리</h2>
+                                    </div>
+                                    <ul class="sub_menu_box">
+                                        <li class="sub_menu_ob">
+                                            <a href="#">진행중인 노트</a>
+                                        </li>
+                                        <li class="sub_menu_ob">
+                                            <a href="#">마감된 노트</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="main_menu_ob main_menu_ob_02">
+                                <a href="#"></a>
+                                <div class="sub_menu_con">
+                                    <div class="sub_menu_title">
+                                        <h2>회원관리</h2>
+                                    </div>
+                                    <ul class="sub_menu_box">
+                                        <li class="sub_menu_ob">
+                                            <a href="#">회원정보</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
-                        <!--교사 서브메인 end -->
-                    </li>
-                </ul>
-                <!--메인메뉴end-->
-            </nav>
-            <!--메인 메뉴 end-->
-
+                    </div>
+                    <div class="menu_cont">
+                        <div class="menu_cont_box">
+                            <div class="logo_box">
+                                <a href="#"></a>
+                                <p>카이스트 <span>연구노트</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!--상단&중간 메뉴 end-->
+    </header>
+    <script type="text/javascript">
+    $(function () {
+	    $('a[href="#"]').click(function (e) {
+	        e.preventDefault();
+	    });
 
-        <!--메뉴 bg-->
-        <div class="menu_bg"></div>
-        <div class="m_menu_bg"></div>
-        <!--메뉴 bg end-->
-    </div>
-</div>
+	    function menu() {
+	        $(".main_menu_ob_01").find(".sub_menu_con").show();
+
+	        $(".main_menu_ob").click(function () {
+	            $(".sub_menu_con").hide();
+	            $(".main_menu_ob").removeClass("menu_active");
+	            $(this).find(".sub_menu_con").show();
+	            $(this).addClass("menu_active");
+	        });
+	    }
+	    menu();
+
+	    // 과제선택
+	    $(".subject_list > li > a").click(function () {
+	        $(this).toggleClass("select_active");
+	    });
+	    // 과제선택 end
+	});
+    </script>

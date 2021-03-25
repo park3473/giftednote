@@ -1,0 +1,34 @@
+#new_ft {
+    width: 100%;
+    height: 70px;
+    position: relative;
+    max-width: -webkit-calc(100% - 260px);
+    max-width: calc(100% - 260px);
+    margin-left: auto;
+    background-color: #bcc6dd;
+}
+
+#new_ft .ft_area {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#new_ft .ft_con {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#new_ft .ft_size {
+    width: 100%;
+    height: 100%;
+    padding-left: 50px;
+    line-height: 70px;
+}
+
+#new_ft .ft_size > p {
+    font-size: 0.938rem;
+    color: #595959;
+    font-weight: 400;
+}
