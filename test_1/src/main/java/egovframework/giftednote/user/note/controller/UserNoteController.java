@@ -59,7 +59,6 @@ public class UserNoteController {
 		{
 			ITEM_COUNT = "10";
 		}
-
 		UserNoteVo.setPAGE(Integer.parseInt(PAGE));
 		UserNoteVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
 		
@@ -69,6 +68,10 @@ public class UserNoteController {
 		
 		UserNoteVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
 		UserNoteVo.setOFFSET(pagelimit);
+		System.out.println(request.getParameter("DEAD"));
+		if(request.getParameter("DEAD") != null){
+		UserNoteVo.setDEAD(request.getParameter("DEAD"));
+		}
 		UserNoteVo.setEMAIL(request.getParameter("EMAIL"));
 		model = userNoteService.getList(UserNoteVo);
 		
@@ -155,5 +158,6 @@ public class UserNoteController {
 	public void COMMENTDELETE(@ModelAttribute("UserCommentVo") UserCommentVo UserCommentVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		userNoteService.CommentDelete(UserCommentVo);
 	}
+	
 	
 }

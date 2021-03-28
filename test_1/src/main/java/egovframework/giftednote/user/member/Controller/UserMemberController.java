@@ -68,10 +68,12 @@ public class UserMemberController {
 	}
 	@RequestMapping(value="/user/member/pw_re.do" , method = RequestMethod.POST,produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String MemberPwRe(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) {
+	public String MemberPwRe(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
 		String pw = userMemberService.getPW(userMembervo);
 		System.out.println(pw);
-		return pw;
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(pw);
+		return jsonStr;
 	}
 	
 	@RequestMapping(value="/user/member/register.do" , method = RequestMethod.GET)

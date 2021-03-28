@@ -102,53 +102,6 @@
             </div>
         </div>
     </section>
-
-    <!-- 양식 등록 폼-->
-    <div id="meeting_form_modal" class="all_modal">
-        <div class="all_modal_con meeting_form_moal_div">
-            <div class="modal_box">
-
-                <div class="modal_title">
-                    <!-- 공통타이틀 -->
-                    <div class="all_title">
-                        <div class="line"><span></span></div>
-                        <h2>노트 상세 보기</h2>
-                    </div>
-                    <!-- 공통타이틀 -->
-
-                    <!-- 닫기 -->
-                    <div id="close_btn" class="close_btn">
-                        <a href="#">
-                            <i class="las la-times"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="join_table">
-                    <div class="all_table all_table_2">
-                        <div>
-							<div id="detail_show">
-							<!-- 연구노트 추가될 부분 -->
-							</div>
-						</div>
-                    </div>
-                    <div class="join_submit_btn" id="detail_wrap" style="display:none" >
-                        <ul class="join_btn">
-                        	<li id="detail_student" class="submit_btn">
-                        		<button id="detail_wrap_bt">작성</button>
-								<button id="detail_exploring">탐구일지</button>
-                        	</li>
-                        	<li id="detail_mento" class="submit_btn">
-								<button id="detail_record">기록일지</button>
-								<button id="detail_complete">마감하기</button>
-								<button id="detail_srce">학생평가</button>
-							</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 <!--공통하단-->
 <%@ include file="../include/footer.jsp" %>
 <!--공통하단 끝-->
@@ -162,43 +115,6 @@ if('${check}' == 'fail'){
 	alert("성공")
 }
 */
-	function detail(idx){
-		const element = document.getElementById(idx+'_detail');
-		  //alert(element.innerHTML);
-		  $('#detail_show').html(element.innerHTML);
-		  $('#meeting_form_modal').show();
-		  $('#detail_wrap').show();
-		  $('#detail_wrap_bt').attr('onclick','location.href="/note/detail.do?N_IDX='+idx+'"');
-		  $('#detail_exploring').attr('onclick','location.href="/exploring/exploring.do?N_IDX='+idx+'&IDX='+${session_idx}+'"')
-		  if(${session_level} == '2'){
-		  		$('#detail_complete').attr('onclick','javascript:complete('+idx+')');
-		  		$('#detail_record').attr('onclick','location.href="/record/list.do?N_IDX='+idx+'"');
-		  		$('#detail_srce').attr('onclick','location.href="/srce/srce.do?N_IDX='+idx+'"');
-		  }else{
-				$('#detail_mento').hide();
-		  }
-	}
-	
-	function complete(n_idx){
-		if($('#'+n_idx+'_idx').attr('dead') == 'COMPLETE'){
-			Swal.fire('이미 마감된 연구노트 입니다.')
-		}else{
-			Swal.fire({
-				  text: "현 연구노트 를 마감하시겠습니까?",
-				  icon: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
-				  confirmButtonText: '예',
-				  cancelButtonText: '아니요',
-				}).then((result) => {
-				  if (result.isConfirmed) {
-					  location.href="/note/complete.do?N_IDX="+n_idx
-				  }
-				})
-		}
-	}
-
     $("#close_btn").click(function() {
         $("#meeting_form_modal").hide();
     });

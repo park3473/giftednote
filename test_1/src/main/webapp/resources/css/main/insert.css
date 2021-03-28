@@ -1,3 +1,38 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #cfd8e7;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px !important;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 2.4rem;
+  border: 1px solid #cfd8e7;
+  background: #cfd8e7;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
 .all_modal .all_modal_con .modal_box img:nth-child(n+1){
 	margin-left:2.2rem;
 }
@@ -17,7 +52,7 @@
 #img_modal_open:hover{
 	background-color: #d0dcef;
 }
-
+/*
 .search{
 	width: 6.25rem;
     height: 100%;
@@ -27,7 +62,7 @@
     border-radius:4px;
     margin-left:0.3rem;
 }
-
+*/
 #img_select_modal{
 	text-align:center;
 	margin-top:1rem;
@@ -54,3 +89,4 @@
     border-radius:4px;
     margin-left:0.3rem;
 }
+

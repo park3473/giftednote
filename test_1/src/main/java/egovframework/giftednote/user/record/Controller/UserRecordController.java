@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import egovframework.giftednote.user.member.model.UserMemberVo;
 import egovframework.giftednote.user.note.model.UserNoteVo;
 import egovframework.giftednote.user.record.Service.UserRecordService;
 import egovframework.giftednote.user.record.model.UserRecordVo;
@@ -39,4 +40,5 @@ public class UserRecordController {
 	public void RecordInsert(@ModelAttribute("UserRecordVo") UserRecordVo UserRecordVo ,HttpServletRequest request, HttpServletResponse response) throws IOException {
 		userRecordService.setRecord(UserRecordVo);
 	}
+	
 }

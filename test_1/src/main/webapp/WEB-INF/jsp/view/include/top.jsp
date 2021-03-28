@@ -15,17 +15,17 @@
                             </div>
                             <div class="gt_menu_cont">
                                 <ul class="gt_menu_box">
+                                	<c:if test="${session_login == 'ok' }">
                                     <li>
                                         <p>
                                             <span>${session_name }</span>님
                                         </p>
                                     </li>
-                                    <li>
-                                        <a onclick="alert('아직 준비중입니다.')">마이페이지</a>
-                                    </li>
+                                    
                                     <li class="logout_btn">
                                         <a onclick="location.href='/user/member/logout.do'">로그아웃</a>
                                     </li>
+                                    </c:if>
                                 </ul>
                             </div>
                         </div>

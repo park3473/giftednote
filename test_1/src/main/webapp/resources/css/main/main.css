@@ -26,3 +26,7 @@ p.form_list_li_p{
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
     padding: 15px;
 }
+
+.all_modal_con.meeting_form_moal_div{
+	height:37rem
+}

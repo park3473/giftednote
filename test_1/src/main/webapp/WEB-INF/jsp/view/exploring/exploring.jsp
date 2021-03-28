@@ -11,6 +11,7 @@
 <!--삭제금지-->
 <!--공통상단-->
 <%@ include file="../include/header.jsp" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/exploring.css" type="text/css">
 <!--공통상단 끝-->
 
 <style>
@@ -26,11 +27,11 @@
     }
 	
 	.tg  {border-collapse:collapse;border-spacing:0;}
-	.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+	.tg td{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
 	  overflow:hidden;padding:10px 5px;word-break:normal;}
-	.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+	.tg th{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
 	  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-	.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+	.tg .tg-0pky{border-color:#3364b1;}
 </style>
 <section id="new_sc" class="sc_wrap">
         <div class="sc_area">
@@ -64,7 +65,7 @@
                                     <div>
 										<table class="tg" style="width:100%">
 											<thead>
-											  <tr>
+											  <tr class="tbl_th">
 											    <th class="tg-0pky" rowspan="2">수업일</th>
 											    <th class="tg-0pky" colspan="2">지도자</th>
 											    <th class="tg-0lax" colspan="2">교육장소</th>
@@ -74,7 +75,7 @@
 											    <th class="tg-0lax" rowspan="2">배운점</th>
 											    <th class="tg-0lax" rowspan="2">느낀점</th>
 											  </tr>
-											  <tr>
+											  <tr class="tbl_th">
 											    <td class="tg-0pky">교수</td>
 											    <td class="tg-0lax">조교</td>
 											    <td class="tg-0lax">자택</td>

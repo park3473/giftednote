@@ -26,11 +26,19 @@
     }
 	
 	.tg  {border-collapse:collapse;border-spacing:0;}
-	.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+	.tg td{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
 	  overflow:hidden;padding:10px 5px;word-break:normal;}
-	.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+	.tg th{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
 	  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-	.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+	.tg .tg-0pky{border-color:#3364b1;}
+	table{
+	text-align : center;
+	}
+	
+	.tbl_th{
+		background-color : #d0dcef;
+	}
+	
 </style>
 
 <section id="new_sc" class="sc_wrap">
@@ -49,6 +57,7 @@
                                     <li>기록일지</li>
                                 </ul>
                             </div>
+                            
                             <!--사이트맵 end-->
 
                             <div class="sc_section_size">
@@ -67,14 +76,14 @@
 										<div>
 											<table class="tg" style="width:100%">
 											<thead>
-											  <tr>
+											  <tr class="tbl_th">
 											    <th class="tg-0pky" rowspan="2">수업일</th>
 											    <c:forEach var="teamitem" items="${model.teamlist }" varStatus="status">
 													<th class="tg-0pky" colspan="2" id="name_${status.index }" name=${teamitem.NAME } idx="${teamitem.IDX }">${teamitem.NAME}</th>
 												</c:forEach>
 											    <th class="tg-0pky" rowspan="2">지도 목표 , 내용 및 자체평가 자유기술</th>
 											  </tr>
-											  <tr>
+											  <tr class="tbl_th">
 											  	<c:forEach begin="0" end="${model.teamcount-1 }">
 											    	<td class="tg-0pky">참여율</td>
 											    	<td class="tg-0pky">기여도</td>
@@ -105,7 +114,7 @@
 									<div>
 										<table class="tg" style="width:100%">
 										<thead>
-										  <tr>
+										  <tr class="tbl_th">
 										    <th class="tg-0pky" rowspan="2">순번</th>
 										    <th class="tg-0pky" rowspan="2">수업일</th>
 										    <th class="tg-0pky" rowspan="2">작성일</th>
@@ -114,7 +123,7 @@
 											</c:forEach>
 										    <th class="tg-0pky" rowspan="2">지도 목표 , 내용 및 자체평가 자유기술</th>
 										  </tr>
-										  <tr>
+										  <tr class="tbl_th">
 										  	<c:forEach begin="0" end="${model.teamcount-1 }">
 										    	<td class="tg-0pky">참여율</td>
 										    	<td class="tg-0pky">기여도</td>

@@ -40,36 +40,7 @@
                 <div class="sc_size">
 
                     <!-- 공통 탑 -->
-                    <div class="sc_top">
-                        <div class="sc_top_size">
-                            <div class="top_home">
-                                <div class="home_btn">
-                                    <a href="${pageContext.request.contextPath}/">HOME</a>
-                                </div>
-                                <div class="home_title">
-                                    <h2>연구노트</h2>
-                                </div>
-                            </div>
-                            <div class="gt_menu_cont">
-                                <ul class="gt_menu_box">
-                                	<c:if test="${session_login == 'ok' }">
-                                    <li>
-                                        <p>
-                                            <span>${session_name }</span>님
-                                        </p>
-                                    </li>
-                                    
-                                    <li>
-                                        <a href="#">마이페이지</a>
-                                    </li>
-                                    <li class="logout_btn">
-                                        <a onclick="location.href='/user/member/logout.do'">로그아웃</a>
-                                    </li>
-                                    </c:if>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <%@ include file="../include/top.jsp" %>
                     <!-- 공통 탑 end-->
 
                     <!-- 본문 내용-->
@@ -118,23 +89,32 @@
 															<input type="text" name="TITLE" placeholder="제목" >
 														</div>
 														<div>
-															<input type="text" name="TOPIC" placeholder="주제" >
+															<input type="text" name="TOPIC" id="TOPIC" placeholder="주제" >
 														</div>
+														<div class="search">
+													      <input type="text" class="searchTerm" name="LEADER" id="leader" placeholder="교수(이메일로 검색하여주세요!)" >
+													      <button type="button" class="searchButton i_search" cked="mento">
+													        <i class="las la-search" cked="mento"></i>
+													     </button>
+													   </div>
+													   <div class="search">
+													      <input type="text" class="searchTerm" name="ASSI" id="assi" placeholder="조교(이메일로 검색하여주세요!)" >
+													      <button type="button" class="searchButton i_search" cked="mento">
+													        <i class="las la-search" cked="mento"></i>
+													     </button>
+													   </div>
 														<div>
-															<input type="text" name="LEADER" id="leader" placeholder="교수(이메일로 검색하여주세요!)" ><span class="search" cked="mento">검색</span>
-														</div>
-														<div>
-															<input type="text" name="ASSI" id="assi" placeholder="조교(이메일로 검색하여주세요!)" ><span class="search" cked="mento">검색</span>
-														</div>
-														<div>
-															<input type="text" name="INTRO" placeholder="소개">
+															<input type="text" name="INTRO"  id="INTRO" placeholder="소개">
 														</div>
 													</div>
 												</form>
 													<div>
-														<div>
-															<input type="text" placeholder="학생검색(이메일로 검색하여주세요!)"><span class="search" cked="student" >검색</span>
-														</div>
+														<div class="search">
+													      <input type="text" class="searchTerm" placeholder="학생검색(이메일로 검색하여주세요!)">
+													      <button type="button" class="searchButton i_search" cked="student">
+													        <i class="las la-search" cked="student"></i>
+													     </button>
+													   </div>
 														<div id="no_check_team_ul">
 															<p>추가 전 학생</p>
 															<ul id="no_check_list_team">
@@ -255,7 +235,7 @@ if('${check}' == 'fail'){
 	}
 	
 	$(document).ready(function (){
-		$('.search').click(function(){
+		$('.i_search').click(function(){
 			var EMAIL = $(this).prev().val();
 			var what_id = $(this).prev().attr('id');
 			var cked = $(this).attr('cked');
@@ -324,6 +304,27 @@ if('${check}' == 'fail'){
 	
 	function insert_note(){
 		//note 내용 보내기
+		if($('#IMAGE').val() == ''){
+			Swal.fire('표지 이미지를 선택하여주세요.');
+			return;
+		}
+		if($('#TOPIC').val() == ''){
+			Swal.fire('제목을 작성하여주세요.');
+			return;
+		}
+		if($('#TITLE').val() == ''){
+			Swal.fire('주제를 작성하여주세요.');
+			return;
+		}
+		if($('#leader').val() == '' || ('#assi').val() == ''){
+			Swal.fire('교수 or 조교 분을 선택하여주세요.');
+			return;
+		}
+		if($('#INTRO').val() == ''){
+			Swal.fire('소개를 작성하여주세요.');
+			return;
+		}
+		
 		var formData = $('#f_insert_note').serialize();
 		console.log(formData);
 		$.ajax({

@@ -27,11 +27,18 @@
     }
 	
 	.tg  {border-collapse:collapse;border-spacing:0;}
-	.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+	.tg td{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
 	  overflow:hidden;padding:10px 5px;word-break:normal;}
-	.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+	.tg th{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
 	  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-	.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+	.tg .tg-0pky{border-color:#3364b1;}
+	table{
+	text-align : center;
+	}
+	
+	.tbl_th{
+		background-color : #d0dcef;
+	}
 </style>
 <div style="display:none">
 	<input type="hidden" value="${fn:length(model.list)}" id="teamcount">
@@ -80,7 +87,7 @@
                                     <div>
 										<table class="tg" id="SRCE_TABLE">
 											<thead>
-											  <tr>
+											  <tr class="tbl_th">
 											    <th class="tg-0lax">구분</th>
 											    <th class="tg-0lax">연구역량</th>
 											    <th class="tg-0lax">평가 문항</th>

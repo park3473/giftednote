@@ -87,9 +87,6 @@
                                         </p>
                                     </li>
                                     
-                                    <li>
-                                        <a href="#">마이페이지</a>
-                                    </li>
                                     <li class="logout_btn">
                                         <a onclick="location.href='/user/member/logout.do'">로그아웃</a>
                                     </li>
@@ -244,7 +241,9 @@
 		        data: ({
 		        	EMAIL : EMAIL
 		        }),
+		        dataType : "json",
 		        success: function(data,status,xhr) {
+		        	console.log(data.pw);
 		        	var password = data;
 		        	console.log(password);
 		            Swal.fire('비밀번호는'+password+'입니다.');

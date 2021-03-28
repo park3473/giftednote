@@ -102,25 +102,30 @@
             <div class="hd_con">
                 <div class="hd_size">
                     <div class="menu_bar">
+                    	<c:if test="${session_login == 'ok' }">
                         <ul class="main_menu">
                             <li class="main_menu_ob main_menu_ob_01 menu_active">
                                 <a href="#"></a>
                                 <div class="sub_menu_con">
                                     <div class="sub_menu_title">
-                                        <h2>회의관리</h2>
+                                        <h2>노트리스트</h2>
                                     </div>
                                     <ul class="sub_menu_box">
                                         <li class="sub_menu_ob">
-                                            <a onclick="alert('아직 경로 설정 미지정')">진행중인 노트</a>
+                                            <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?DEAD=NO&EMAIL=${session_email}'">진행중인 노트</a>
                                         </li>
                                         <li class="sub_menu_ob">
-                                            <a onclick="alert('아직 경로 설정 미지정')">마감된 노트</a>
+                                            <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?DEAD=COMPLETE&EMAIL=${session_email}'">마감된 노트</a>
+                                        </li>
+                                        <li class="sub_menu_ob">
+                                            <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?EMAIL=${session_email}'">전체 노트</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
+                            <c:if test="${session_level == '3' }">
                             <li class="main_menu_ob main_menu_ob_02">
-                                <a onclick="alert('아직 경로 설정 미지정')"></a>
+                                <a onclick="location.href='${pageContext.request.contextPath}/user/admin.do'"></a>
                                 <div class="sub_menu_con">
                                     <div class="sub_menu_title">
                                         <h2>회원관리</h2>
@@ -132,7 +137,9 @@
                                     </ul>
                                 </div>
                             </li>
+                            </c:if>
                         </ul>
+                        </c:if>
                     </div>
                     <div class="menu_cont">
                         <div class="menu_cont_box">

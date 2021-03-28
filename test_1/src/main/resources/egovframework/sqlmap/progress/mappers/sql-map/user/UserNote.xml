@@ -11,6 +11,9 @@
 		<if test="EMAIL != ''">
 	    	AND T.EMAIL = #{EMAIL}
 	    </if>
+	    <if test="DEAD != ''">
+	    	AND N.DEAD = #{DEAD}
+	    </if>
 	</select>
 	
 	<select id="getListCnt" resultType="int" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
@@ -25,9 +28,9 @@
 	
 	<insert id="setNote" parameterType="egovframework.giftednote.user.note.model.UserNoteVo" useGeneratedKeys="true" keyProperty="N_IDX">
 		INSERT INTO TBL_NOTE 
-		(IDX , IMAGE , TITLE , TOPIC , LEADER , ASSI , INTRO) 
+		(IDX , IMAGE , TITLE , TOPIC , LEADER , ASSI , INTRO , DEAD) 
 		VALUES 
-		(#{IDX} , #{IMAGE} , #{TITLE} , #{TOPIC} , #{LEADER} , #{ASSI} , #{INTRO})
+		(#{IDX} , #{IMAGE} , #{TITLE} , #{TOPIC} , #{LEADER} , #{ASSI} , #{INTRO} , 'NO')
 	</insert>
 	
 	<update id="NoteComplete" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
