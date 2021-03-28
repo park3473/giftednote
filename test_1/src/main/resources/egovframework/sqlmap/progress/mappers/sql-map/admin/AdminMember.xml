@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="egovframework.giftednote.admin.member.Service.Impl.AdminMemberMapper">
-	<select id="getALLList" resultType="hashMap" parameterType="egovframwork.giftednote.admin.member.Model.AdminMemberVo">
-		SELECT * FROM TBL_MEMBER;
+<mapper namespace="egovframework.giftednote.admin.member.Service.impl.AdminMemberMapper">
+	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		SELECT * FROM TBL_MEMBER
 	</select>
 
 

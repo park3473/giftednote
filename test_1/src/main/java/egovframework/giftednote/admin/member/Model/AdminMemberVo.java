@@ -1,4 +1,4 @@
-package egovframwork.giftednote.admin.member.Model;
+package egovframework.giftednote.admin.member.Model;
 
 public class AdminMemberVo {
 

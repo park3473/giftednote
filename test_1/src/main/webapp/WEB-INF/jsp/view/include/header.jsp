@@ -69,6 +69,12 @@
 
 </script>
 <!-- 내정보 -->
+<% 
+	String session_login = (String)session.getAttribute("session_login");
+	String session_level = (String)session.getAttribute("session_level");
+	String sli = request.getRequestURI();
+
+%>
 <div style="display:none">
 	<c:if test="${session_login == 'ok'}">
 		<div>
@@ -124,15 +130,15 @@
                                 </div>
                             </li>
                             <c:if test="${session_level == '3' }">
-                            <li class="main_menu_ob main_menu_ob_02">
-                                <a onclick="location.href='${pageContext.request.contextPath}/user/admin.do'"></a>
+                            <li class="main_menu_ob main_menu_ob_02 ">
+                                <a onclick="location.href='${pageContext.request.contextPath}/admin/member/list.do'"></a>
                                 <div class="sub_menu_con">
                                     <div class="sub_menu_title">
                                         <h2>회원관리</h2>
                                     </div>
                                     <ul class="sub_menu_box">
                                         <li class="sub_menu_ob">
-                                            <a onclick="alert('아직 경로 설정 미지정')">회원정보</a>
+                                            <a href="#">회원정보</a>
                                         </li>
                                     </ul>
                                 </div>

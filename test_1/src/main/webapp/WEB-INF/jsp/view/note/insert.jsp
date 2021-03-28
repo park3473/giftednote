@@ -171,11 +171,11 @@
                         </a>
                     </div>
                 </div>
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_0505.png" ondblclick="javascript:check_img('1_0505')" >
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_1515.png" ondblclick="javascript:check_img('1_1515')">
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_3535.png" ondblclick="javascript:check_img('1_3535')">
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_4545.png" ondblclick="javascript:check_img('1_4545')">
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_5555.png" ondblclick="javascript:check_img('1_5555')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_0505.png" onclick="javascript:check_img('1_0505')" >
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_1515.png" onclick="javascript:check_img('1_1515')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_3535.png" onclick="javascript:check_img('1_3535')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_4545.png" onclick="javascript:check_img('1_4545')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_5555.png" onclick="javascript:check_img('1_5555')">
             </div>
         </div>
     </div>
@@ -234,6 +234,15 @@ if('${check}' == 'fail'){
 		$('#no_check_list_team').append('<li id=check_'+idx+' name='+name+' school_name='+school_name+' school_year='+school_year+' email='+email+' value='+idx+' ondblclick="javascript:check_id('+idx+')">'+name+'</li>');
 	}
 	
+	function checking_id(e){
+		var name = $('#checking_'+e).attr('name');
+		var school_name = $('#checking_'+e).attr('school_name');
+		var school_year = $('#checking_'+e).attr('school_year');
+		var email = $('#checking_'+e).attr('email');
+		var idx = $('#check_'+e).val();
+		$('#checking_'+e).remove();
+		$('#check_list_team').append('<li id=checking_'+idx+' name='+name+' school_name='+school_name+' school_year='+school_year+' email='+email+' value='+idx+' ondblclick="javascript:no_check_id('+idx+')">'+name+'</li>');
+	}
 	$(document).ready(function (){
 		$('.i_search').click(function(){
 			var EMAIL = $(this).prev().val();
@@ -290,7 +299,7 @@ if('${check}' == 'fail'){
 						if(data.length > 0){
 							for(i = 0; i<data.length; i++){
 								$('#no_check_list_team').html('');
-								$('#no_check_list_team').append('<li id=checking_'+data[i].idx+' name='+data[i].name+' school_name='+data[i].school_name+' school_year='+data[i].school_year+' email='+data[i].email+' value='+data[i].idx+' ondblclick="javascript:check_id('+data[i].idx+')">'+data[i].name+'</li>');
+								$('#no_check_list_team').append('<li id=checking_'+data[i].idx+' name='+data[i].name+' school_name='+data[i].school_name+' school_year='+data[i].school_year+' email='+data[i].email+' value='+data[i].idx+' ondblclick="javascript:checking_id('+data[i].idx+')">'+data[i].name+'</li>');
 							}
 						}else{
 							Swal.fire('이메일을 확인하여 주세요')
@@ -316,7 +325,7 @@ if('${check}' == 'fail'){
 			Swal.fire('주제를 작성하여주세요.');
 			return;
 		}
-		if($('#leader').val() == '' || ('#assi').val() == ''){
+		if($('#leader').val() == '' || $('#assi').val() == ''){
 			Swal.fire('교수 or 조교 분을 선택하여주세요.');
 			return;
 		}
@@ -340,7 +349,7 @@ if('${check}' == 'fail'){
 				console.log($('#check_list_team').children().length);
 				var list_size = $('#check_list_team').children().length;
 				var last_n_idx = data;
-				alert(last_n_idx);
+				//alert(last_n_idx);
 				for(i = 0; i<list_size; i++){
 					var team = $('#check_list_team').children().eq(i);
 					console.log(team.attr('name'));

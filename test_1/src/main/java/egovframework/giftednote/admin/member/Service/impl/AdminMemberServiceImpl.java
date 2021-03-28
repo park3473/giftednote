@@ -1,4 +1,4 @@
-package egovframwork.giftednote.admin.member.Servic.Impl;
+package egovframework.giftednote.admin.member.Service.impl;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
-import egovframwork.giftednote.admin.member.Service.AdminMemberService;
+import egovframework.giftednote.admin.member.Service.AdminMemberService;
 
 
 @Service("AdminMemberService")
@@ -21,7 +21,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 			// TODO Auto-generated method stub
 			System.out.println("ddsadsadsa");
 			ModelMap modelMap = new ModelMap();
-			List<?> list = adminMemberMapper.getALLList();
+			List<?> list = adminMemberMapper.getList();
 			modelMap.addAttribute("list",list);
 			return modelMap;
 		}

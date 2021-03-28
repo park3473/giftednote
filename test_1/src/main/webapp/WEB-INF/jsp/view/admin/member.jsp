@@ -12,19 +12,20 @@
 <!--공통상단-->
 <%@ include file="../include/header.jsp" %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/main.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/admin_member.css" type="text/css">
 
 <style>
     a {
         color: #ffffff !important;
         text-decoration: none !important;
     }
-    .form_list_ob > .form_list_note > .test_p{
-    	display:none;
-    }
-    #detail_show > .test_p{
-    	display:block;
-    }
+    
+    .tg  {border-collapse:collapse;border-spacing:0;}
+	.tg td{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
+	  overflow:hidden;padding:10px 5px;word-break:normal;}
+	.tg th{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
+	  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+	.tg .tg-0pky{border-color:#3364b1;}
 </style>
 <section id="new_sc" class="sc_wrap">
         <div class="sc_area">
@@ -38,8 +39,8 @@
                             <!--사이트맵-->
                             <div class="sitemap">
                                 <ul class="sitemap_box">
-                                    <li><span><img src="${pageContext.request.contextPath}/resources//img/home_icon.png"></span>연구노트</li>
-                                    <li>메인</li>
+                                    <li><span><img src="${pageContext.request.contextPath}/resources//img/home_icon.png"></span>관리자</li>
+                                    <li>회원 관리</li>
                                 </ul>
                             </div>
                             <!--사이트맵 end-->
@@ -51,44 +52,46 @@
                                     <!-- 공통타이틀 -->
                                     <div class="all_title">
                                         <div class="line"><span></span></div>
-                                        <h2>리스트</h2>
+                                        <h2>회원 리스트</h2>
                                     </div>
                                     <!-- 공통타이틀 -->
-
-                                    <!-- 공통서치 -->
-                                    <div class="meeting_search">
-
-                                        <div id="meeting_form_btn" class="meeting_add floatR" >
-                                            <a onclick="location.href='${pageContext.request.contextPath}/note/insert.do?IDX=${session_idx}'">노트 등록</a>
-                                        </div>
-
-                                    </div>
-                                    <!-- 공통서치 end-->
-
-                                    <!-- 양식 리스트 -->
-                                    <div class="form_list_con">
-                                        <ul class="form_list_box">
-                                            <c:forEach var="item" items="${model.list}" varStatus="var">
-								                <li class="form_list_ob">
-								                    <div class="form_list_note form_img" onclick="javascript:detail(${item.N_IDX})" id="${item.N_IDX }_detail">
-								                        <img src="${pageContext.request.contextPath}/resources/upload/note_img/${item.IMAGE }.png">
-								                        
-									                    <div id="${item.N_IDX }_idx" class="test_p" dead="${item.DEAD }">
-									                        <ul>
-									                        	<li><p class="form_list_li">제목</p><p class="form_list_li_p">${item.TITLE }</p></li>
-									                        	<li><p class="form_list_li">주제</p><p class="form_list_li_p">${item.TOPIC }</p></li>
-									                        	<li><p class="form_list_li">담당 교수</p><p class="form_list_li_p">${item.LEADER }</p></li>
-									                        	<li><p class="form_list_li">담당 조교</p><p class="form_list_li_p">${item.ASSI }</p></li>
-									                        	<li><p class="form_list_li">연구일지 시작일</p><p class="form_list_li_p">${item.START_TM }</p></li>
-									                        	<li><p class="form_list_li">연구일지 마감일</p><p class="form_list_li_p">${item.END_TM }</p></li>
-									                        </ul>
-													    </div>
-												    </div>
-								                </li>
-											</c:forEach>
-                                        </ul>
-                                    </div>
-                                    <!-- 양식 리스트 end-->
+									<div>
+										<table class="tg" style="width:100%">
+											<thead>
+											  <tr class="tbl_th">
+											    <th class="tg-0lax">순번</th>
+											    <th class="tg-0lax">이름</th>
+											    <th class="tg-0lax">이메일</th>
+											    <th class="tg-0lax">전화번호</th>
+											    <th class="tg-0lax">주소</th>
+											    <th class="tg-0lax">직업</th>
+											  </tr>
+											</thead>
+											<tbody id="list">
+												<c:forEach var="item" items="${model.list }" varStatus="Status">
+												<tr>
+												    <td class="tg-0lax">${Status.index+1 }</td>
+												    <td class="tg-0lax">${item.NAME }</td>
+												    <td class="tg-0lax">${item.EMAIL }</td>
+												    <td class="tg-0lax">${item.PHONE }</td>
+												    <td class="tg-0lax">${item.ADDRESS }</td>
+												    <td class="tg-0lax">
+												    	<c:if test="${item.LEVEL == '2'}">
+												    		멘토
+												    	</c:if>
+												    	<c:if test="${item.LEVEL == '1'}">
+												    		학생
+												    	</c:if>
+												    	<c:if test="${item.LEVEL == '3'}">
+												    		관리자
+												    	</c:if>
+												    </td>
+												 </tr>
+												 </c:forEach>
+											</tbody>
+										</table>
+									</div>
+                                   
 
                                 </div>
                                 <!-- 진행중인 회의 end -->

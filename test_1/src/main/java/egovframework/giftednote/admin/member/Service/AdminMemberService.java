@@ -1,4 +1,4 @@
-package egovframwork.giftednote.admin.member.Service;
+package egovframework.giftednote.admin.member.Service;
 
 import org.springframework.ui.ModelMap;
 

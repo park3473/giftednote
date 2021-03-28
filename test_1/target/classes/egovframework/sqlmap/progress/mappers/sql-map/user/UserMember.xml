@@ -11,9 +11,9 @@
 	</select>
 	<insert id="insertMember" parameterType="egovframework.giftednote.user.member.model.UserMemberVo">
 		INSERT INTO TBL_MEMBER 
-		(EMAIL , PASSWORD , ADDRESS , PHONE , NAME) 
+		(EMAIL , PASSWORD , ADDRESS , PHONE , NAME , LEVEL) 
 		VALUES 
-		(#{EMAIL} , #{PASSWORD} , #{ADDRESS} , #{PHONE} , #{NAME})
+		(#{EMAIL} , #{PASSWORD} , #{ADDRESS} , #{PHONE} , #{NAME} , #{LEVEL})
 	</insert>
 	<select id="getListAll" parameterType="egovframework.giftednote.user.member.model.UserMemberVo" resultType="egovframework.giftednote.user.member.model.UserMemberVo">
 		SELECT *
