@@ -7,7 +7,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!--삭제금지-->
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/detail.css" type="text/css">
 <!--삭제금지-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
@@ -112,8 +112,8 @@
                             <!--사이트맵-->
                             <div class="sitemap">
                                 <ul class="sitemap_box">
-                                    <li><span><img src="${pageContext.request.contextPath}/resources//img/home_icon.png"></span>설정관리</li>
-                                    <li>회의록 양식</li>
+                                    <li><span><img src="${pageContext.request.contextPath}/resources//img/home_icon.png"></span>노트</li>
+                                    <li>연구노트</li>
                                 </ul>
                             </div>
                             <!--사이트맵 end-->
@@ -125,58 +125,63 @@
                                     <!-- 공통타이틀 -->
                                     <div class="all_title">
                                         <div class="line"><span></span></div>
-                                        <h2>회의록 양식</h2>
+                                        <h2>연구노트</h2>
                                     </div>
                                     <!-- 공통타이틀 -->
-
-                                    <!-- 공통서치 -->
-                                    <div class="meeting_search">
-
-                                        <div id="meeting_form_btn" class="meeting_add floatR" >
-                                            <a onclick="location.href='${pageContext.request.contextPath}/note/insert.do?IDX=${session_idx}'">노트 등록</a>
-                                        </div>
-
-                                    </div>
-                                    <!-- 공통서치 end-->
-
                                     <!-- 양식 리스트 -->
-                                    <div>
-											<p>hello</p>
-											<ul>
-											<c:forEach var="i" begin="1" end="${model.Pagecount}" varStatus="count">
-										    	<li onclick="javascript:content(${count.index})">${count.index}</li>
-											</c:forEach>
-												<li><button onclick="javascript:PageUp()">페이지 추가 버튼</button></li>
-											</ul>
-											<ul style="display:none">
-												<li>${model.list[0].P_IDX }</li>
-												<li id="N_IDX" value="${model.list[0].N_IDX }">${model.list[0].N_IDX }</li>
-												<li id="CONTENT" content="${model.list[0].CONTENT }">${model.list[0].CONTENT }</li>
-											</ul>
-											<div>
-											<div id="cke">
-													<div><button id="insert_bt" onclick="javascript:content_insert()" P_IDX="1">저장</button></div>
-													<textarea name="CONTENT" id="ckeditor">
-														<!-- 콘텐츠 보이는곳 -->
-														${model.list[0].CONTENT }
-													</textarea>
-												</div>
-											</div>
-											<div>
-												<c:forEach var="colist" items="${model.colist}" varStatus="var">
-													<p id="${colist.C_IDX }_conid">${colist.N_IDX }</p>
-													<p id="${colist.C_IDX }_coid">${colist.IDX }</p>
-													<p id="${colist.C_IDX }_cona">${colist.NAME }</p>
-													<p id="${colist.C_IDX }_cocom" >${colist.CONTENT }</p>
-													<p onclick="javascript:comment_up(${colist.C_IDX})">수정 버튼</p>
-													<p onclick="javascript:comment_delete(${colist.C_IDX})">삭제 버튼</p>
+                                    <div id="detail_modal">
+                                    	<ul id="detail_modal_ul">
+                                    		<li class="detail_modal_li">
+												<ul>
+												<c:forEach var="i" begin="1" end="${model.Pagecount}" varStatus="count">
+											    	<li id="deatil_page_list" onclick="javascript:content(${count.index})">${count.index}<span>Page</span></li>
 												</c:forEach>
-											</div>
-											<div id="comment">
-												<input type="text" name="comment_set" id="comment_set">
-												<button onclick="javascript:comment_set()">댓글 전송</button>
-											</div>
-										</div>
+													<li class="detail_page_up" ><button onclick="javascript:PageUp()">페이지 추가</button></li>
+													<li class="detail_page_up"><button id="insert_bt" onclick="javascript:content_insert()" P_IDX="1">페이지 저장</button></li>
+												</ul>
+												<ul style="display:none">
+													<li>${model.list[0].P_IDX }</li>
+													<li id="N_IDX" value="${model.list[0].N_IDX }">${model.list[0].N_IDX }</li>
+													<li id="CONTENT" content="${model.list[0].CONTENT }">${model.list[0].CONTENT }</li>
+												</ul>
+                                    		</li>
+                                    		<li class="detail_modal_li">
+                                    			<div>
+													<div id="cke">
+														<textarea name="CONTENT" id="ckeditor">
+															<!-- 콘텐츠 보이는곳 -->
+															${model.list[0].CONTENT }
+														</textarea>
+													</div>
+												</div>
+                                    		</li>
+                                    		<li class="detail_modal_li" style="margin-left:2rem">
+                                    			<div>
+                                    				<p>댓글</p>
+                                    			</div>
+                                    			<div>
+													<c:forEach var="colist" items="${model.colist}" varStatus="var">
+													<div class="colist_view">
+														<p style="display:none" id="${colist.C_IDX }_conid">${colist.N_IDX }</p>
+														<p style="display:none" id="${colist.C_IDX }_coid">${colist.IDX }</p>
+														<p id="${colist.C_IDX }_cona">${colist.NAME }</p>
+														<p id="${colist.C_IDX }_cocom" >${colist.CONTENT }</p>
+														<ul class="colist_ul">
+															<li id="colist_co_up" class="colist_bt"><p onclick="javascript:comment_up(${colist.C_IDX})">수정 버튼</p></li>
+															<li id="colist_co_de" class="colist_bt"><p onclick="javascript:comment_delete(${colist.C_IDX})">삭제 버튼</p></li>
+														</ul>
+													</div>
+													</c:forEach>
+												</div>
+												<div id="comment">
+													<ul>
+														<li><input type="text" name="comment_set" id="comment_set"></li>
+														<li><button onclick="javascript:comment_set()">댓글 전송</button></li>
+													</ul>
+												</div>
+                                    		</li>
+                                    	</ul>
+									</div>
 
                                 </div>
                                     <!-- 양식 리스트 end-->
@@ -268,7 +273,8 @@ if('${check}' == 'fail'){
 			success: function(data , status, xhr){
 			}
 		})
-		location.reload();
+		location.reload(true);
+		history.go(0);
 	}
 	
 	function comment_set(){
@@ -291,7 +297,8 @@ if('${check}' == 'fail'){
 				
 			}
 		})
-		location.reload();
+		history.go(0);
+		history.go(0);
 	}
 	
 	function comment_up(c_idx){
@@ -320,7 +327,8 @@ if('${check}' == 'fail'){
 				
 			}
 		})
-		location.reload();
+		history.go(0);
+		history.go(0);
 	}
 	
 	function comment_delete(c_idx){
@@ -347,7 +355,8 @@ if('${check}' == 'fail'){
 								
 						}
 					})
-					location.reload();
+					history.go(0);
+				  history.go(0);
 			  }
 			})
 	}

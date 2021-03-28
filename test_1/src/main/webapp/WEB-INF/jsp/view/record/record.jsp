@@ -32,77 +32,127 @@
 	  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
 	.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
 </style>
-<div>
-	<div>
-		<table class="tg">
-		<thead>
-		  <tr>
-		    <th class="tg-0pky" rowspan="2">수업일</th>
-		    <c:forEach var="teamitem" items="${model.teamlist }" varStatus="status">
-				<th class="tg-0pky" colspan="2" id="name_${status.index }" name=${teamitem.NAME } idx="${teamitem.IDX }">${teamitem.NAME}</th>
-			</c:forEach>
-		    <th class="tg-0pky" rowspan="2">지도 목표 , 내용 및 자체평가 자유기술</th>
-		  </tr>
-		  <tr>
-		  	<c:forEach begin="0" end="${model.teamcount-1 }">
-		    	<td class="tg-0pky">참여율</td>
-		    	<td class="tg-0pky">기여도</td>
-			</c:forEach>
-		  </tr>
-		</thead>
-		<tbody id="set">
-			  <tr id="setList">
-			    <td class="tg-0pky"><input class="input_size datecalendar" type="text" name="CLASS_TM" id="CLASS_TM"></td>
-			    <c:forEach begin="0" end="${model.teamcount-1 }" step="1" varStatus="status">
-					<td class="tg-0pky" ><select id="join_${status.index }"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
-					<td class="tg-0pky"><select id="uptake_${status.index }"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
-				</c:forEach>
-			    <td class="tg-0pky"><textarea type="text" id="RECORD"></textarea></td>
-			  </tr>
-		</tbody>
-		</table>
-	</div>
-	<div>
-		<button onclick="javascript:insert(${model.teamcount})">등록</button>
-	</div>
-</div>
-<div>
-	<table class="tg">
-	<thead>
-	  <tr>
-	    <th class="tg-0pky" rowspan="2">순번</th>
-	    <th class="tg-0pky" rowspan="2">수업일</th>
-	    <th class="tg-0pky" rowspan="2">작성일</th>
-	    <c:forEach var="teamitem" items="${model.teamlist }" varStatus="status">
-			<th class="tg-0pky" colspan="2">${teamitem.NAME}</th>
-		</c:forEach>
-	    <th class="tg-0pky" rowspan="2">지도 목표 , 내용 및 자체평가 자유기술</th>
-	  </tr>
-	  <tr>
-	  	<c:forEach begin="0" end="${model.teamcount-1 }">
-	    	<td class="tg-0pky">참여율</td>
-	    	<td class="tg-0pky">기여도</td>
-		</c:forEach>
-	  </tr>
-	</thead>
-	<tbody>
-		<c:if test="${model.daycount != 0 }">
-		<c:forEach begin="0" end="${model.daycount-1 }" var="dayitem" items="${model.daylist }" varStatus="status">
-		  <tr id="list_${status.index }" onclick="javascript:update(${status.index})">
-		    <td class="tg-0pky" id="index_list">${status.index+1 }</td>
-		    <td class="tg-0pky" id="class_tm_list">${dayitem.CLASS_TM}</td>
-		    <td class="tg-0pky" id="create_tm_list">${dayitem.CREATE_TM }</td>
-		    <c:forEach begin="${status.index*4 }" end="${(status.index*model.teamcount)+3 }" step="1" var="item" items="${model.list }">
-				<td class="tg-0pky" ID="${status.index*4 }">${item.SCORE_JOIN }</td>
-				<td class="tg-0pky" id="${(status.index*4)+3 }">${item.SCORE_UPTAKE }</td>
-			</c:forEach>
-		    <td class="tg-0pky">${dayitem.RECORD }</td>
-		  </tr>
-		 </c:forEach>
-		 </c:if>
-	</tbody>
-	</table>
-</div>
+
+<section id="new_sc" class="sc_wrap">
+        <div class="sc_area">
+            <div class="sc_con">
+                <div class="sc_size">
+					<%@ include file="../include/top.jsp" %>
+
+                    <!-- 본문 내용-->
+                    <div class="sc_section">
+                        <div class="sc_section_con">
+                            <!--사이트맵-->
+                            <div class="sitemap">
+                                <ul class="sitemap_box">
+                                    <li><span><img src="${pageContext.request.contextPath}/resources//img/home_icon.png"></span>연구노트</li>
+                                    <li>기록일지</li>
+                                </ul>
+                            </div>
+                            <!--사이트맵 end-->
+
+                            <div class="sc_section_size">
+                                <!-- 진행중인 회의 -->
+                                <div class="meeting_wrap">
+
+                                    <!-- 공통타이틀 -->
+                                    <div class="all_title">
+                                        <div class="line"><span></span></div>
+                                        <h2>기록일지</h2>
+                                    </div>
+                                    <!-- 공통타이틀 -->
+
+                                    <!-- 양식 리스트 -->
+                                    <div>
+										<div>
+											<table class="tg" style="width:100%">
+											<thead>
+											  <tr>
+											    <th class="tg-0pky" rowspan="2">수업일</th>
+											    <c:forEach var="teamitem" items="${model.teamlist }" varStatus="status">
+													<th class="tg-0pky" colspan="2" id="name_${status.index }" name=${teamitem.NAME } idx="${teamitem.IDX }">${teamitem.NAME}</th>
+												</c:forEach>
+											    <th class="tg-0pky" rowspan="2">지도 목표 , 내용 및 자체평가 자유기술</th>
+											  </tr>
+											  <tr>
+											  	<c:forEach begin="0" end="${model.teamcount-1 }">
+											    	<td class="tg-0pky">참여율</td>
+											    	<td class="tg-0pky">기여도</td>
+												</c:forEach>
+											  </tr>
+											</thead>
+											<tbody id="set">
+												  <tr id="setList">
+												    <td class="tg-0pky"><input class="input_size datecalendar" type="text" name="CLASS_TM" id="CLASS_TM"></td>
+												    <c:forEach begin="0" end="${model.teamcount-1 }" step="1" varStatus="status">
+														<td class="tg-0pky" ><select id="join_${status.index }"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+														<td class="tg-0pky"><select id="uptake_${status.index }"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+													</c:forEach>
+												    <td class="tg-0pky"><textarea type="text" id="RECORD"></textarea></td>
+												  </tr>
+											</tbody>
+											</table>
+											
+											<div class="meeting_search">
+	
+		                                        <div id="meeting_form_btn" class="meeting_add floatR" >
+		                                            <a onclick="javascript:insert(${model.teamcount})">등록</a>
+		                                        </div>
+		
+		                                    </div>
+										</div>
+									</div>
+									<div>
+										<table class="tg" style="width:100%">
+										<thead>
+										  <tr>
+										    <th class="tg-0pky" rowspan="2">순번</th>
+										    <th class="tg-0pky" rowspan="2">수업일</th>
+										    <th class="tg-0pky" rowspan="2">작성일</th>
+										    <c:forEach var="teamitem" items="${model.teamlist }" varStatus="status">
+												<th class="tg-0pky" colspan="2">${teamitem.NAME}</th>
+											</c:forEach>
+										    <th class="tg-0pky" rowspan="2">지도 목표 , 내용 및 자체평가 자유기술</th>
+										  </tr>
+										  <tr>
+										  	<c:forEach begin="0" end="${model.teamcount-1 }">
+										    	<td class="tg-0pky">참여율</td>
+										    	<td class="tg-0pky">기여도</td>
+											</c:forEach>
+										  </tr>
+										</thead>
+										<tbody>
+											<c:if test="${model.daycount != 0 }">
+											<c:forEach begin="0" end="${model.daycount-1 }" var="dayitem" items="${model.daylist }" varStatus="status">
+											  <tr id="list_${status.index }" onclick="javascript:update(${status.index})">
+											    <td class="tg-0pky" id="index_list">${status.index+1 }</td>
+											    <td class="tg-0pky" id="class_tm_list">${dayitem.CLASS_TM}</td>
+											    <td class="tg-0pky" id="create_tm_list">${dayitem.CREATE_TM }</td>
+											    <c:forEach begin="${status.index*model.teamcount }" end="${(status.index*model.teamcount)+(model.teamcount-1) }" step="1" var="item" items="${model.list }">
+													<td class="tg-0pky" ID="${status.index*model.teamcount }">${item.SCORE_JOIN }</td>
+													<td class="tg-0pky" id="${(status.index*model.teamcount)+(model.teamcount-1) }">${item.SCORE_UPTAKE }</td>
+												</c:forEach>
+											    <td class="tg-0pky">${dayitem.RECORD }</td>
+											  </tr>
+											 </c:forEach>
+											 </c:if>
+										</tbody>
+										</table>
+									</div>
+                                    <!-- 양식 리스트 end-->
+
+                                </div>
+                                <!-- 진행중인 회의 end -->
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- 본문 내용 end-->
+
+                </div>
+            </div>
+        </div>
+    </section>
 <input type="hidden" value="${model.N_IDX }" id="n_idx">
 <!--공통하단-->
 <%@ include file="../include/footer.jsp" %>

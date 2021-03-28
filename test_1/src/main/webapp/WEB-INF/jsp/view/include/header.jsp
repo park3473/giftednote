@@ -111,23 +111,23 @@
                                     </div>
                                     <ul class="sub_menu_box">
                                         <li class="sub_menu_ob">
-                                            <a href="#">진행중인 노트</a>
+                                            <a onclick="alert('아직 경로 설정 미지정')">진행중인 노트</a>
                                         </li>
                                         <li class="sub_menu_ob">
-                                            <a href="#">마감된 노트</a>
+                                            <a onclick="alert('아직 경로 설정 미지정')">마감된 노트</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
                             <li class="main_menu_ob main_menu_ob_02">
-                                <a href="#"></a>
+                                <a onclick="alert('아직 경로 설정 미지정')"></a>
                                 <div class="sub_menu_con">
                                     <div class="sub_menu_title">
                                         <h2>회원관리</h2>
                                     </div>
                                     <ul class="sub_menu_box">
                                         <li class="sub_menu_ob">
-                                            <a href="#">회원정보</a>
+                                            <a onclick="alert('아직 경로 설정 미지정')">회원정보</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -137,7 +137,7 @@
                     <div class="menu_cont">
                         <div class="menu_cont_box">
                             <div class="logo_box">
-                                <a href="#"></a>
+                                <a href="${pageContext.request.contextPath}/"></a>
                                 <p>카이스트 <span>연구노트</span></p>
                             </div>
                         </div>

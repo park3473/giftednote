@@ -11,6 +11,8 @@
 <!--삭제금지-->
 <!--공통상단-->
 <%@ include file="../include/header.jsp" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/register.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/insert.css" type="text/css">
 <!--공통상단 끝-->
 
 <style>
@@ -24,10 +26,6 @@
     #detail_show > .test_p{
     	display:block;
     }
-    .img_modal{
-    width : 1000px;
-    height: 500px;
-    }
     .img_modal img{
     	width : 100px;
     	heigth : auto;
@@ -35,72 +33,172 @@
 	#img_check{
 		width:100px;
 	}
-	#img_modal_open{
-		width: 100px;
-		border : 1px solid black;
-	}
 </style>
-<div>
-	<div>
-		<div>
-			<form action="#" id="f_insert_note" method="POST">
-				<div>
-					<input type="hidden" name="IDX" value="${session_idx}">
-				</div>
-				<div>
-					<img id="img_check" src="#" alt="ddd">
-					<input type="hidden" name="IMAGE" id="IMAGE">
-					<p id="img_modal_open" onclick="javascript:img_modal()">표지 선택</p>
-				</div>
-				<div>
-					<span>제목</span><input type="text" name="TITLE">
-				</div>
-				<div>
-					<span>주제</span><input type="text" name="TOPIC">
-				</div>
-				<div>
-					<span>지도자</span><input type="text" name="LEADER" id="leader"><span class="search" cked="mento">검색</span>
-				</div>
-				<div>
-					<span>조교</span><input type="text" name="ASSI" id="assi"><span class="search" cked="mento">검색</span>
-				</div>
-				<div>
-					<span>주제</span><input type="text" name="INTRO">
-				</div>
-			</form>
-				<div>
-					<div>
-							<label>검색창</label><input type="text"><span class="search" cked="student">검색</span>
-					</div>
-					<div>
-						<p>추가 전 학생</p>
-					<ul id="no_check_list_team">
-						<c:forEach var="item" items="${model.list}" varStatus="var">
-							<li id="check_${item.IDX }" ondblclick="javascript:check_id('${item.IDX}')" value="${item.IDX }" name="${item.NAME }" idx="${item.IDX }" school_name="${item.SCHOOL_NAME }" email="${item.EMAIL }"school_year="${item.SCHOOL_YEAR }"><span>${item.NAME }</span></li>
-						</c:forEach>
-					</ul>
-					</div>
-				</div>
-				<div id="asd">
-					<p>추가된 학생</p>
-					<ul id="check_list_team">
-						<!-- 추가된 학생 리스트가 들어갈 자리 -->
-					</ul>
-				</div>
-			<div>
-				<button onclick="javascript:insert_note()">테스트 입력!</button>
-			</div>
-		</div>
-	</div>
-</div>
+<section id="new_sc" class="sc_wrap">
+        <div class="sc_area">
+            <div class="sc_con">
+                <div class="sc_size">
+
+                    <!-- 공통 탑 -->
+                    <div class="sc_top">
+                        <div class="sc_top_size">
+                            <div class="top_home">
+                                <div class="home_btn">
+                                    <a href="${pageContext.request.contextPath}/">HOME</a>
+                                </div>
+                                <div class="home_title">
+                                    <h2>연구노트</h2>
+                                </div>
+                            </div>
+                            <div class="gt_menu_cont">
+                                <ul class="gt_menu_box">
+                                	<c:if test="${session_login == 'ok' }">
+                                    <li>
+                                        <p>
+                                            <span>${session_name }</span>님
+                                        </p>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="#">마이페이지</a>
+                                    </li>
+                                    <li class="logout_btn">
+                                        <a onclick="location.href='/user/member/logout.do'">로그아웃</a>
+                                    </li>
+                                    </c:if>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 공통 탑 end-->
+
+                    <!-- 본문 내용-->
+                    <div class="sc_section">
+                        <div class="sc_section_con">
+                            <!--사이트맵-->
+                            <div class="sitemap">
+                                <ul class="sitemap_box">
+                                    <li><span><img src="${pageContext.request.contextPath}/resources/img/home_icon.png"></span>노트</li>
+                                    <li>노트 등록</li>
+                                </ul>
+                            </div>
+                            <!--사이트맵 end-->
+
+                            <div class="sc_section_size">
+                                <!-- 진행중인 회의 -->
+                                <div class="meeting_wrap">
+
+                                    <!-- 공통타이틀 -->
+                                    <div class="all_title">
+                                        <div class="line"><span></span></div>
+                                        <h2>노트 등록</h2>
+                                    </div>
+                                    <!-- 공통타이틀 -->
+
+                                    <!-- 양식 리스트 -->
+                                    <div class="form_list_con">
+                                        <!--메인버튼 끝-->
+                                        <div>
+                                        	<img src="${pageContext.request.contextPath }/resources/img/logo.png">
+                                        </div>
+										<div>
+										<div>
+											<div>
+												<form action="#" id="f_insert_note" method="POST">
+													<div>
+														<input type="hidden" name="IDX" value="${session_idx}">
+													</div>
+													<div id="img_select_modal">
+														<img id="img_check" src="${pageContext.request.contextPath}/resources/upload/note_img/1_0505.png" alt="">
+														<input type="hidden" name="IMAGE" id="IMAGE">
+														<p id="img_modal_open" onclick="javascript:img_modal()">표지 선택</p>
+													</div>
+													<div>
+														<div>
+															<input type="text" name="TITLE" placeholder="제목" >
+														</div>
+														<div>
+															<input type="text" name="TOPIC" placeholder="주제" >
+														</div>
+														<div>
+															<input type="text" name="LEADER" id="leader" placeholder="교수(이메일로 검색하여주세요!)" ><span class="search" cked="mento">검색</span>
+														</div>
+														<div>
+															<input type="text" name="ASSI" id="assi" placeholder="조교(이메일로 검색하여주세요!)" ><span class="search" cked="mento">검색</span>
+														</div>
+														<div>
+															<input type="text" name="INTRO" placeholder="소개">
+														</div>
+													</div>
+												</form>
+													<div>
+														<div>
+															<input type="text" placeholder="학생검색(이메일로 검색하여주세요!)"><span class="search" cked="student" >검색</span>
+														</div>
+														<div id="no_check_team_ul">
+															<p>추가 전 학생</p>
+															<ul id="no_check_list_team">
+																<c:forEach var="item" items="${model.list}" varStatus="var">
+																	<li id="check_${item.IDX }" ondblclick="javascript:check_id('${item.IDX}')" value="${item.IDX }" name="${item.NAME }" idx="${item.IDX }" school_name="${item.SCHOOL_NAME }" email="${item.EMAIL }"school_year="${item.SCHOOL_YEAR }"><span>${item.NAME }</span></li>
+																</c:forEach>
+															</ul>
+														</div>
+														<div id="check_team_ul">
+															<p>추가된 학생</p>
+															<ul id="check_list_team">
+																<!-- 추가된 학생 리스트가 들어갈 자리 -->
+															</ul>
+														</div>
+													</div>
+												<div id="note_insert_bt">
+													<button onclick="javascript:insert_note()">노트 등록!</button>
+												</div>
+											</div>
+										</div>
+									</div>
+                                    </div>
+                                    <!-- 양식 리스트 end-->
+
+                                </div>
+                                <!-- 진행중인 회의 end -->
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- 본문 내용 end-->
+
+                </div>
+            </div>
+        </div>
+    </section>
 <!-- img_modal start -->
-	<div style="display:none" class="img_modal">
-		<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_0505.png" ondblclick="javascript:check_img('1_0505')" >
-		<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_1515.png" ondblclick="javascript:check_img('1_1515')">
-		<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_3535.png" ondblclick="javascript:check_img('1_3535')">
-		<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_4545.png" ondblclick="javascript:check_img('1_4545')">
-		<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_5555.png" ondblclick="javascript:check_img('1_5555')">
-	</div>
+	<div id="meeting_form_modal" class="all_modal img_modal">
+        <div class="all_modal_con">
+            <div class="modal_box">
+
+                <div class="modal_title">
+                    <!-- 공통타이틀 -->
+                    <div class="all_title">
+                        <div class="line"><span></span></div>
+                        <h2>표지 이미지 선택</h2>
+                    </div>
+                    <!-- 공통타이틀 -->
+
+                    <!-- 닫기 -->
+                    <div id="close_btn" class="close_btn">
+                        <a href="#">
+                            <i class="las la-times"></i>
+                        </a>
+                    </div>
+                </div>
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_0505.png" ondblclick="javascript:check_img('1_0505')" >
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_1515.png" ondblclick="javascript:check_img('1_1515')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_3535.png" ondblclick="javascript:check_img('1_3535')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_4545.png" ondblclick="javascript:check_img('1_4545')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_5555.png" ondblclick="javascript:check_img('1_5555')">
+            </div>
+        </div>
+    </div>
 <!-- img_modal end -->
 <!-- 교수 , 조교 추가 modal start-->
 <div>
