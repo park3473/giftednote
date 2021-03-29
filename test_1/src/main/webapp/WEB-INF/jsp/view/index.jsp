@@ -222,6 +222,7 @@
 	            var s = result.indexOf("true");
 	            if (s > -1) {
 	                idchk = true;
+	                if()
 	                location.href = '${pageContext.request.contextPath}/note/list.do?EMAIL='+$('#ID').val();
 	                return;
 	            } else if (result.indexOf("false:-1") > -1) {

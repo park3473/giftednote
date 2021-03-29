@@ -32,6 +32,9 @@
 	.tg th{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
 	  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
 	.tg .tg-0pky{border-color:#3364b1;}
+	table{
+		width:100%;
+	}
 </style>
 <section id="new_sc" class="sc_wrap">
         <div class="sc_area">

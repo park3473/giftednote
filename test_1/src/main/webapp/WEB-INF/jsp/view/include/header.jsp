@@ -83,26 +83,10 @@
 			<p>${session_name }</p>
 			<p>${session_level }</p>
 		</div>
-		<div>
-			<button onclick="location.href='/user/member/logout.do'">로그아웃</button>
-		</div>
 	</c:if>
 	<!-- 내정보 -->
-	<div>
-		<button onclick="javascript:history.back()">뒤로가기</button>
-		<button onclick="location.href='/'">홈</button>
-	</div>
-	<div>
-		<div>
-			<ul>
-				<li>톱니</li>
-				<li>노트</li>
-				<li>사람</li>
-				<li></li>
-			</ul>
-		</div>
-	</div>
 </div>
+<c:set var='urlname' value="${pageContext.request.requestURL}" />
 <header id="new_hd" class="hd_wrap">
         <div class="hd_area">
             <div class="hd_con">
@@ -110,8 +94,9 @@
                     <div class="menu_bar">
                     	<c:if test="${session_login == 'ok' }">
                         <ul class="main_menu">
-                            <li class="main_menu_ob main_menu_ob_01 menu_active">
-                                <a href="#"></a>
+                            <li class="main_menu_ob main_menu_ob_01 
+								<c:if test="${fn:indexOf(urlname,'/note/') > -1 }">menu_active</c:if> ">
+                                <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?EMAIL=${session_email}'"></a>
                                 <div class="sub_menu_con">
                                     <div class="sub_menu_title">
                                         <h2>노트리스트</h2>
@@ -129,8 +114,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <c:if test="${session_level == '3' }">
-                            <li class="main_menu_ob main_menu_ob_02 ">
+                            <li class="main_menu_ob main_menu_ob_02 <c:if test="${fn:indexOf(urlname,'/myinfo/') > -1 }">menu_active</c:if> ">
                                 <a onclick="location.href='${pageContext.request.contextPath}/admin/member/list.do'"></a>
                                 <div class="sub_menu_con">
                                     <div class="sub_menu_title">
@@ -139,6 +123,20 @@
                                     <ul class="sub_menu_box">
                                         <li class="sub_menu_ob">
                                             <a href="#">회원정보</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <c:if test="${session_level == '3' }">
+                            <li class="main_menu_ob main_menu_ob_03 <c:if test="${fn:indexOf(urlname,'/admin/') > -1 }">menu_active</c:if> ">
+                                <a onclick="location.href='${pageContext.request.contextPath}/admin/member/list.do'"></a>
+                                <div class="sub_menu_con">
+                                    <div class="sub_menu_title">
+                                        <h2>회원관리</h2>
+                                    </div>
+                                    <ul class="sub_menu_box">
+                                        <li class="sub_menu_ob">
+                                            <a href="#">회원관리</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -166,7 +164,7 @@
 	    });
 
 	    function menu() {
-	        $(".main_menu_ob_01").find(".sub_menu_con").show();
+	        $(".menu_active").find(".sub_menu_con").show();
 
 	        $(".main_menu_ob").click(function () {
 	            $(".sub_menu_con").hide();

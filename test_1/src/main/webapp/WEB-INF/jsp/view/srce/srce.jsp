@@ -34,6 +34,7 @@
 	.tg .tg-0pky{border-color:#3364b1;}
 	table{
 	text-align : center;
+	width:100%;
 	}
 	
 	.tbl_th{
