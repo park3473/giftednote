@@ -4,6 +4,11 @@ li.detail_modal_li{
 	min-width:250px;
 }
 
+.PageActive{
+    border: 1px solid #3364b1 !important;
+    background-color: #3364b1 !important;
+}
+
 
 #deatil_page_list{
 	width: 4rem;
@@ -17,6 +22,8 @@ li.detail_modal_li{
     cursor: pointer
 	
 }
+
+
 
 .detail_page_up button{
 	width: 100px;

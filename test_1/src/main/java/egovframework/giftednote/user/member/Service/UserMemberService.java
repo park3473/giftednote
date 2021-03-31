@@ -19,6 +19,8 @@ public interface UserMemberService {
 
 	public List<?> getList(UserMemberVo userMembervo);
 
+	public UserMemberVo getMyInfo(UserMemberVo userMemberVo);
+
 	
 }
 

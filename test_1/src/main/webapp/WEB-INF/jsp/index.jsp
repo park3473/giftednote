@@ -129,8 +129,8 @@
 										<div class="form_list_login">
 											<form action="#" method="post" id="member_login_form" name="member_login_form" >
 												<ul>
-													<li><input type="text" id="ID" name="EMAIL" placeholder="이메일"></li>
-													<li><input type="password" id="PASSWORD" name="PASSWORD" placeholder="비밀번호"></li>
+													<li><input type="text" id="ID" onkeyup="login_enter();" name="EMAIL" placeholder="이메일"></li>
+													<li><input type="password" onkeyup="login_enter();" class="login_input" id="PASSWORD" name="PASSWORD" placeholder="비밀번호"></li>
 												</ul>
 												<ul class="form_list_bt">
 													<li><button type="button" onclick="javascript:login()">로그인</button></li>
@@ -177,7 +177,7 @@
                 </div>
 				<div id="password_modal">
 											<div>
-													<input type="text" id="password_re_email" name="EMAIL">
+													<input type="text" onkeyup="password_re_search()"id="password_re_email" name="EMAIL">
 													<input type="button" onclick="javascript:password_re_search()" id="pw_re" value="비밀번호 찾기">
 											</div>
 										</div>
@@ -222,11 +222,10 @@
 	            var s = result.indexOf("true");
 	            if (s > -1) {
 	                idchk = true;
-	                if()
 	                location.href = '${pageContext.request.contextPath}/note/list.do?EMAIL='+$('#ID').val();
 	                return;
 	            } else if (result.indexOf("false:-1") > -1) {
-	                alert('이메일 혹은 패스워드를 재확인 해주십시오.');
+	                Swal.fire('이메일 혹은 패스워드를 재확인 해주십시오.');
 	                return;
 	            }      
 	        }
@@ -251,6 +250,13 @@
 		        }
 		    });
 	}
+	
+	function login_enter(){
+		if(window.event.keyCode == 13){
+			login();
+		}
+	}
+	
 	
 </script>
 <!-- js 끝 -->

@@ -10,7 +10,7 @@
 
 <!--삭제금지-->
 <!--공통상단-->
-<%@ include file="../include/header.jsp" %>
+<%@ include file="../../include/header.jsp" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/admin_member.css" type="text/css">
 
@@ -31,7 +31,7 @@
         <div class="sc_area">
             <div class="sc_con">
                 <div class="sc_size">
-					<%@ include file="../include/top.jsp" %>
+					<%@ include file="../../include/top.jsp" %>
 
                     <!-- 본문 내용-->
                     <div class="sc_section">
@@ -106,7 +106,7 @@
         </div>
     </section>
 <!--공통하단-->
-<%@ include file="../include/footer.jsp" %>
+<%@ include file="../../include/footer.jsp" %>
 <!--공통하단 끝-->
 <!-- js 시작 -->
 <script type="text/javascript">

@@ -10,7 +10,7 @@
 
 <!--삭제금지-->
 <!--공통상단-->
-<%@ include file="../include/header.jsp" %>
+<%@ include file="../../include/header.jsp" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/register.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/insert.css" type="text/css">
 <!--공통상단 끝-->
@@ -40,7 +40,7 @@
                 <div class="sc_size">
 
                     <!-- 공통 탑 -->
-                    <%@ include file="../include/top.jsp" %>
+                    <%@ include file="../../include/top.jsp" %>
                     <!-- 공통 탑 end-->
 
                     <!-- 본문 내용-->
@@ -187,7 +187,7 @@
 </div>
 <!-- 교수 , 조교 추가 modal end -->
 <!--공통하단-->
-<%@ include file="../include/footer.jsp" %>
+<%@ include file="../../include/footer.jsp" %>
 <!--공통하단 끝-->
 <!-- js 시작 -->
 <script type="text/javascript">

@@ -2,6 +2,8 @@ package egovframework.giftednote.user.member.Service.impl;
 
 import java.util.List;
 
+import org.springframework.ui.ModelMap;
+
 import egovframework.giftednote.user.member.model.UserMemberVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -16,4 +18,6 @@ public interface UserMemberMapper {
 	public List<?> getListAll();
 	
 	public List<?> getList(UserMemberVo userMembervo);
+
+	public UserMemberVo getMyInfo(UserMemberVo userMemberVo);
 }

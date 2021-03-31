@@ -30,7 +30,7 @@ public class AdminMemberController {
 		ModelMap model = new ModelMap();
 		model = adminMemberService.getALLList();
 		System.out.println("dddd");
-		return new ModelAndView("view/admin/member","model",model);
+		return new ModelAndView("admin/member/list","model",model);
 	}
 
 }

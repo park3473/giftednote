@@ -33,7 +33,7 @@ public class UserExploringContorller {
 		model = userExploringService.getList(UserExploringVo);
 		model.put("IDX", request.getParameter("IDX"));
 		model.put("N_IDX", request.getParameter("N_IDX"));
-		return new ModelAndView("/view/exploring/exploring","model",model);
+		return new ModelAndView("/user/exploring/exploring","model",model);
 	}
 	
 	@RequestMapping(value="/exploring/setExplor.do", method=RequestMethod.POST)

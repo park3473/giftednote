@@ -81,7 +81,7 @@ public class UserNoteController {
 		
 		model.put("beforeDomain", UserNoteVo);
 
-		return new ModelAndView("view/note/main", "model", model);
+		return new ModelAndView("user/note/main", "model", model);
 	}
 	
 	@RequestMapping(value="/note/insert.do" , method = RequestMethod.GET)
@@ -92,7 +92,7 @@ public class UserNoteController {
 		
 		model = userMemberService.getListAll();
 		
-		return new ModelAndView("view/note/insert" , "model", model);
+		return new ModelAndView("user/note/insert" , "model", model);
 	}
 	@RequestMapping(value="/note/insert.do" , method = RequestMethod.POST)
 	public void InsertNote(@ModelAttribute("UserNoteVo") UserNoteVo UserNoteVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -122,7 +122,7 @@ public class UserNoteController {
 		UserNoteDetailVo.setN_IDX(n_idx);
 		model = userNoteService.getDetail(UserNoteDetailVo);
 		
-		return new ModelAndView("view/note/detail" , "model", model);
+		return new ModelAndView("user/note/detail" , "model", model);
 	}
 	//detail 페이지 content불러오기
 	@RequestMapping(value="user/note/detail.do" , method = RequestMethod.POST ,produces = "application/json; charset=utf8")

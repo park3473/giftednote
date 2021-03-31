@@ -78,7 +78,7 @@ public class UserMemberController {
 	
 	@RequestMapping(value="/user/member/register.do" , method = RequestMethod.GET)
 	public ModelAndView MemberRegister(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response){
-		return new ModelAndView("view/member/register");
+		return new ModelAndView("user/member/register");
 	}
 	
 	@RequestMapping(value="/user/member/logout.do" , method = RequestMethod.GET)
@@ -98,12 +98,12 @@ public class UserMemberController {
 	public ModelAndView Register(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response){
 		
 		userMemberService.insertMember(userMembervo);
-		return new ModelAndView("view/index");
+		return new ModelAndView("index");
 	}
 	
 	@RequestMapping(value="/user/member/view.do" ,  method = RequestMethod.POST)
 	public ModelAndView MemberView(@ModelAttribute("UserMemberVo") UserMemberVo userMembervo , HttpServletRequest request, HttpServletResponse response) {
-		return new ModelAndView("view/index");
+		return new ModelAndView("index");
 	}
 	
 	@RequestMapping(value="/user/member/search.do" ,  method = RequestMethod.POST,produces = "application/json; charset=utf8")
@@ -113,6 +113,13 @@ public class UserMemberController {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonStr = mapper.writeValueAsString(list);
 		return jsonStr;
+	}
+	
+	@RequestMapping(value="/user/myinfo/view.do" , method = RequestMethod.GET)
+	public ModelAndView MyInfoView(@ModelAttribute("UserMemberVo")UserMemberVo UserMemberVo , HttpServletRequest request , HttpServletResponse response) {
+		UserMemberVo.setEMAIL(request.getParameter("EMAIL"));
+		UserMemberVo userMember = userMemberService.getMyInfo(UserMemberVo);
+		return new ModelAndView("user/myinfo/view" , "model" , userMember);
 	}
 	
 }

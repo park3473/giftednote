@@ -10,7 +10,7 @@
 
 <!--삭제금지-->
 <!--공통상단-->
-<%@ include file="../include/header.jsp" %>
+<%@ include file="../../include/header.jsp" %>
 <!--공통상단 끝-->
 
 <style>
@@ -46,7 +46,7 @@
         <div class="sc_area">
             <div class="sc_con">
                 <div class="sc_size">
-					<%@ include file="../include/top.jsp" %>
+					<%@ include file="../../include/top.jsp" %>
 
                     <!-- 본문 내용-->
                     <div class="sc_section">
@@ -165,7 +165,7 @@
     </section>
 <input type="hidden" value="${model.N_IDX }" id="n_idx">
 <!--공통하단-->
-<%@ include file="../include/footer.jsp" %>
+<%@ include file="../../include/footer.jsp" %>
 <!--공통하단 끝-->
 <!-- js 시작 -->
 <script type="text/javascript">

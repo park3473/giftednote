@@ -50,6 +50,11 @@ public class UserMemberServiceImpl implements UserMemberService {
 		// TODO Auto-generated method stub
 		return userMemberMapper.getList(userMembervo);
 	}
+	@Override
+	public UserMemberVo getMyInfo(UserMemberVo userMemberVo) {
+		// TODO Auto-generated method stub
+		return userMemberMapper.getMyInfo(userMemberVo);
+	}
 	
 
 }

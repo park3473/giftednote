@@ -31,7 +31,7 @@ public class UserController {
 			return "redirect:/note/list.do?EMAIL="+session_email;
 		}
 		
-		return "view/index";
+		return "index";
 	}
 	
 	

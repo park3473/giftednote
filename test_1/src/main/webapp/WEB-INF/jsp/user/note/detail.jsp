@@ -58,7 +58,7 @@
     //CKEDITOR.config.contentsCss = '${pageContext.request.contextPath}/resources/css/startupTemplate.css';
 </script>
 <!--공통상단-->
-<%@ include file="../include/header.jsp" %>
+<%@ include file="../../include/header.jsp" %>
 <!--공통상단 끝-->
 
 <style>
@@ -80,7 +80,7 @@
                 <div class="sc_size">
 
                     <!-- 공통 탑 -->
-                    <%@ include file="../include/top.jsp" %>
+                    <%@ include file="../../include/top.jsp" %>
                     <!-- 공통 탑 end-->
 
                     <!-- 본문 내용-->
@@ -111,7 +111,7 @@
                                     		<li class="detail_modal_li">
 												<ul>
 												<c:forEach var="i" begin="1" end="${model.Pagecount}" varStatus="count">
-											    	<li id="deatil_page_list" onclick="javascript:content(${count.index})">${count.index}<span>Page</span></li>
+											    	<li id="deatil_page_list" onclick="javascript:content(${count.index})" class="page${count.index} allpage <c:if test="${count.index == '1' }">PageActive</c:if>">${count.index}<span>Page</span></li>
 												</c:forEach>
 													<li class="detail_page_up" ><button onclick="javascript:PageUp()">페이지 추가</button></li>
 													<li class="detail_page_up"><button id="insert_bt" onclick="javascript:content_insert()" P_IDX="1">페이지 저장</button></li>
@@ -176,7 +176,7 @@
         </div>
     </section>
 <!--공통하단-->
-<%@ include file="../include/footer.jsp" %>
+<%@ include file="../../include/footer.jsp" %>
 <!--공통하단 끝-->
 <!-- js 시작 -->
 <script type="text/javascript">
@@ -206,6 +206,8 @@ if('${check}' == 'fail'){
 				var editor = CKEDITOR.instances.ckeditor;
 				editor.setData(view);
 				$('#insert_bt').attr('P_IDX',P_IDX);
+				$('.allpage').removeClass('PageActive')
+				$('.page'+P_IDX+'').addClass('PageActive');
 				}
 		})
 	};
@@ -230,6 +232,17 @@ if('${check}' == 'fail'){
 				console.log(data);
 			}
 		})
+		Swal.fire({
+			  text: ""+P_IDX+"페이지가 저장되었습니다!!",
+			  icon: 'success',
+			  showCancelButton: false,
+			  confirmButtonColor: '#3085d6',
+			  confirmButtonText: 'Yes!'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+					location.reload();
+			  }
+			})
 		//alert('수정 완료!');
 	}
 	
@@ -250,8 +263,17 @@ if('${check}' == 'fail'){
 			success: function(data , status, xhr){
 			}
 		})
-		location.reload(true);
-		history.go(0);
+		Swal.fire({
+			  text: "페이지가 추가되었습니다!",
+			  icon: 'success',
+			  showCancelButton: false,
+			  confirmButtonColor: '#3085d6',
+			  confirmButtonText: 'Yes!'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+					location.reload();
+			  }
+			})
 	}
 	
 	function comment_set(){
@@ -274,8 +296,17 @@ if('${check}' == 'fail'){
 				
 			}
 		})
-		history.go(0);
-		history.go(0);
+		Swal.fire({
+			  text: "댓글을 등록하였습니다.",
+			  icon: 'success',
+			  showCancelButton: false,
+			  confirmButtonColor: '#3085d6',
+			  confirmButtonText: 'Yes!'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+					location.reload();
+			  }
+			})
 	}
 	
 	function comment_up(c_idx){
@@ -305,7 +336,6 @@ if('${check}' == 'fail'){
 			}
 		})
 		history.go(0);
-		history.go(0);
 	}
 	
 	function comment_delete(c_idx){
@@ -332,7 +362,6 @@ if('${check}' == 'fail'){
 								
 						}
 					})
-					history.go(0);
 				  history.go(0);
 			  }
 			})

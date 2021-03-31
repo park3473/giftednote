@@ -35,7 +35,7 @@ public class UserSrceController {
 		model = userSrceService.getList(UserSrceVo);
 		model.put("N_IDX", N_IDX);
 		
-		return new ModelAndView("/view/srce/srce","model",model);
+		return new ModelAndView("/user/srce/srce","model",model);
 	}
 	@RequestMapping(value="/srce/srce.do" , method = RequestMethod.POST ,produces = "application/json; charset=utf8")
 	@ResponseBody
