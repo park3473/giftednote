@@ -12,7 +12,7 @@
 <!--공통상단-->
 <%@ include file="../../include/header.jsp" %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/admin_member.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/member_view.css" type="text/css">
 
 <style>
     a {
@@ -69,13 +69,13 @@
 											</thead>
 											<tbody id="list">
 												<c:forEach var="item" items="${model.list }" varStatus="Status">
-												<tr>
+												<tr class="update_modal">
 												    <td class="tg-0lax">${Status.index+1 }</td>
-												    <td class="tg-0lax">${item.NAME }</td>
-												    <td class="tg-0lax">${item.EMAIL }</td>
-												    <td class="tg-0lax">${item.PHONE }</td>
-												    <td class="tg-0lax">${item.ADDRESS }</td>
-												    <td class="tg-0lax">
+												    <td class="tg-0lax" id="name_${Status.index+1 }" >${item.NAME }</td>
+												    <td class="tg-0lax" id="email_${Status.index+1 }">${item.EMAIL }</td>
+												    <td class="tg-0lax" id="phone_${Status.index+1 }">${item.PHONE }</td>
+												    <td class="tg-0lax" id="address_${Status.index+1 }">${item.ADDRESS }</td>
+												    <td class="tg-0lax" id="level_${Status.index+1 }" value="${item.LEVEL }">
 												    	<c:if test="${item.LEVEL == '2'}">
 												    		멘토
 												    	</c:if>
@@ -86,13 +86,17 @@
 												    		관리자
 												    	</c:if>
 												    </td>
+												    <td id="birth_${Status.index+1 }" style="display:none">
+												    	${item.BIRTH }
+												    </td>
+												    <td id="idx_${Status.index+1 }" style="display:none">
+												     	${item.IDX }
+												     </td>
 												 </tr>
 												 </c:forEach>
 											</tbody>
 										</table>
 									</div>
-                                   
-
                                 </div>
                                 <!-- 진행중인 회의 end -->
                             </div>
@@ -108,6 +112,73 @@
 <!--공통하단-->
 <%@ include file="../../include/footer.jsp" %>
 <!--공통하단 끝-->
+<div id="meeting_form_modal" class="all_modal">
+	<div class="all_modal_con">
+		<div class="modal_box">
+
+			<div class="modal_title">
+				<!-- 공통타이틀 -->
+				<div class="all_title">
+					<div class="line">
+						<span></span>
+					</div>
+					<h2>개인 정보 수정</h2>
+				</div>
+				<!-- 공통타이틀 -->
+
+				<!-- 닫기 -->
+				<div id="close_btn" class="close_btn">
+					<a href="#"> <i class="las la-times"></i>
+					</a>
+				</div>
+			</div>
+			<div id="member_update_modal">
+				<form id="member_update_form">
+				<div>
+					<ul>
+						<li>
+							<p>이름</p>
+							<input type="text" id="UPDATE_NAME" name="NAME" value="">
+						</li>
+						<li>
+							<input type="hidden" id="UPDATE_EMAIL" name="EMAIL" value="">
+						</li>
+						<li>
+							<p>번호</p>
+							<input type="text" id="UPDATE_PHONE" name="PHONE" value="">
+						</li>
+						<li>
+							<p>주소</p>
+							<input type="text" id="UPDATE_ADDRESS" name="ADDRESS" value="" >
+						</li>	
+						<li>
+							<p>권한<span>3 = 관리자 / 2 = 교수 or 조교 / 1 = 학생</span></p>
+							<select>
+								<option value="1">학생</option>
+								<option value="2">조교 or 교수</option>
+								<option value="3">관리자</option>
+								
+							</select>
+						</li>
+						<li>
+							<p>생년월일</p>
+							<input type="text" id="UPDATE_BIRTH" name="BIRTH" value="" >
+						</li>
+						<li>
+							<input type="hidden" id="UPDATE_IDX" name="IDX" value="" >
+						</li>
+						<li>
+							<button type="button" onclick="javascript:member_update_set()" id="member_update" >정보 수정</button>
+						</li>
+					</ul>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <!-- js 시작 -->
 <script type="text/javascript">
 /*
@@ -122,6 +193,62 @@ if('${check}' == 'fail'){
         $("#meeting_form_modal").hide();
     });
 
+	$('.update_modal').click(function(){
+		
+		let tdv = $(this).find('td').toArray().map(function (td){ return $(td).text().trim();})
+		console.log(tdv);
+		for(i = 0; i < 8 ;i++ ){
+			if(i <4){
+				$('#member_update_modal').find('input').eq(i).val(tdv[i+1]);
+			}else if(i == 4){
+				if(tdv[i+1] == '멘토'){
+					tdv[i+1] = '2';
+				}else if(tdv[i+1] == '학생'){
+					tdv[i+1] = '1';
+				}else{
+					tdv[i+1] = '3';
+				}
+
+				$('#member_update_modal').find('select').val(tdv[i+1]).prop('selected',true);
+				$('#member_update_modal').find('input').eq(i).val(tdv[i+2]);
+			}else{
+				$('#member_update_modal').find('input').eq(i).val(tdv[i+2]);
+			}
+		}
+		$("#meeting_form_modal").show();
+	})
+	
+	function member_update_set(){
+		var formData = $('#member_update_form').serialize();
+		console.log(formData);
+		$.ajax({
+			type : "POST",
+			url : "/admin/member/update.do",
+			cache : false,
+			data : formData,
+			success : function(result) {
+				if(result = true){
+					Swal.fire({
+						text : "정보가 수정되었습니다.!",
+						confirmButtonText: 'Yes!'
+					}).then((result) => {
+						if(result.isConfirmed) {
+							location.href='${pageContext.request.contextPath}/';
+						}
+					})	
+				}
+		}
+	});
+		
+	}
+	
+	$.datetimepicker.setLocale('ko');
+	jQuery('#UPDATE_BIRTH').datetimepicker({
+		format : 'Y-m-d',
+		lang : "ko",
+		timepicker : false
+	});
+	
 	
 </script>
 <!-- js 끝 -->

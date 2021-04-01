@@ -28,14 +28,14 @@
 	
 	<insert id="setNote" parameterType="egovframework.giftednote.user.note.model.UserNoteVo" useGeneratedKeys="true" keyProperty="N_IDX">
 		INSERT INTO TBL_NOTE 
-		(IDX , IMAGE , TITLE , TOPIC , LEADER , ASSI , INTRO , DEAD) 
+		(IDX , IMAGE , TITLE , TOPIC , LEADER , ASSI , INTRO , DEAD , START_TM) 
 		VALUES 
-		(#{IDX} , #{IMAGE} , #{TITLE} , #{TOPIC} , #{LEADER} , #{ASSI} , #{INTRO} , 'NO')
+		(#{IDX} , #{IMAGE} , #{TITLE} , #{TOPIC} , #{LEADER} , #{ASSI} , #{INTRO} , 'NO' , now())
 	</insert>
 	
 	<update id="NoteComplete" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
 		UPDATE TBL_NOTE
-		SET DEAD = 'COMPLETE'
+		SET DEAD = 'COMPLETE' , END_TM = now()
 		WHERE N_IDX = #{N_IDX}
 	</update>
 	

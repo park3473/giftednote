@@ -30,4 +30,9 @@
 	<select id="getMyInfo" parameterType="egovframework.giftednote.user.member.model.UserMemberVo" resultType="egovframework.giftednote.user.member.model.UserMemberVo">
 		SELECT * FROM TBL_MEMBER WHERE EMAIL = #{EMAIL}
 	</select>
+	<update id="setMyInfo" parameterType="egovframework.giftednote.user.member.model.UserMemberVo">
+		UPDATE TBL_MEMBER SET NAME = #{NAME} , PHONE = #{PHONE} , ADDRESS = #{ADDRESS} , BIRTH = #{BIRTH}
+		WHERE IDX = #{IDX} AND EMAIL = #{EMAIL}
+	</update>
+	
 </mapper>

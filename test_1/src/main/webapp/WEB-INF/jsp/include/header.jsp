@@ -115,7 +115,7 @@
                                 </div>
                             </li>
                             <li class="main_menu_ob main_menu_ob_02 <c:if test="${fn:indexOf(urlname,'/myinfo/') > -1 }">menu_active</c:if> ">
-                                <a onclick="location.href='${pageContext.request.contextPath}/admin/member/list.do'"></a>
+                                <a onclick="location.href='${pageContext.request.contextPath}/user/myinfo/view.do?EMAIL=${session_email }'"></a>
                                 <div class="sub_menu_con">
                                     <div class="sub_menu_title">
                                         <h2>회원관리</h2>

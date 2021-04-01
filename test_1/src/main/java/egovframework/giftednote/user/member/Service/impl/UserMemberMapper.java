@@ -20,4 +20,6 @@ public interface UserMemberMapper {
 	public List<?> getList(UserMemberVo userMembervo);
 
 	public UserMemberVo getMyInfo(UserMemberVo userMemberVo);
+
+	public void setMyInfo(UserMemberVo userMemberVo);
 }

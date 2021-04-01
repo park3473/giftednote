@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/all.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tail.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/myinfo_view.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/myinfo_view.css" type="text/css">
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
@@ -182,7 +182,7 @@
 					<div class="line">
 						<span></span>
 					</div>
-					<h2>비밀번호 찾기</h2>
+					<h2>개인 정보 수정</h2>
 				</div>
 				<!-- 공통타이틀 -->
 
@@ -192,13 +192,33 @@
 					</a>
 				</div>
 			</div>
-			<div id="password_modal">
+			<div id="myinfo_update_modal">
 				<div>
-					<input type="text" id="" name="NAME">
-					<input type="text" id="" name="ADDRESS">
-					<input type="text" id="" name="PHONE">
-					<input type="text" id="" name="BIRTH">
-					<input type="button"onclick="javascript:myinfo_update()" id="myinfo_update" value="정보 수정">
+					<ul>
+						<li>
+							<p>이름</p>
+							<input type="text" id="UPDATE_NAME" name="NAME" value="${model.NAME }">
+						</li>
+						<li>
+							<p>주소</p>
+							<input type="text" id="UPDATE_ADDRESS" name="ADDRESS" value="${model.ADDRESS }">
+						</li>
+						<li>
+							<p>번호</p>
+							<input type="text" id="UPDATE_PHONE" name="PHONE" value="${model.PHONE }">
+						</li>
+						<li>
+							<p>생년월일</p>
+							<input type="text" id="UPDATE_BIRTH" name="BIRTH" value="${model.BIRTH }">
+						</li>
+						<li>
+							<button onclick="javascript:myinfo_update()" id="myinfo_update" >정보 수정</button>
+						</li>
+						<li>
+							<input type="hidden" id="UPDATE_IDX" value="${model.IDX }">
+							<input type="hidden" id="UPDATE_EMAIL" value="${model.EMAIL }">
+						</li>
+					</ul>
 				</div>
 			</div>
 			<div>${PASSWORD}</div>
@@ -280,5 +300,61 @@
 	$('.close_btn').click(function(){
 		$('#meeting_form_modal').hide();
 	})
+	
+	
+	function myinfo_update(){
+		Swal.fire({
+			  title: '개인정보를 수정하시겠습니까?',
+			  text: "수정 하시면 다시 되돌릴수 없습니다!",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Yes!',
+			  cancelButtonText: 'No'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+				  var NAME = $('#UPDATE_NAME').val();
+				  var PHONE = $('#UPDATE_PHONE').val();
+				  var ADDRESS = $('#UPDATE_ADDRESS').val();
+				  var BIRTH = $('#UPDATE_BIRTH').val();
+				  var IDX = $('#UPDATE_IDX').val();
+				  var EMAIL = $('#UPDATE_EMAIL').val();
+				  $.ajax({
+						type : "POST",
+						url : "/user/myinfo/update.do",
+						cache : false,
+						data : ({
+							EMAIL : EMAIL,
+							IDX : IDX,
+							NAME : NAME,
+							ADDRESS : ADDRESS,
+							PHONE : PHONE,
+							BIRTH : BIRTH
+						}),
+						dataType : "json",
+						success : function(result) {
+							if(result = true){
+								Swal.fire({
+									text : "정보가 수정되었습니다.!",
+									confirmButtonText: 'Yes!'
+								}).then((result) => {
+									if(result.isConfirmed) {
+										location.href='${pageContext.request.contextPath}/';
+									}
+								})	
+							}
+						}
+					});
+			  }
+			})
+	}
+	
+	$.datetimepicker.setLocale('ko');
+	jQuery('#UPDATE_BIRTH').datetimepicker({
+		format : 'Y-m-d',
+		lang : "ko",
+		timepicker : false
+	});
 </script>
 <!-- js 끝 -->

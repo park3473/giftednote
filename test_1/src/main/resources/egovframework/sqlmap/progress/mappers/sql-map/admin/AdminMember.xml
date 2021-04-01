@@ -6,6 +6,9 @@
 	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
 		SELECT * FROM TBL_MEMBER
 	</select>
-
+	<update id="setMember" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		UPDATE TBL_MEMBER SET NAME = #{NAME} , PHONE = #{PHONE} , ADDRESS = #{ADDRESS} , BIRTH = #{BIRTH}
+		WHERE IDX = #{IDX} AND EMAIL = #{EMAIL}
+	</update>
 
 </mapper>

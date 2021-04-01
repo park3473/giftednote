@@ -21,6 +21,8 @@ public interface UserMemberService {
 
 	public UserMemberVo getMyInfo(UserMemberVo userMemberVo);
 
+	public void setMyInfo(UserMemberVo userMemberVo);
+
 	
 }
 

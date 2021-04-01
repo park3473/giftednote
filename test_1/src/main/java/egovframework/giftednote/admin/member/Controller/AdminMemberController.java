@@ -1,5 +1,7 @@
 package egovframework.giftednote.admin.member.Controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import egovframework.giftednote.admin.member.Model.AdminMemberVo;
 import egovframework.giftednote.admin.member.Service.AdminMemberService;
+import egovframework.giftednote.user.member.model.UserMemberVo;
 
 @Controller
 public class AdminMemberController {
@@ -31,6 +34,12 @@ public class AdminMemberController {
 		model = adminMemberService.getALLList();
 		System.out.println("dddd");
 		return new ModelAndView("admin/member/list","model",model);
+	}
+	
+	@RequestMapping(value="/admin/member/update.do" , method = RequestMethod.POST)
+	public void AdminMemberUpdate(@ModelAttribute("AdminMemberVo") AdminMemberVo AdminMemberVo,HttpServletRequest request , HttpServletResponse response) throws IOException {
+		adminMemberService.setMember(AdminMemberVo);
+		response.getWriter().println("true");
 	}
 
 }

@@ -122,4 +122,11 @@ public class UserMemberController {
 		return new ModelAndView("user/myinfo/view" , "model" , userMember);
 	}
 	
+	@RequestMapping(value="/user/myinfo/update.do" , method = RequestMethod.POST)
+	public void MyInfoUpdate(@ModelAttribute("UserMemberVo")UserMemberVo UserMemberVo,HttpServletRequest request , HttpServletResponse response) throws IOException {
+		userMemberService.setMyInfo(UserMemberVo);
+		response.getWriter().println("true");
+	}
+	
+	
 }

@@ -1,3 +1,10 @@
+table{
+	text-align : center;
+}
+
+.tbl_th{
+	background-color : #d0dcef;
+}
 .form_list_con{
 	width: 880px;
   display: flex;
@@ -9,17 +16,29 @@
   border-radius: 4px;
   margin:auto;
 }
-.form_list_con input[type="text"], input[type="password"]{
+input[type="text"], input[type="password"]{
 	padding: 0 10px;
     border: 1px solid #cfd8e7;
     color: #242424;
     font-size: 0.938rem;
     font-weight: 300;
     border-radius: 4px;
-    width:20rem;
+    width:100%;
     height:2.4rem;
     margin-bottom:0.6rem;
 }
+select{
+	padding: 0 10px;
+    border: 1px solid #cfd8e7;
+    color: #242424;
+    font-size: 0.938rem;
+    font-weight: 300;
+    border-radius: 4px;
+    width:100%;
+    height:2.4rem;
+    margin-bottom:0.6rem;
+}
+
 
 ul.form_list_bt{
 	margin-left: 3.7rem;
@@ -78,4 +97,14 @@ button{
 }
 button:hover{
 	background-color: #d0dcef;
+}
+
+#member_update_modal{
+	text-align:center;
+	width:50%;
+	margin:auto;
+}
+
+#member_update_modal p{
+	text-align:left;
 }

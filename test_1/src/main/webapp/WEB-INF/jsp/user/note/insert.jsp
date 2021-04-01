@@ -423,8 +423,14 @@ if('${check}' == 'fail'){
 	}
 	
 	function wrap_list(){
-		Swal.fire('연구일지가 추가되었습니다!');
-		location.href = '${pageContext.request.contextPath}/note/list.do?EMAIL=${session_email}';
+		Swal.fire({
+			text : "연구일지가 추가되었습니다!",
+			confirmButtonText: 'Yes!'
+		}).then((result) => {
+			if(result.isConfirmed) {
+				location.href = '${pageContext.request.contextPath}/note/list.do?EMAIL=${session_email}';
+			}
+		})
 	}
 </script>
 <!-- js 끝 -->
