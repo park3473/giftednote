@@ -225,7 +225,30 @@
                             </div>
                             <!--학번자동발급_모달창 end-->
                             
-                            
+                            <form action="/admin/member/matching.do?" method="post" name="matchingExcelform" id="matchingExcelform" enctype="multipart/form-data">
+                                <input type="hidden"  name="csrf" value="${CSRF_TOKEN}" />
+                                <div class="member_modal_wrap">
+                                    <div class="member_modal_con member_input_wrap">
+                                        <div class="modal_title">
+                                            <h2>회원 엑셀 업로드</h2>
+                                        </div>
+                                        <ul class="modal_form member_input">
+                                            <li>
+                                                <span class="list_t">엑셀 업로드</span>
+                                                <input type="file" id="file1" name="file" accept=".xls">
+                                                <span class="relate_c">양식에 맞는 엑셀을 업로드 해주세요.</span>
+                                            </li>
+                                        </ul>
+                                        
+                                        <div class="member_btn adm_btn_wrap mr-0">
+                                            <ul>
+                                                <li class="register modal_close" ><a href="#">취소</a></li>
+                                                <li class="register modal_upload" ><a href="javascript:matchingUpload()">회원 업로드</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                             
                             
                             
@@ -349,7 +372,9 @@ function update()
 	location.href = './'+deleteArrIdx+'/update.do';
 }
 
-
+function matchingUpload(){
+	$("#matchingExcelform").submit();
+}
 
 function deleteArrClick()
 {
@@ -511,7 +536,5 @@ function excelDown()
 	
 	
 }
-
-
 
 </script>

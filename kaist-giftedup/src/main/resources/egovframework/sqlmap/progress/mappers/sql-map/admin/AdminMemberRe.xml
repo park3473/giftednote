@@ -239,4 +239,52 @@
 		ORDER BY FIELD(teacher_sido_name,'서울' , '광주' , '인천')
 	</select>
 	
+	<insert id="setReInsert" parameterType="egovframework.kaist.admin.member_re.model.AdminReMemberVo">
+		INSERT INTO TBL_RE_MEMBER (ID , MENTO_FILE , TEACHER_NAME , TEACHER_PHONE , STUDENT_NAME , STUDENT_PHONE , MAIN_FILE_1 , MAIN_FILE_2 , MAIN_FILE_3 , MAIN_FILE_4 , TYPE , TYPE_FILE_1 , TYPE_FILE_2 , TYPE_FILE_3 , TYPE_FILE_4 , TYPE_FILE_5 )
+		VALUES(#{ID} , #{MENTO_FILE} , #{TEACHER_NAME} , #{TEACHER_PHONE} , #{STUDENT_NAME} , #{STUDENT_PHONE} , #{MAIN_FILE_1} , #{MAIN_FILE_2} , #{MAIN_FILE_3} , #{MAIN_FILE_4} , #{TYPE} , #{TYPE_FILE_1} , #{TYPE_FILE_2} , #{TYPE_FILE_3} , #{TYPE_FILE_4} , #{TYPE_FILE_5})
+	</insert>
+	
+	<select id="getReMember" resultType="egovframework.kaist.admin.member_re.model.AdminReMemberVo" parameterType="egovframework.kaist.admin.member_re.model.AdminReMemberVo">
+		SELECT * FROM TBL_RE_MEMBER WHERE ID = #{ID}
+		<if test="ID == '유형1' || ID == '유형3'">
+		 	AND TEACHER_NAME = #{TEACHER_NAME} AND TEACHER_PHONE = #{TEACHER_PHONE}
+		</if>
+		<if test="ID == '유형2'" >
+			AND STUDENT_NAME = #{STUDENT_NAME} AND STUDENT_PHONE = #{STUDENT_PHONE}
+		</if>
+	</select>
+	<select id="getReMemberMentoCheck" resultType="egovframework.kaist.admin.member_re.model.AdminReMemberVo" parameterType="egovframework.kaist.admin.member_re.model.AdminReMemberVo">
+		SELECT * FROM TBL_RE_MEMBER WHERE ID = #{ID} AND TEACHER_NAME = #{TEACHER_NAME} AND TEACHER_PHONE = #{TEACHER_PHONE} AND STUDENT_NAME = #{STUDENT_NAME}
+	</select>
+	
+	<update id="setReUpdate" parameterType="egovframework.kaist.admin.member_re.model.AdminReMemberVo">
+		UPDATE TBL_RE_MEMBER
+		SET ID = #{ID} , MENTO_FILE = #{MENTO_FILE} , TEACHER_NAME = #{TEACHER_NAME} , TEACHER_PHONE = #{TEACHER_PHONE} ,
+		STUDENT_NAME = #{STUDENT_NAME} , STUDENT_PHONE = #{STUDENT_PHONE} , MAIN_FILE_1 = #{MAIN_FILE_1} ,
+		 MAIN_FILE_2 = #{MAIN_FILE_2} , MAIN_FILE_3 = #{MAIN_FILE_3} , MAIN_FILE_4 = #{MAIN_FILE_4} , TYPE = #{TYPE} ,
+		  TYPE_FILE_1 = #{TYPE_FILE_1} , TYPE_FILE_2 = #{TYPE_FILE_2} , TYPE_FILE_3 = #{TYPE_FILE_3} , TYPE_FILE_4 = #{TYPE_FILE_4} , TYPE_FILE_5 = #{TYPE_FILE_5}
+		WHERE ID = #{ID} AND
+		<if test="TEACHER_NAME != ''">
+			TEACHER_NAME = #{TEACHER_NAME} AND TEACHER_PHONE = #{TEACHER_PHONE} AND 
+		</if>
+		STUDENT_NAME = #{STUDENT_NAME} AND STUDENT_PHONE = #{STUDENT_PHONE}
+	</update>
+	
+	<select id="getReMemberStudentCheck" resultType="egovframework.kaist.admin.member_re.model.AdminReMemberVo" parameterType="egovframework.kaist.admin.member_re.model.AdminReMemberVo">
+		SELECT * FROM TBL_RE_MEMBER WHERE ID = #{ID} AND STUDENT_NAME = #{STUDENT_NAME} AND STUDENT_PHONE = #{STUDENT_PHONE}
+	</select>
+	
+	
+	<select id="getReListCnt" resultType="int" parameterType="egovframework.kaist.admin.member_re.model.AdminReMemberVo">
+		SELECT count(*) FROM TBL_RE_MEMBER
+		WHERE 1=1 
+	</select>
+	
+	<select id="getReList" resultType="hashMap" parameterType="egovframework.kaist.admin.member_re.model.AdminReMemberVo">
+		SELECT * FROM TBL_RE_MEMBER
+		WHERE 1=1  
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	
+	
 </mapper>

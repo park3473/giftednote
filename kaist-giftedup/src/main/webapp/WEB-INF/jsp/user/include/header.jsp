@@ -154,10 +154,10 @@
                         </ul>
                     </li>
                     <li class="col-sm-auto">
-                    	<a href="${pageContext.request.contextPath}/user/member_re/check.do">선발</a>
+                    	<a href="${pageContext.request.contextPath}/user/member_re/check.do">모집</a>
                     	<ul class="sub_main teacher">
-                    		<li><a href="${pageContext.request.contextPath}/user/member_re/check.do">신입생 지원</a></li>
-                    		<li><a href="${pageContext.request.contextPath}/user/member_re/inquiry.do">지원서/합격자 조회</a></li>
+                    		<li><a href="${pageContext.request.contextPath}/user/member_re/check.do">신규 참가자 지원</a></li>
+                    		<li><a href="${pageContext.request.contextPath}/user/member_re/new_inquiry.do">지원서 조회</a></li>
                     	</ul>
                     </li>
                     <li class="col-sm-auto">
@@ -262,10 +262,10 @@
                             </ul>
                         </li>
                         <li class="col-sm-auto m_menu">
-                        	<a href="#">선발<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                        	<a href="#">모집<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
                     		<ul class="m_sub_main">
-	                    		<li><a href="${pageContext.request.contextPath}/user/member_re/check.do">신입생 지원</a></li>
-	                    		<li><a href="${pageContext.request.contextPath}/user/member_re/inquiry.do">지원서/합격자 조회</a></li>
+	                    		<li><a href="${pageContext.request.contextPath}/user/member_re/check.do">신규 참가자 지원</a></li>
+	                    		<li><a href="${pageContext.request.contextPath}/user/member_re/new_inquiry.do">지원서/합격자 조회</a></li>
                     		</ul>
                         </li>
                         <li class="col-sm-auto m_menu">

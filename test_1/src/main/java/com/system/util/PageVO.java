@@ -1,7 +1,8 @@
 package com.system.util;
 
 public class PageVO {
-
+	
+	
 	int itemtotalcount;
 	int itemCount;
 	int itempage;
@@ -68,32 +69,9 @@ public class PageVO {
 
 	public PageVO(int itemcount, int totalcount, int page)
 	{
-		if(totalcount == 0)
-		{
-			itemtotalcount = 0 ; 
-			itemCount = itemcount;
-			itempage = 0 ;
-			itempagestart = 0 ;
-			itempageend = 0 ;
-			itemtotalpage = 0 ;
-			return;
-		}
-		
 		itemtotalcount = totalcount;
 		itemCount = itemcount;
-		try {
-			itempageend = itemtotalcount / itemCount;	
-		}catch(java.lang.ArithmeticException e)
-		{
-			itemtotalcount = 0 ; 
-			itemCount = itemcount;
-			itempage = 0 ;
-			itempagestart = 0 ;
-			itempageend = 0 ;
-			itemtotalpage = 0 ;
-			return;
-		}
-		
+		itempageend = itemtotalcount / itemCount;
 		
 		if(itemtotalcount % itemCount == 0)
 		{
@@ -130,15 +108,15 @@ public class PageVO {
 		{
 			itempagenext = false;
 		}
-		/*System.out.println("itemtotalcount : " +  itemtotalcount);
+		System.out.println("itemtotalcount : " +  itemtotalcount);
 		System.out.println("itemCount : " +  itemCount);
 		System.out.println("itempage : " +  itempage);
 		System.out.println("itempagestart : " +  itempagestart);
 		System.out.println("itempageend : " +  itempageend);
-		System.out.println("itemtotalpage : " +  itemtotalpage);*/
+		System.out.println("itemtotalpage : " +  itemtotalpage);
 		
 	}
-	
+
 
 
 }

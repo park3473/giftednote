@@ -40,6 +40,12 @@ public interface AdminMemberService {
 
 	public ModelMap getListPortfolioMemberIdIn(String mEMBER_ID);
 
+	public ModelMap getCheckView(AdminMemberVo vo);
+
+	public void setInsert2021(AdminMemberVo vo);
+
+	public Object getListNameOrder(AdminMemberVo adminMemberVo2);
+
 	
 	
 

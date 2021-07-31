@@ -10,4 +10,8 @@ public interface UserExploringService {
 
 	public void setExplor(UserExploringVo userExploringVo);
 
+	public int getClassCheck(UserExploringVo userExploringVo);
+
+	public void setExploringDelete(UserExploringVo userExploringVo);
+
 }

@@ -40,7 +40,7 @@
         <div class="error-number">ERROR</div>
         <div class="error-details col-sm-6 offset-sm-3">
           <h2 class="error-message">ERROR</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce maximus, lorem nec fermentum tempus, ipsum ex porta justo, dapibus placerat velit massa ut dolor.</p>
+          <p>call me kaist - giftedup.</p>
           
       </div>
     </div>

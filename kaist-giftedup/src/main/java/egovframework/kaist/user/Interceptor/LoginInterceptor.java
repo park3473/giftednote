@@ -194,7 +194,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			} else if(request.getRequestURI().indexOf("portfolio/detail") > -1
 					|| request.getRequestURI().indexOf("member/view.do") > -1
 					|| request.getRequestURI().indexOf("mypage") > -1
-					|| request.getRequestURI().indexOf("notices_data/1/") > -1
 					){
 				log.info(" sendRedirect __2___ " + rtn);
 				response.sendRedirect(request.getContextPath()+"/user/member/login.do?URL="+request.getRequestURI());

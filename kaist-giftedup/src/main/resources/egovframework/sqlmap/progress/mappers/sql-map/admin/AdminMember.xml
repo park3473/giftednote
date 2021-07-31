@@ -344,7 +344,6 @@
 		UPDATE /*AdminMemberMapper*/ TBL_MEMBER SET 
 			
 			<if test="PASSWORD != ''">
-	    	PASSWORD = #{PASSWORD},
 	    	</if>
 	    	PHONE = #{PHONE},
 			EMAIL = #{EMAIL},
@@ -445,6 +444,164 @@
 			INFO_AGREEMENT = 0,
 		    INFO_AGREEMENT_TM = null
 	</update>
+
+	<select id="getCheckView" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo" resultType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		SELECT * 
+		FROM TBL_MEMBER
+		WHERE NAME = #{NAME} AND PHONE = #{PHONE} ORDER BY CREATE_TM DESC LIMIT 1
+	</select>
+
+	<insert id="setInsert2021" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		INSERT INTO /*AdminMemberMapper*/ TBL_MEMBER_21 (
+			MEMBER_ID,
+			PASSWORD,
+			NAME,
+			PHONE,
+			EMAIL,
+			LEVEL,
+			JOIN_TM,
+			CREATE_TM,
+			TYPE,
+			TYPE_SUB,
+			NAME_ENG,
+			NAME_HANJA,
+			IMAGE,
+			ADDRESS_LOCAL,
+			SCHOOL_NAME,
+			SCHOOL_TYPE,
+			SCHOOL_YEAR,
+			SCHOOL_GROUP,
+			BIRTH,
+			SEX,
+			SCHOOL_ZIPCODE,
+			SCHOOL_ADDRESS,
+			SCHOOL_ADDRESS_DETAIL,
+			SUPPORT_AREA,
+			ZIPCODE,
+			ADDRESS,
+			ADDRESS_DETAIL,
+			PARENTS_NAME,
+			PARENTS_RELATION,
+			PARENTS_PHONE,
+			PARENTS_PHONE2,
+			INFO_AGREEMENT,
+			DORMANCY_TM,
+			LOGIN_TM,
+			UPDATE_TM,
+			STATUS,
+			SCHOOL_NUMBER,
+			SCHOOL_JIGGEUB,
+			TEL,
+			AREA_NUMBER,
+			SCHOOL_MAJOR,
+			ELIGIBILITY,
+			EXP,
+			EXP_TYPE,
+			EXP_DATA,
+			TEST
+			
+		) VALUES (
+			#{MEMBER_ID},
+			#{PASSWORD},
+			#{NAME},
+			#{PHONE},
+			#{EMAIL},
+			#{LEVEL},
+			now(),
+			now(),
+			#{TYPE},
+			#{TYPE_SUB},
+			#{NAME_ENG},
+			#{NAME_HANJA},
+			#{IMAGE},
+			#{ADDRESS_LOCAL},
+			#{SCHOOL_NAME},
+			#{SCHOOL_TYPE},
+			#{SCHOOL_YEAR},
+			#{SCHOOL_GROUP},
+			#{BIRTH},
+			#{SEX},
+			#{SCHOOL_ZIPCODE},
+			#{SCHOOL_ADDRESS},
+			#{SCHOOL_ADDRESS_DETAIL},
+			#{SUPPORT_AREA},
+			#{ZIPCODE},
+			#{ADDRESS},
+			#{ADDRESS_DETAIL},
+			#{PARENTS_NAME},
+			#{PARENTS_RELATION},
+			#{PARENTS_PHONE},
+			#{PARENTS_PHONE2},
+			#{INFO_AGREEMENT},
+			null,
+			null,
+			now(),
+			#{STATUS},
+			#{SCHOOL_NUMBER},
+			#{SCHOOL_JIGGEUB},
+		
+			#{TEL},
+			#{AREA_NUMBER},
+			#{SCHOOL_MAJOR},
+			#{ELIGIBILITY},
+			#{EXP},
+			#{EXP_TYPE},
+			#{EXP_DATA},
+			#{TEST}
+		)
+		
+	</insert>
+
+
+<select id="getListNameOrder" resultType="hashMap" parameterType="egovframework.kaist.admin.member.model.AdminMemberVo">
+		SELECT /*AdminMemberMapper*/ * FROM TBL_MEMBER
+		WHERE 1=1 
+
+		
+		<if test="DORMANCY != ''">
+	    	AND DORMANCY = #{DORMANCY}
+	    	
+	    	<if test="START_TM != ''">
+	 		<![CDATA[
+	    	AND DORMANCY_TM >=  date_format(#{START_TM}, '%Y-%m-%d 00:00:00')
+	    	AND DORMANCY_TM <=  date_format(#{END_TM}, '%Y-%m-%d 23:59:59')
+	    	]]>
+	     	</if>
+	    
+	    </if>
+	    
+	    <if test="LEVEL != ''">
+	    	AND LEVEL = #{LEVEL}
+	    </if>
+	    
+	    <if test="TYPE != ''">
+	    	AND TYPE = #{TYPE}
+	    </if>
+
+	    <if test="SCHOOL_YEAR != ''">
+	    	AND SCHOOL_YEAR = #{SCHOOL_YEAR}
+	    </if>
+	    
+	     <if test="SEARCH_TEXT != ''">
+		     <if test="SEARCH_TYPE == 'ALL'">
+		    	AND (
+		    		NAME LIKE '%${SEARCH_TEXT}%' 
+		    		OR  MEMBER_ID LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_NAME LIKE '%${SEARCH_TEXT}%'
+		    		OR  PHONE LIKE '%${SEARCH_TEXT}%'
+		    		OR  SCHOOL_YEAR LIKE '%${SEARCH_TEXT}%'
+		    		) 
+		    </if>
+		    <if test="SEARCH_TYPE != 'ALL'">
+	    		 AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%'
+	    	</if>
+	    	
+	    </if>
+	    
+	    
+		ORDER BY NAME asc
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
 
 
 </mapper>

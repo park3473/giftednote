@@ -209,6 +209,50 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		return modelMap;
 	}
 
+	@Override
+	public ModelMap getCheckView(AdminMemberVo vo) {
+		ModelMap model = new ModelMap();
+		AdminMemberVo vo2 = adminMemberMapper.getCheckView(vo);
+		model.put("pageDomain", vo2);
+		return model;
+	}
+
+	@Override
+	public void setInsert2021(AdminMemberVo vo) {
+		// TODO Auto-generated method stub
+		adminMemberMapper.setInsert2021(vo);
+	}
+
+	@Override
+	public Object getListNameOrder(AdminMemberVo adminMemberVo) {
+		ModelMap modelMap = new ModelMap();
+		List<?> list = adminMemberMapper.getListNameOrder(adminMemberVo);
+		modelMap.addAttribute("list", list);
+		System.out.println("------------------size : " + list.size());
+		
+		int itemtotalcount = adminMemberMapper.getListCnt(adminMemberVo);
+		
+		int itemCount = adminMemberVo.getITEM_COUNT();
+		int itempage = adminMemberVo.getPAGE();
+
+		PageVO pageVo = new PageVO(itemCount, itemtotalcount, itempage);
+
+		if (pageVo.isItempagenext() == true) {
+			modelMap.put("itempagenext", "true");
+		} else {
+			modelMap.put("itempagenext", "false");
+		}
+
+		modelMap.put("page", pageVo.getItempage());
+		modelMap.put("itemCount", pageVo.getItemCount());
+		modelMap.put("itempagestart", pageVo.getItempagestart());
+		modelMap.put("itempageend", pageVo.getItempageend());
+		modelMap.put("itemtotalcount", pageVo.getItemtotalcount());
+		modelMap.put("itemtotalpage", pageVo.getItemtotalpage());
+		
+		return modelMap;
+	}
+
 
 		
 }

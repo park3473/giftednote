@@ -33,4 +33,8 @@ public interface UserNoteService {
 
 	public void NoteComplete(UserNoteVo userNoteVo);
 
+	public ModelMap getDetailAll(UserNoteDetailVo userNoteDetailVo);
+
+	public ModelMap getTeamList(UserNoteVo userNoteVo);
+
 }

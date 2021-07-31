@@ -16,6 +16,8 @@ import com.system.util.PageVO;
 import com.system.util.SUtil;
 
 import egovframework.kaist.admin.dcmnt.service.impl.AdminDcmntMapper;
+import egovframework.kaist.admin.member_re.model.AdminReMemberVo;
+import egovframework.kaist.admin.member_re.service.impl.AdminMemberReMapper;
 import egovframework.kaist.user.member_re.model.UserMemberReVo;
 import egovframework.kaist.user.member_re.service.UserMemberReService;
 import egovframework.kaist.user.school.model.UserSchoolVo;
@@ -30,6 +32,9 @@ public class UserMember_reServiceImpl implements UserMemberReService {
 	
 	@Resource(name = "userMember_reMapper")
 	private UserMemberReMapper userMember_reMapper;
+	
+	@Resource(name = "adminMember_reMapper")
+	private AdminMemberReMapper adminMember_reMapper;
 	
 	protected Log log = LogFactory.getLog(UserMember_reServiceImpl.class);
 	
@@ -195,5 +200,18 @@ public class UserMember_reServiceImpl implements UserMemberReService {
 		
 		return modelMap;
 	}
+
+	@Override
+	public List<AdminReMemberVo> getReCheck(AdminReMemberVo adminReMemberVo) {
+		// TODO Auto-generated method stub
+		System.out.println(adminReMemberVo.getID());
+		System.out.println(adminReMemberVo.getSTUDENT_NAME());
+		System.out.println(adminReMemberVo.getSTUDENT_PHONE());
+		System.out.println(adminReMemberVo.getTEACHER_NAME());
+		System.out.println(adminReMemberVo.getTEACHER_PHONE());
+		return adminMember_reMapper.getReMember(adminReMemberVo);
+	}
+
+	
 		
 }

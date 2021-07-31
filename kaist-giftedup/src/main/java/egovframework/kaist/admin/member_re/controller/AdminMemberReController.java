@@ -1,6 +1,9 @@
 ﻿package egovframework.kaist.admin.member_re.controller;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -9,6 +12,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -40,12 +46,15 @@ import egovframework.kaist.admin.buseo.service.AdminBuseoService;
 import egovframework.kaist.admin.config.service.AdminConfigService;
 import egovframework.kaist.admin.dcmnt.model.DcmntVo;
 import egovframework.kaist.admin.dcmnt.service.AdminDcmntService;
+import egovframework.kaist.admin.member.model.AdminMemberVo;
 import egovframework.kaist.admin.member_re.model.AdminDcmntVo;
 import egovframework.kaist.admin.member_re.model.AdminMemberReStatVo;
 import egovframework.kaist.admin.member_re.model.AdminMemberReVo;
+import egovframework.kaist.admin.member_re.model.AdminReMemberVo;
 import egovframework.kaist.admin.member_re.service.AdminMemberReService;
 import egovframework.kaist.admin.sms_log.model.AdminSmsLogVo;
 import egovframework.kaist.admin.sms_log.service.AdminSmsLogService;
+import egovframework.kaist.user.member_re.model.UserMemberReVo;
 
 @Controller
 public class AdminMemberReController {
@@ -279,6 +288,379 @@ public class AdminMemberReController {
 		
 		return new ModelAndView("/admin/member_re/member_re_st","model", model);
 	}
+	
+	@RequestMapping(value="/admin/member_re/excel_upload.do" , method = RequestMethod.GET)
+	public ModelAndView ExcelUpload(@ModelAttribute("AdminReMemberVo") AdminReMemberVo adminReMemberVo, HttpServletRequest request, HttpServletResponse response) {
+		String PAGE = request.getParameter("PAGE") != null ? request
+				.getParameter("PAGE") : "0";
+		String ITEM_COUNT = request.getParameter("ITEM_COUNT") != null ? request
+				.getParameter("ITEM_COUNT") : "10";
+			
+		if(PAGE == null)
+		{
+			PAGE = "0";
+		}
+		
+		if(ITEM_COUNT == null)
+		{
+			ITEM_COUNT = "10";
+		}
+		adminReMemberVo.setPAGE(Integer.parseInt(PAGE));
+		adminReMemberVo.setITEM_COUNT(Integer.parseInt(ITEM_COUNT));
+		
+		ModelMap model = new ModelMap();
+		
+		int pagelimit = adminReMemberVo.getPAGE()*adminReMemberVo.getITEM_COUNT();
+		
+		adminReMemberVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
+		adminReMemberVo.setOFFSET(pagelimit);
+		
+		model = adminMember_reService.getReList(adminReMemberVo);
+		
+		model.put("SEARCH_TYPE", adminReMemberVo.getSEARCH_TYPE());
+		model.put("SEARCH_TEXT", adminReMemberVo.getSEARCH_TEXT());
+		
+		model.put("beforeDomain", adminReMemberVo);
+		
+		
+		return new ModelAndView("/admin/member_re/ExcelUpload", "model",model);
+	}
+	
+	@RequestMapping(value = "/admin/member_re/excelReMemberUpload.do", method = RequestMethod.POST)
+	public String excelPost(MultipartHttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+
+		String drv = request.getRealPath("");
+		drv = drv.substring(0, drv.length()) + "./resources"+request.getContextPath()+"/upload/excelupload/";
+		System.out.println(drv);
+		String filename = SUtil.setFileUpload(request, drv);
+		
+		
+		filename = URLDecoder.decode(filename, "utf-8");  
+		
+		ModelMap model = new ModelMap();
+
+		try {
+            FileInputStream fis = new FileInputStream(drv + filename);
+            HSSFWorkbook workbook = new HSSFWorkbook(fis);
+            HSSFSheet sheet = workbook.getSheetAt(0); // 해당 엑셀파일의 시트(Sheet) 수
+            int rows = sheet.getPhysicalNumberOfRows(); // 해당 시트의 행의 개수
+            //System.out.println(rows);
+            for (int rowIndex = 1; rowIndex < rows; rowIndex++)
+            {
+                HSSFRow row = sheet.getRow(rowIndex); // 각 행을 읽어온다
+                if (row != null)
+                {
+                    int cells = row.getPhysicalNumberOfCells();
+                    AdminReMemberVo vo = new AdminReMemberVo();
+                    //48위 항목 48개 여서 47까지
+                    for (int columnIndex = 0; columnIndex <= 70; columnIndex++)
+                    {
+                        HSSFCell cell = row.getCell(columnIndex); // 셀에 담겨있는 값을 읽는다.
+                        String value = "";
+                        try {
+                        	switch (cell.getCellType()) 
+                            { // 각 셀에 담겨있는 데이터의 타입을 체크하고 해당 타입에 맞게 가져온다.
+    	                        case HSSFCell.CELL_TYPE_NUMERIC:
+    	                            value = (int)cell.getNumericCellValue() + "";
+    	                            break;
+    	                        case HSSFCell.CELL_TYPE_STRING:
+    	                            value = cell.getStringCellValue() + "";
+    	                            break;
+    	                        case HSSFCell.CELL_TYPE_BLANK:
+    	                            value = cell.getBooleanCellValue() + "";
+    	                            break;
+    	                        case HSSFCell.CELL_TYPE_ERROR:
+    	                            value = cell.getErrorCellValue() + "";
+    	                            break;
+                            }	
+                        }catch(java.lang.NullPointerException e)
+                        {
+                        	try {
+                        		value = cell.getStringCellValue() + "";	
+                        	}catch(java.lang.NullPointerException e1)
+                        	{
+                        		value = "";
+                        	}
+                        }
+                        
+                        System.out.println(columnIndex+"여기까진 오나??"+value+"");
+                        
+                        if(columnIndex == 10 && value != ""){
+                        	value = value.substring(0,3);
+                        	vo.setID(value);
+                        	System.out.println(value);
+                        }else if(columnIndex == 12 && value != "") {
+                        	vo.setMENTO_FILE(value);
+                        	System.out.println(value);
+                        }else if(columnIndex == 13 && value != "") {
+                        	vo.setTEACHER_NAME(value);
+                        	System.out.println(value);
+                        }else if(columnIndex == 24 && value != "") {
+                        	value = value.substring(3);
+                        	vo.setTEACHER_PHONE(value);
+                        	System.out.println(value);
+                        }else if(columnIndex == 32 && value != "") {
+                        	vo.setSTUDENT_NAME(value);
+                        	System.out.println(value);
+                        }else if(columnIndex == 45 && value != "") {
+                        	value = value.substring(3);
+                        	vo.setSTUDENT_PHONE(value);
+                        	System.out.println(value);
+                        }else if(columnIndex == 63 && value != "") {
+                        	vo.setMAIN_FILE_1("true");
+                        	System.out.println(value);
+                        }else if(columnIndex == 65 && value != "") {
+                        	vo.setMAIN_FILE_2("true");
+                        	System.out.println(value);
+                        }else if(columnIndex == 67 && value != "") {
+                        	vo.setMAIN_FILE_3("true");
+                        	System.out.println(value);
+                        }else if(columnIndex == 69 && value != "") {
+                        	vo.setMAIN_FILE_4("true");
+                        	System.out.println(value);
+                        }else if(columnIndex == 70 && value != "") {
+                        	vo.setTYPE(value);
+                        	if ("국민기초생활 수급권자 또는 교육급여 수급자".equals(value)) {
+								cell = row.getCell(72); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("특수교육 대상자".equals(value)) {
+								cell = row.getCell(74); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("도서벽지 거주자".equals(value)) {
+								cell = row.getCell(76); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(78); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_2(value);
+								System.out.println(value);
+							} else if ("읍면지역 거주자".equals(value)) {
+								cell = row.getCell(80); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(82); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_2(value);
+								System.out.println(value);
+							} else if ("학교장이 경제적 어려움이 있다고 추천한 학생".equals(value)) {
+								cell = row.getCell(84); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("국가보훈처에서 정한 교육보호 대상자(국가유공자 등 예우 및 지원에 관한 법률에 근거)".equals(value)) {
+								cell = row.getCell(86); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(88); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_2(value);
+								System.out.println(value);
+							} else if ("북한이탈주민 또는 그 자녀".equals(value)) {
+								cell = row.getCell(90); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(92); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_2(value);
+								System.out.println(value);
+								cell = row.getCell(94); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_3(value);
+								System.out.println(value);
+							} else if ("법정 차상위 계층".equals(value)) {
+								cell = row.getCell(96); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(98); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_2(value);
+								System.out.println(value);
+								cell = row.getCell(100); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_3(value);
+								System.out.println(value);
+							} else if ("「한부모가족지원법」 제5조에 따른 한부모 가족보호대상자".equals(value)) {
+								cell = row.getCell(102); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(104); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_2(value);
+								System.out.println(value);
+								cell = row.getCell(106); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_3(value);
+								System.out.println(value);
+							} else if ("아동복지전담기관(아동보호전문기관 및 가정위탁지원센터)에 보호 아동으로 등재된 자".equals(value)) {
+								cell = row.getCell(108); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(110); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_2(value);
+								System.out.println(value);
+							} else if ("다문화가족(결혼이민자 또는 귀화허가를 받은 자와 출생 시부터 대한민국 국적을 취득한 자로 이루어진 가족) 자녀".equals(value)) {
+								cell = row.getCell(112); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(114); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_2(value);
+								System.out.println(value);
+								cell = row.getCell(115);
+								String check = "";
+								check = cell.getStringCellValue() + "";
+								if("결혼이민자의 자녀".equals(check)) {
+									cell = row.getCell(117); // 셀에 담겨있는 값을 읽는다.
+									value = (int)cell.getNumericCellValue() + "";
+									vo.setTYPE_FILE_3(value);
+									System.out.println(value);
+								}else if("귀화허가를 받은 자의 자녀".equals(check)) {
+									cell = row.getCell(119); // 셀에 담겨있는 값을 읽는다.
+									value = (int)cell.getNumericCellValue() + "";
+									vo.setTYPE_FILE_3(value);
+									System.out.println(value);
+								}else {
+									System.out.println("항목이 없음...");
+								}
+							} else if ("소년 소녀 가장, 조손가정의 자녀".equals(value)) {
+								cell = row.getCell(121); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("다자녀가정(3자녀 이상)의 자녀".equals(value)) {
+								cell = row.getCell(123); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("순직 군경·소방관·교원·공무원의 자녀".equals(value)) {
+								cell = row.getCell(125); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(127); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_2(value);
+								System.out.println(value);
+								cell = row.getCell(129); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_3(value);
+								System.out.println(value);
+							} else if ("「장애인복지법법」제2에 따른 장애 정도가 심한 자의 자녀".equals(value)) {
+								cell = row.getCell(131); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(133); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("환경미화원 자녀(기초 및 광역자치단체에 소속된 경우)".equals(value)) {
+								cell = row.getCell(135); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(137); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("군인(15년 이상 재직 중인 준부사관 이하)의 자녀".equals(value)) {
+								cell = row.getCell(139); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(141); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("경찰(15년 이상의 재직 중인 경위 이하)의 자녀".equals(value)) {
+								cell = row.getCell(143); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(145); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("소방공무원(15년 이상의 재직 중인 소방위 이하)의 자녀".equals(value)) {
+								cell = row.getCell(147); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(149); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("산업재해근로자 자녀".equals(value)) {
+								cell = row.getCell(151); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+								cell = row.getCell(153); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							} else if ("기준 중위소득 60% 이하 가구의 자녀".equals(value)) {
+								cell = row.getCell(155); // 셀에 담겨있는 값을 읽는다.
+								value = (int)cell.getNumericCellValue() + "";
+								vo.setTYPE_FILE_1(value);
+								System.out.println(value);
+							}
+                        }
+                        
+                    
+                    }
+                    
+                    //for cloumn
+                    String check_id = vo.getID();
+                    
+                    if(check_id.equals("유형1") || check_id.equals("유형3")) {
+                    	ModelMap model2 = adminMember_reService.ReMemberMentoCheck(vo);
+                    	AdminReMemberVo vo2 = (AdminReMemberVo) model2.get("check");
+                    	if(vo2 == null){
+                    		adminMember_reService.setReInsert(vo);
+            				System.out.println(" 엑셀 회원 추가 : ");	
+                    	}else{
+                    		adminMember_reService.setReUpdate(vo);
+                    		System.out.println(" 엑셀 회원 업데이트 : ");
+                    	}
+                    }else if(check_id.equals("유형2")) {
+                    	ModelMap model2 = adminMember_reService.ReMemberStudentCheck(vo);
+                    	AdminReMemberVo vo2 = (AdminReMemberVo) model2.get("check");
+                    	if(vo2 == null){
+                    		adminMember_reService.setReInsert(vo);
+            				System.out.println(" 엑셀 회원 추가 : ");	
+                    	}else{
+                    		adminMember_reService.setReUpdate(vo);
+                    		System.out.println(" 엑셀 회원 업데이트 : ");
+                    	}
+                    }else {
+                    	System.out.println("업로드 실패?");
+                    }
+                    
+                    
+                }//for row
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		System.out.println("???? 왜터짐??");
+		
+		return "redirect:/index.do";
+	}
+	
 	
 	//엑셀 출력
 	//-------------------------------------------------------------------------------------------------------------------

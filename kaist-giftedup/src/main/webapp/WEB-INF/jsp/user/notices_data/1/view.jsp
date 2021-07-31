@@ -25,7 +25,6 @@
         <div id="new_sub_area" class="sub_area">
             <div id="new_sub_con" class="sub_con">
                 <div class="sub_size">
-
                     <!-- 메뉴바 -->
                     <nav class="right_nav_wrap">
                         <div class="title">

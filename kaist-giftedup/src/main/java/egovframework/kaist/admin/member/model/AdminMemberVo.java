@@ -53,6 +53,7 @@ public class AdminMemberVo extends SearchVo {
 	String EXP = "";
 	String EXP_TYPE = "";
 	String EXP_DATA = "";
+	String TEST = "";
 	
 	
 	String AREA_NUMBER = "";
@@ -65,6 +66,12 @@ public class AdminMemberVo extends SearchVo {
 	String DOWN = "";
 	
 	
+	public String getTEST() {
+		return TEST;
+	}
+	public void setTEST(String tEST) {
+		TEST = tEST;
+	}
 	public String getINFO_AGREEMENT_TM() {
 		return INFO_AGREEMENT_TM;
 	}

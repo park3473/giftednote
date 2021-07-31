@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,6 +42,8 @@ import com.system.util.SUtil;
 import egovframework.kaist.admin.buseo.service.AdminBuseoService;
 import egovframework.kaist.admin.config.model.AdminConfigVo;
 import egovframework.kaist.admin.config.service.AdminConfigService;
+import egovframework.kaist.admin.matching.model.AdminMatchingVo;
+import egovframework.kaist.admin.matching.service.AdminMatchingService;
 import egovframework.kaist.admin.member.model.AdminMemberVo;
 import egovframework.kaist.admin.member.service.AdminMemberService;
 
@@ -56,7 +59,9 @@ public class AdminMemberController {
 	@Autowired
 	AdminConfigService adminConfigService;
 	
-
+	@Autowired
+	AdminMatchingService adminMathingService;
+	
 
 	private static final Logger Logger = LoggerFactory.getLogger(AdminMemberController.class);
 
@@ -516,7 +521,7 @@ public class AdminMemberController {
                 {
                     int cells = row.getPhysicalNumberOfCells();
                     AdminMemberVo vo = new AdminMemberVo();
-                    
+                    //48위 항목 48개 여서 47까지
                     for (int columnIndex = 0; columnIndex <= 47; columnIndex++)
                     {
                         HSSFCell cell = row.getCell(columnIndex); // 셀에 담겨있는 값을 읽는다.
@@ -1402,6 +1407,313 @@ public class AdminMemberController {
 		adminMemberService.setInfo_AgreementUpdate();
 		response.getWriter().print("true");
 		
+	}
+	
+	@RequestMapping(value = "/admin/member/comparing.do" , method = RequestMethod.POST)
+	public String comparing(MultipartHttpServletRequest request, HttpServletResponse response)throws UnsupportedEncodingException {
+		String drv = request.getRealPath("");
+		
+		
+		drv = drv.substring(0, drv.length()) + "./resources"+request.getContextPath()+"/upload/excelupload/";
+		
+		System.out.println(drv);
+		
+		String filename = SUtil.setFileUpload(request, drv);
+		
+		int student_idx = 20210000;
+		int mento_idx = 20210000;
+		int student_num = 0;
+    	int mento_num = 0;
+		
+		System.out.println("=====1=====");
+		filename = URLDecoder.decode(filename, "utf-8");  
+		
+		ModelMap model = new ModelMap();
+
+		try {
+            FileInputStream fis = new FileInputStream(drv + filename);
+            HSSFWorkbook workbook = new HSSFWorkbook(fis);
+            HSSFSheet sheet = workbook.getSheetAt(0); // 해당 엑셀파일의 시트(Sheet) 수
+            int rows = sheet.getPhysicalNumberOfRows(); // 해당 시트의 행의 개수
+            for (int rowIndex = 1; rowIndex < rows; rowIndex++)
+            {
+                HSSFRow row = sheet.getRow(rowIndex); // 각 행을 읽어온다
+                if (row != null)
+                {
+                	String ph = "";
+                	String clss = "";
+                    int cells = row.getPhysicalNumberOfCells();
+                    AdminMemberVo vo = new AdminMemberVo();
+                    for (int columnIndex = 0; columnIndex <= 9; columnIndex++)
+                    {
+                        HSSFCell cell = row.getCell(columnIndex); // 셀에 담겨있는 값을 읽는다.
+                        String value = "";
+                        try {
+                        	switch (cell.getCellType()) 
+                            { // 각 셀에 담겨있는 데이터의 타입을 체크하고 해당 타입에 맞게 가져온다.
+    	                        case HSSFCell.CELL_TYPE_NUMERIC:
+    	                            value = (int)cell.getNumericCellValue() + "";
+    	                            break;
+    	                        case HSSFCell.CELL_TYPE_STRING:
+    	                            value = cell.getStringCellValue() + "";
+    	                            break;
+    	                        case HSSFCell.CELL_TYPE_BLANK:
+    	                            value = cell.getBooleanCellValue() + "";
+    	                            break;
+    	                        case HSSFCell.CELL_TYPE_ERROR:
+    	                            value = cell.getErrorCellValue() + "";
+    	                            break;
+                            }	
+                        }catch(java.lang.NullPointerException e)
+                        {
+                        	try {
+                        		value = cell.getStringCellValue() + "";	
+                        	}catch(java.lang.NullPointerException e1)
+                        	{
+                        		value = "";
+                        	}
+                        }
+                        if(columnIndex == 0)
+                        {
+                        	if(value.equals("학생")){
+                        		clss = "학생";
+                        		vo.setLEVEL("11");
+                        		vo.setTYPE("1");
+                        	}else if(value.equals("교사")){
+                        		clss = "교사";
+                        		vo.setLEVEL("8");
+                        		vo.setTYPE("2");
+                        	}
+                        	;
+                        }else if(columnIndex == 1) {
+                        	vo.setNAME(value);
+                        	System.out.println(value);
+                        }else if(columnIndex == 2) {
+                        	if(value.equals("-")) {
+                        		ph = "no";
+                        	}else if(value.equals("")) {
+                        		ph = "no";
+                        	}else if(value.equals(null)) {
+                        		ph = "no";
+                        	}else {
+                        		value = "0" + value;
+                        		vo.setPHONE(value);
+                        		value = value.substring(value.length() - 8 , value.length());
+                        		value = SUtil.getSHA256(value);
+                            	vo.setPASSWORD(value);
+                        	}
+                        }else if(columnIndex == 3) {
+                        	if(ph.equals("no")) {
+                        		value = "0" + value;
+                        		vo.setPHONE(value);
+                        		value = value.substring(value.length() - 8 , value.length());
+                        		value = SUtil.getSHA256(value);
+                            	vo.setPASSWORD(value);
+                        	};
+                        }else if(columnIndex == 4) {
+							if(clss.equals("학생")) {
+								vo.setADDRESS(value);                       		
+                        	}
+                        }else if(columnIndex == 5) {
+                        	vo.setSCHOOL_TYPE(value);
+                        }else if(columnIndex == 6) {
+                        	if(clss.equals("학생")) {
+                        		if(vo.getSCHOOL_TYPE().equals("초등학교")) {
+                        			value = value.substring(0 , 1);
+                        			vo.setSCHOOL_YEAR(value);
+                        		}else if(vo.getSCHOOL_TYPE().equals("중학교")) {
+                        			value = value.substring(0,1);
+                        			int year = Integer.parseInt(value);
+                        			year = year + 6;
+                        			value = Integer.toString(year);
+                        			vo.setSCHOOL_YEAR(value);
+                        			
+                        		}else if(vo.getSCHOOL_TYPE().equals("고등학교")) {
+                        			value = value.substring(0,1);
+                        			int year = Integer.parseInt(value);
+                        			year = year + 9;
+                        			value = Integer.toString(year);
+                        			vo.setSCHOOL_YEAR(value);
+                        			
+                        		}
+                        	}
+                        }else if(columnIndex == 7) {
+                        	vo.setSCHOOL_NAME(value);
+                        }else if(columnIndex == 8) {
+                        	if(clss.equals("학생")) {
+								vo.setELIGIBILITY(value);                       		
+                        	}
+                        }else if(columnIndex == 9) {
+                        	if(clss.equals("학생")) {
+								vo.setSUPPORT_AREA(value);
+                        	}
+                        }
+                    }//for cloumn
+                    System.out.println("====2====");
+                    ModelMap model2 = adminMemberService.getCheckView(vo);
+                    
+        			AdminMemberVo vo2 = (AdminMemberVo) model2.get("pageDomain");
+        			if(vo2 == null )
+        			{
+        				if(clss.equals("학생")) {
+        					int student_id = student_idx + 1000 + student_num;
+        					student_num = student_num + 1;
+        					System.out.println(student_num);
+        					String student_ID = Integer.toString(student_id);
+        					vo.setMEMBER_ID(student_ID);
+        					vo.setEXP_DATA("21");
+        					adminMemberService.setInsert(vo);
+        					//adminMemberService.setInsert(vo);
+            				//System.out.println(vo.getMEMBER_ID() + " 엑셀 회원 추가 : ");	
+        				}else if(clss.equals("교사")) {
+        					int mento_id = mento_idx + 2000 + mento_num;
+        					mento_num = mento_num + 1;
+        					String mento_ID = Integer.toString(mento_id);
+        					vo.setMEMBER_ID(mento_ID);
+        					vo.setEXP_DATA("21");
+        					adminMemberService.setInsert(vo);
+        					//adminMemberService.setInsert(vo);
+            				//System.out.println(vo.getMEMBER_ID() + " 엑셀 회원 추가 : ");	
+        				}
+        				
+        			}else
+        			{
+        				vo.setTEST("업데이트");
+        				vo2.setSCHOOL_NAME(vo.getSCHOOL_NAME());
+        				vo2.setSCHOOL_TYPE(vo.getSCHOOL_TYPE());
+        				vo2.setSCHOOL_YEAR(vo.getSCHOOL_YEAR());
+        				vo2.setELIGIBILITY(vo.getELIGIBILITY());
+        				//adminMemberService.setUpdate(vo);
+        				vo2.setEXP_DATA("20,21");
+        				adminMemberService.setUpdate(vo2);
+        				//System.out.println(vo.getMEMBER_ID() + " 엑셀 회원 업데이트 :  " + vo.getSEX());
+        			}
+                    
+                }//for row
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		
+		return "redirect:./list.do";
+	}
+	
+	
+	
+	@RequestMapping(value = "/admin/member/matching.do" , method = RequestMethod.POST)
+	public String matching(MultipartHttpServletRequest request, HttpServletResponse response)throws UnsupportedEncodingException {
+		String drv = request.getRealPath("");
+		
+		
+		drv = drv.substring(0, drv.length()) + "./resources"+request.getContextPath()+"/upload/excelupload/";
+		
+		//System.out.println(drv);
+		
+		String filename = SUtil.setFileUpload(request, drv);
+		
+		filename = URLDecoder.decode(filename, "utf-8");  
+		
+		ModelMap model = new ModelMap();
+
+		try {
+            FileInputStream fis = new FileInputStream(drv + filename);
+            HSSFWorkbook workbook = new HSSFWorkbook(fis);
+            HSSFSheet sheet = workbook.getSheetAt(0); // 해당 엑셀파일의 시트(Sheet) 수
+            int rows = sheet.getPhysicalNumberOfRows(); // 해당 시트의 행의 개수
+            
+            
+            for (int rowIndex = 1; rowIndex < rows; rowIndex++)
+            {
+                HSSFRow row = sheet.getRow(rowIndex); // 각 행을 읽어온다
+                if (row != null)
+                {
+                    int cells = row.getPhysicalNumberOfCells();
+                    AdminMatchingVo vo = new AdminMatchingVo();
+                    
+                    for (int columnIndex = 0; columnIndex <= 9; columnIndex++)
+                    {
+                    	int schooltype = 0;
+                        HSSFCell cell = row.getCell(columnIndex); // 셀에 담겨있는 값을 읽는다.
+                        String value = "";
+                        try {
+                        	switch (cell.getCellType()) 
+                            { // 각 셀에 담겨있는 데이터의 타입을 체크하고 해당 타입에 맞게 가져온다.
+    	                        case HSSFCell.CELL_TYPE_NUMERIC:
+    	                            value = (int)cell.getNumericCellValue() + "";
+    	                            break;
+    	                        case HSSFCell.CELL_TYPE_STRING:
+    	                            value = cell.getStringCellValue() + "";
+    	                            break;
+    	                        case HSSFCell.CELL_TYPE_BLANK:
+    	                            value = cell.getBooleanCellValue() + "";
+    	                            break;
+    	                        case HSSFCell.CELL_TYPE_ERROR:
+    	                            value = cell.getErrorCellValue() + "";
+    	                            break;
+                            }	
+                        }catch(java.lang.NullPointerException e)
+                        {
+                        	try {
+                        		value = cell.getStringCellValue() + "";	
+                        	}catch(java.lang.NullPointerException e1)
+                        	{
+                        		value = "";
+                        	}
+                        }
+                        if(columnIndex == 0)
+                        {
+                        	vo.setMEMBER_ID(value);
+                        }else if(columnIndex == 1) {
+                        	vo.setPROFESSOR_MEMBER_ID(value);
+                        }else if(columnIndex == 2) {
+                        	vo.setSCHOOL_NAME(value);
+                        }else if(columnIndex == 3) {
+                        	if(value.equals("초등학교")) {
+                        		schooltype = 0;
+                        	}else if(value.equals("중학교")) {
+                        		schooltype = 6;
+                        	}else if(value.equals("고등학교")) {
+                        		schooltype = 9;
+                        	}
+                        }else if(columnIndex == 4) {
+                        	value = value.substring(0,1);
+                        	int schoolyear = Integer.parseInt(value);
+                        	 schoolyear = schooltype + schoolyear;
+                        	 value = Integer.toString(schoolyear);
+                        	vo.setSCHOOL_YEAR(value);
+                        }
+                    }//for cloumn
+                    
+                    vo.setYEAR("2021");
+                    ModelMap model2 = adminMathingService.getOneList(vo);
+                   
+                    AdminMatchingVo vo2 = (AdminMatchingVo) model2.get("pageDomain");
+        			
+        			if(vo2 == null )
+        			{
+        				System.out.println(vo.getMEMBER_ID());
+        				System.out.println(vo.getPROFESSOR_MEMBER_ID());
+        				adminMathingService.setInsert(vo);
+        				System.out.println("신규 매칭 = 학생아이디 : "+vo.getMEMBER_ID()+"교사 아이디 :"+vo.getPROFESSOR_MEMBER_ID());
+        			}else
+        			{
+        				adminMathingService.setUpdate(vo);
+        				System.out.println("업데이트 매칭 = 학생아이디 : "+vo.getMEMBER_ID()+"교사 아이디 :"+vo.getPROFESSOR_MEMBER_ID());
+        				//adminMemberService.setUpdate(vo);
+        				//System.out.println(vo.getMEMBER_ID() + " 엑셀 회원 업데이트 :  " + vo.getSEX());
+        			}
+                    
+                }//for row
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		
+		return "redirect:./list.do";
 	}
 	
 	

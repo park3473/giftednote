@@ -32,6 +32,11 @@ public class AdminMatchingServiceImpl implements AdminMatchingService {
  
 	@Override
 	public int setInsert(AdminMatchingVo domain) {
+		System.out.println(domain.getMEMBER_ID());
+		System.out.println(domain.getPROFESSOR_MEMBER_ID());
+		System.out.println(domain.getYEAR());
+		System.out.println(domain.getSCHOOL_NAME());
+		System.out.println(domain.getSCHOOL_YEAR());
 		return adminMatchingMapper.setInsert(domain);
 	}
 
@@ -153,6 +158,14 @@ public class AdminMatchingServiceImpl implements AdminMatchingService {
 		modelMap.addAttribute("list", list);
 		System.out.println("------------------size : " + list.size());
 		return modelMap;
+	}
+
+	@Override
+	public ModelMap getOneList(AdminMatchingVo vo) {
+		ModelMap model = new ModelMap();
+		AdminMatchingVo vo2 = adminMatchingMapper.getOneList(vo);
+		model.put("pageDomain", vo2);
+		return model;
 	}
 
 		

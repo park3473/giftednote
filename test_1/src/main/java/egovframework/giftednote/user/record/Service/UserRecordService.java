@@ -10,4 +10,16 @@ public interface UserRecordService {
 
 	void setRecord(UserRecordVo userRecordVo);
 
+	ModelMap getTeam(UserRecordVo userRecordVo);
+
+	ModelMap getTeamNameDay(UserRecordVo userRecordVo);
+
+	void setRecordUpdate(UserRecordVo userRecordVo);
+
+	int getClassCheck(UserRecordVo userRecordVo);
+
+	void setRecordDelete(UserRecordVo userRecordVo);
+
+
+
 }

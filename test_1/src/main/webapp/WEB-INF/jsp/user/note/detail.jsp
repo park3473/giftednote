@@ -63,7 +63,7 @@
 
 <style>
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
     .test_div > .test_p{
@@ -118,7 +118,7 @@
 												</ul>
 												<ul style="display:none">
 													<li>${model.list[0].P_IDX }</li>
-													<li id="N_IDX" value="${model.list[0].N_IDX }">${model.list[0].N_IDX }</li>
+													<li id="lab_id" value="${model.lab_id}">${model.lab_id }</li>
 													<li id="CONTENT" content="${model.list[0].CONTENT }">${model.list[0].CONTENT }</li>
 												</ul>
                                     		</li>
@@ -126,12 +126,13 @@
                                     			<div>
 													<div id="cke">
 														<textarea name="CONTENT" id="ckeditor">
-															<!-- 콘텐츠 보이는곳 -->
 															${model.list[0].CONTENT }
 														</textarea>
 													</div>
 												</div>
                                     		</li>
+                                    		<!-- 
+                                    		07 - 26 댓글 기능 삭제
                                     		<li class="detail_modal_li" style="margin-left:2rem">
                                     			<div>
                                     				<p>댓글</p>
@@ -157,6 +158,7 @@
 													</ul>
 												</div>
                                     		</li>
+                                    		-->
                                     	</ul>
 									</div>
 
@@ -188,15 +190,28 @@ if('${check}' == 'fail'){
 	alert("성공")
 }
 */
+
+
+
+	$(document).ready(function(){
+		if($('.cke_show_borders').offsetHeight > 740){
+			alert('더이상 작성할수 없습니다.');
+			return false;
+		}
+	})
+	
+	
 	function content(P_IDX){
-		var N_IDX = $('#N_IDX').val();
+		var lab_id = $('#lab_id').val();
+		var P_USER_IDX = ${session_idx}
 		$.ajax({
 			type : "POST",
 			url : "/user/note/detail.do?",
 			cache : false,
 			data : ({
 				P_IDX : P_IDX,
-				N_IDX : N_IDX
+				lab_id : lab_id,
+				P_USER_IDX : P_USER_IDX
 			}),
 			dataType : "json",
 			success: function(data , status, xhr){
@@ -216,15 +231,17 @@ if('${check}' == 'fail'){
 		var editor = CKEDITOR.instances.ckeditor;
 		var CONTENT = editor.getData();
 		var P_IDX = $('#insert_bt').attr('P_IDX');
-		var N_IDX = $('#N_IDX').val();
+		var P_USER_IDX = ${session_idx}
+		var lab_id = $('#lab_id').val();
 		$.ajax({
 			type : "POST",
 			url : "/user/note/detail_update.do?",
 			cache : false,
 			data : ({
 				CONTENT : CONTENT,
-				N_IDX : N_IDX,
+				lab_id : lab_id,
 				P_IDX : P_IDX,
+				P_USER_IDX
 			}),
 			dataType : "json",
 			success: function(data , status, xhr){
@@ -238,7 +255,7 @@ if('${check}' == 'fail'){
 			  showCancelButton: false,
 			  confirmButtonColor: '#3085d6',
 			  confirmButtonText: 'Yes!'
-			}).then((result) => {
+			}).then(function(result) {
 			  if (result.isConfirmed) {
 					location.reload();
 			  }
@@ -248,7 +265,8 @@ if('${check}' == 'fail'){
 	
 	function PageUp(){
 		var P_IDX = ${model.Pagecount + 1};
-		var N_IDX = $('#N_IDX').val();
+		var lab_id = $('#lab_id').val();
+		var P_USER_IDX = ${session_idx};
 		var CONTENT = '';
 		$.ajax({
 			type : "POST",
@@ -256,8 +274,9 @@ if('${check}' == 'fail'){
 			cache : false,
 			data : ({
 				CONTENT : CONTENT,
-				N_IDX : N_IDX,
+				lab_id : lab_id,
 				P_IDX : P_IDX,
+				P_USER_IDX : P_USER_IDX
 			}),
 			dataType : "json",
 			success: function(data , status, xhr){
@@ -269,13 +288,16 @@ if('${check}' == 'fail'){
 			  showCancelButton: false,
 			  confirmButtonColor: '#3085d6',
 			  confirmButtonText: 'Yes!'
-			}).then((result) => {
+			}).then(function(result) {
 			  if (result.isConfirmed) {
 					location.reload();
 			  }
 			})
 	}
 	
+	
+	// 07 - 26 코멘트 기능 삭제
+	/*
 	function comment_set(){
 		var N_IDX = $('#N_IDX').val();
 		var IDX = ${session_idx};
@@ -302,7 +324,7 @@ if('${check}' == 'fail'){
 			  showCancelButton: false,
 			  confirmButtonColor: '#3085d6',
 			  confirmButtonText: 'Yes!'
-			}).then((result) => {
+			}).then(function(result) {
 			  if (result.isConfirmed) {
 					location.reload();
 			  }
@@ -347,7 +369,7 @@ if('${check}' == 'fail'){
 			  cancelButtonColor: '#d33',
 			  confirmButtonText: '삭제!',
 			  cancelButtonText: '아니요',
-			}).then((result) => {
+			}).then(function(result) {
 			  if (result.isConfirmed) {
 				  var C_IDX = c_idx;
 				  $.ajax({
@@ -366,7 +388,7 @@ if('${check}' == 'fail'){
 			  }
 			})
 	}
-
+*/
 /*
 $(window).load(function(){
 	

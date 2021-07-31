@@ -28,9 +28,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.system.util.SUtil;
 
 import egovframework.kaist.admin.config.model.AdminConfigVo;
@@ -1117,4 +1120,20 @@ public class UserMemberController {
 
 		return new ModelAndView("user/member/update", "model", model);
 	}
+	
+	@RequestMapping(value="/user/member/id_search.do" , method = RequestMethod.POST , produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String id_search(@ModelAttribute("UserMemberVo") UserMemberVo UserMemberVo , HttpServletRequest request , HttpServletResponse response) throws JsonProcessingException {
+		UserMemberVo.setPHONE(UserMemberVo.getPHONE().replace("-", ""));
+		
+		String Search_id = userMemberService.getID(UserMemberVo);
+		System.out.println(Search_id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(Search_id);
+		return jsonStr;
+	}
+	
+	
+	
+	
 }

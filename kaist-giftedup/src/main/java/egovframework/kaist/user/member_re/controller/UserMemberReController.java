@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.system.util.SUtil;
 
+import egovframework.kaist.admin.member_re.model.AdminReMemberVo;
 import egovframework.kaist.admin.sms_log.model.AdminSmsLogVo;
 import egovframework.kaist.admin.sms_log.service.AdminSmsLogService;
 import egovframework.kaist.user.buseo.service.UserBuseoService;
@@ -392,6 +394,21 @@ public class UserMemberReController {
 	}
 	
 	
+	@RequestMapping(value ="/user/member_re/new_inquiry.do" , method = RequestMethod.GET)
+	public ModelAndView NewInquiry(HttpServletRequest request, HttpServletResponse response) {
+		return new ModelAndView("/user/member_re/new_inquiry");
+	}
+	
+	@RequestMapping(value ="/user/member_re/new_inquiry.do" , method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String NewInquiryCheck(@ModelAttribute("AdminReMemberVo")AdminReMemberVo adminReMemberVo , HttpServletRequest request, HttpServletResponse response)throws JsonProcessingException {
+		String type = request.getParameter("VIEW_TYPE");
+		adminReMemberVo.setID("유형"+type);
+		List<AdminReMemberVo> list = userMember_reService.getReCheck(adminReMemberVo);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(list);
+		return jsonStr;
+	}
 	
 	
 }

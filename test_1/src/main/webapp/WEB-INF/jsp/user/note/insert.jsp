@@ -17,7 +17,7 @@
 
 <style>
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
     .test_div > .test_p{
@@ -80,7 +80,7 @@
 														<input type="hidden" name="IDX" value="${session_idx}">
 													</div>
 													<div id="img_select_modal">
-														<img id="img_check" src="${pageContext.request.contextPath}/resources/upload/note_img/1_0505.png" alt="">
+														<img id="img_check" src="${pageContext.request.contextPath}/resources/upload/note_img/kaist.jpg" alt="">
 														<input type="hidden" name="IMAGE" id="IMAGE">
 														<p id="img_modal_open" onclick="javascript:img_modal()">표지 선택</p>
 													</div>
@@ -117,7 +117,7 @@
 													   </div>
 														<div id="no_check_team_ul">
 															<p>추가 전 학생</p>
-															<ul id="no_check_list_team">
+															<ul id="no_check_list_team"  style="height: 200px; overflow: scroll;">
 																<c:forEach var="item" items="${model.list}" varStatus="var">
 																	<li id="check_${item.IDX }" ondblclick="javascript:check_id('${item.IDX}')" value="${item.IDX }" name="${item.NAME }" idx="${item.IDX }" school_name="${item.SCHOOL_NAME }" email="${item.EMAIL }"school_year="${item.SCHOOL_YEAR }"><span>${item.NAME }</span></li>
 																</c:forEach>
@@ -125,7 +125,7 @@
 														</div>
 														<div id="check_team_ul">
 															<p>추가된 학생</p>
-															<ul id="check_list_team">
+															<ul id="check_list_team" style="height: 200px; overflow: scroll;">
 																<!-- 추가된 학생 리스트가 들어갈 자리 -->
 															</ul>
 														</div>
@@ -171,11 +171,10 @@
                         </a>
                     </div>
                 </div>
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_0505.png" onclick="javascript:check_img('1_0505')" >
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_1515.png" onclick="javascript:check_img('1_1515')">
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_3535.png" onclick="javascript:check_img('1_3535')">
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_4545.png" onclick="javascript:check_img('1_4545')">
-				<img src="${pageContext.request.contextPath}/resources/upload/note_img/1_5555.png" onclick="javascript:check_img('1_5555')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/kaist.jpg" onclick="javascript:check_img('kaist')" >
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/gist.jpg" onclick="javascript:check_img('gist')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/dgist.jpg" onclick="javascript:check_img('dgist')">
+				<img src="${pageContext.request.contextPath}/resources/upload/note_img/unist.jpg" onclick="javascript:check_img('unist')">
             </div>
         </div>
     </div>
@@ -208,7 +207,7 @@ if('${check}' == 'fail'){
 	function check_img(e){ 
 		console.log(e);
 		$('.img_modal').hide();
-		$('#img_check').attr('src','${pageContext.request.contextPath}/resources/upload/note_img/'+e+'.png')
+		$('#img_check').attr('src','${pageContext.request.contextPath}/resources/upload/note_img/'+e+'.jpg')
 		$('#IMAGE').val(e);
 	}
 	

@@ -15,8 +15,30 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/member_view.css" type="text/css">
 
 <style>
+
+	.excel_form_modal_ul button{
+		height : auto;
+	}
+
+	input#file-upload-button{
+		width:5rem;
+		height:1rem;
+		background-color:red;
+	}
+	
+	
+	#excel_file{
+		height: 35px;
+	    font-size: 0.75rem;
+	    color: #464646;
+	    border: 1px solid #dedede;
+	    vertical-align: middle;
+	    padding-left: 10px;
+	    padding-top : 4px;
+	}
+
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
     
@@ -26,6 +48,7 @@
 	.tg th{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
 	  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
 	.tg .tg-0pky{border-color:#3364b1;}
+
 </style>
 <section id="new_sc" class="sc_wrap">
         <div class="sc_area">
@@ -61,42 +84,94 @@
 											  <tr class="tbl_th">
 											    <th class="tg-0lax">순번</th>
 											    <th class="tg-0lax">이름</th>
+											    <th class="tg-0lax">PREURP - 아이디</th>
+											    <th class="tg-0lax">생년월일</th>
 											    <th class="tg-0lax">이메일</th>
-											    <th class="tg-0lax">전화번호</th>
-											    <th class="tg-0lax">주소</th>
-											    <th class="tg-0lax">직업</th>
 											  </tr>
 											</thead>
 											<tbody id="list">
 												<c:forEach var="item" items="${model.list }" varStatus="Status">
 												<tr class="update_modal">
-												    <td class="tg-0lax">${Status.index+1 }</td>
-												    <td class="tg-0lax" id="name_${Status.index+1 }" >${item.NAME }</td>
-												    <td class="tg-0lax" id="email_${Status.index+1 }">${item.EMAIL }</td>
-												    <td class="tg-0lax" id="phone_${Status.index+1 }">${item.PHONE }</td>
-												    <td class="tg-0lax" id="address_${Status.index+1 }">${item.ADDRESS }</td>
-												    <td class="tg-0lax" id="level_${Status.index+1 }" value="${item.LEVEL }">
-												    	<c:if test="${item.LEVEL == '2'}">
-												    		멘토
-												    	</c:if>
-												    	<c:if test="${item.LEVEL == '1'}">
-												    		학생
-												    	</c:if>
-												    	<c:if test="${item.LEVEL == '3'}">
-												    		관리자
-												    	</c:if>
-												    </td>
-												    <td id="birth_${Status.index+1 }" style="display:none">
-												    	${item.BIRTH }
-												    </td>
+												    <td class="tg-0lax">${model.itemtotalcount - (Status.index + model.beforeDomain.PAGE *  model.beforeDomain.ITEM_COUNT)}</td>
+												    <td class="tg-0lax" id="name_${Status.index+1 }" >${item.ur_name }</td>
+												    <td class="tg-0lax" id="email_${Status.index+1 }">${item.ur_userid }</td>
+												    <td class="tg-0lax" id="phone_${Status.index+1 }">${item.ur_birthday }</td>
+												    <td class="tg-0lax" id="address_${Status.index+1 }">${item.ur_email }</td>
 												    <td id="idx_${Status.index+1 }" style="display:none">
-												     	${item.IDX }
+												     	${item.ur_id }
 												     </td>
 												 </tr>
 												 </c:forEach>
 											</tbody>
 										</table>
 									</div>
+									
+									<div style="float:right">
+									<!--
+										07 - 26 삭제 
+										<button type="button" id="chk_delete">선택삭제</button>
+										<button type="button" onclick="location.href='${pageContext.request.contextPath}/admin/member/insert.do'">추가</button>
+										<button type="button" id="excelUploadModal">엑셀 회원 추가</button>
+									 -->
+									 <!--
+										<button type="button" id="excelDownload">엑셀 다운로드</button>
+									-->
+									</div>
+									
+									<!-- 페이징 -->
+                                    <div class="paging_con">
+                                        <div class="paging_box">
+	                                        <c:if test="${model.page > 0 }">
+		                                    	<div class="arrows_box arrows_box_lt">
+											        <a href="javascript:pageChanged(${model.page-1}, ${model.itempageend});">
+											            <i class="las la-angle-left"></i>
+											        </a>
+											    </div>
+	                                    	</c:if>
+	                                    	<c:if test="${model.page <= 0}">
+	                                    		<div class="arrows_box arrows_box_lt">
+											        <a href="#">
+											            <i class="las la-angle-left"></i>
+											        </a>
+											    </div>
+	                                    	</c:if>
+                                            <ul class="number_box">
+                                            	<c:if test="${model.itempageend > 0}">
+											    <c:forEach var="i" begin="${model.itempagestart}" end="${model.itempageend}">
+											    <c:choose>
+											    
+											    <c:when test="${model.page == i }">
+											    <li class="number page_active"><a href="#">${i+1}</a></li>
+											    </c:when>
+											    
+											    <c:otherwise>
+											    <li class="number"><a href="javascript:pageChanged(${i}, ${model.itempageend});">${i+1}</a></li>
+											    </c:otherwise>
+											    
+											    </c:choose>
+											    </c:forEach>
+											    </c:if>
+											
+											    <c:if test="${model.itempageend == 0}">
+											    <li class="number page_active"><a>1</a></li>
+											    </c:if>
+											    <c:if test="${model.itempageend < 0}">
+											    <li class="number page_active"><a>1</a></li>
+											    </c:if>
+                                            </ul>
+                                            <c:if test="${model.itemCount < model.itemtotalcount/(model.page+1)}">
+                                            	<div class="arrows_box arrows_box_gt">
+	                                                <a href="javascript:pageChanged(${model.page+1}, ${model.itemtotalpage});"><i class="las la-angle-right"></i></a>
+	                                            </div>
+                                            </c:if>
+                                            <c:if test="${model.itemCount >= model.itemtotalcount/(model.page+1)}">
+                                            	<div class="arrows_box arrows_box_gt">
+	                                                <a href="#"><i class="las la-angle-right"></i></a>
+	                                            </div>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                    <!-- 페이징 end-->
                                 </div>
                                 <!-- 진행중인 회의 end -->
                             </div>
@@ -112,7 +187,7 @@
 <!--공통하단-->
 <%@ include file="../../include/footer.jsp" %>
 <!--공통하단 끝-->
-<div id="meeting_form_modal" class="all_modal">
+<%-- <div id="meeting_form_modal" class="all_modal">
 	<div class="all_modal_con">
 		<div class="modal_box">
 
@@ -177,8 +252,53 @@
 		</div>
 	</div>
 </div>
+<div id="meeting_form_modal" class="all_modal excel_modal">
+	<div class="all_modal_con">
+		<div class="modal_box">
+			<div class="modal_title">
+				<!-- 공통타이틀 -->
+				<div class="all_title">
+					<div class="line">
+						<span></span>
+					</div>
+					<h2>회원 엑셀 업로드</h2>
+				</div>
+				<!-- 공통타이틀 -->
 
-
+				<!-- 닫기 -->
+				<div id="excel_btn" class="close_btn">
+					<a href="#"> <i class="las la-times"></i>
+					</a>
+				</div>
+			</div>
+			<form action="${pageContext.request.contextPath }/admin/member/excelMemberUpload.do" method="POST" id="excel_form_upload" enctype="multipart/form-data">
+			<ul class="modal_form member_input excel_form_modal_ul">
+				<!--
+				엑셀 설명 필요 없을듯
+				<li>
+					<span class="list_t">설명 다운로드</span>
+					<button type="button" id="fileDownBtn1">다운로드</button> 
+					<span class="relate_c">엑셀 작성에 대한 설명서 내용입니다.</span>
+				</li>
+				
+				-->
+				<li><span class="list_t">양식 다운로드</span>
+					<button type="button" id="fileDownBtn2">다운로드</button>
+					<span class="relate_c">회원 일괄 등록에 필요한 엑셀 양식입니다.</span>
+				</li>
+				<li>
+					<span class="list_t">엑셀 업로드</span>
+					<input type="file" name="file" id="excel_file" accept=".xls">
+					<span>양식에 맞는 엑셀을 업로드 해주세요.</span>
+				</li>
+			</ul>
+			</form>
+			<div id="excel_form_modal" style="text-align:center">
+				<button type="button" onclick="javascript:excel_upload()">업로드</button>
+			</div>
+		</div>
+	</div>
+</div> --%>
 <!-- js 시작 -->
 <script type="text/javascript">
 /*
@@ -189,6 +309,73 @@ if('${check}' == 'fail'){
 	alert("성공")
 }
 */
+/*	
+	//전체 선택 체크 박스
+	$(document).on("click", "#chk_calc_all", function(e) {
+	    if ($(this).prop('checked')) {
+	        $('input[name="chk_calc"]').prop('checked', true);
+	    } else {
+	        $('input[name="chk_calc"]').prop('checked', false);
+	    }
+	});
+	
+	//선택 삭제 버튼 on
+	$(document).on("click","#chk_delete",function(e){
+		
+		if($("input[name='chk_calc']").is(':checked') == true){
+			
+			
+			var check_length = $('input[name=chk_calc]:checked').length;
+			//console.log(check_length);
+			for(i = 0; i < check_length; i ++){
+				var IDX = $('input[name=chk_calc]:checked').eq(i).val();
+				console.log(i+'IDX='+IDX);
+				$.ajax({
+					type : "POST",
+	                url : "${pageContext.request.contextPath}/admin/member/delete.do",
+	                cache : false,
+	                data : ({
+	                    IDX : IDX
+	                }),
+	                dataType : "json",
+	                success : function(data,status,xhr){
+	                	
+	                }
+				})
+				Swal.fire('선택된 회원들이 퇴출되었습니다.')
+			}
+		}else{
+			Swal.fire('선택된 회원이 없습니다.');
+		}
+	})
+	
+	
+	//
+	$("#excelUploadModal").click(function(){
+		$('.excel_modal').show();
+	})
+	$("#excel_btn").click(function() {
+        $(".excel_modal").hide(); 
+    });
+	
+	
+	//엑셀 업로드
+	function excel_upload(){
+		$('#excel_form_upload').submit();
+	}
+	
+	//엑셀 업로드 버튼
+	$('#fileDownBtn2').click(function(){
+		var url = '/resources/files/note_member.xls'
+		location.href = url;
+	})
+*/	
+	//엑셀 다운로드
+	$('#excelDownload').click(function(){
+		location.href='${pageContext.request.contextPath}/admin/member/excelDown.do';
+	})
+/*	
+	
     $("#close_btn").click(function() {
         $("#meeting_form_modal").hide();
     });
@@ -241,13 +428,36 @@ if('${check}' == 'fail'){
 	});
 		
 	}
-	
+*/	
 	$.datetimepicker.setLocale('ko');
 	jQuery('#UPDATE_BIRTH').datetimepicker({
 		format : 'Y-m-d',
 		lang : "ko",
 		timepicker : false
 	});
+	
+	function pageChanged(page , endpage){
+		if (page < 0) {
+            page = 0;
+        }
+        
+        if (endpage < 0) {
+            endpage = 0;
+        }
+        
+        if (page >= endpage) {
+            page = endpage;
+        }
+
+        var URL = "list.do?PAGE="+page;
+        if('${model.ITEM_COUNT}' == '') {
+            URL = URL + "&ITEM_COUNT=" + '10';
+        }else {
+            URL = URL + "&ITEM_COUNT=" + '${model.ITEM_COUNT}';
+        }
+        
+        location.href = URL;
+	}
 	
 	
 </script>

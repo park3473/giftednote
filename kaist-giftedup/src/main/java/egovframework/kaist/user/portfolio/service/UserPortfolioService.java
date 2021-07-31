@@ -26,4 +26,6 @@ public interface UserPortfolioService {
 
 	public Object getView2(String portfolioid);
 
+	public HashMap<String,String> getSummary2021(UserPortfolioVo userPortfolioVo);
+
 }

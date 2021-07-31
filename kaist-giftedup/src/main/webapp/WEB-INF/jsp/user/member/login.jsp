@@ -6,7 +6,6 @@
 <head>
     <%@ include file="../include/head.jsp" %>
 </head>
-
 <body>
     <header id="new_hd" class="hd_wrap">
         <%@ include file="../include/header.jsp" %>
@@ -108,13 +107,31 @@
                                                 <p>※ 비밀번호 잊어버릴시 휴대전화 인증으로 로그인해주시기 바랍니다.</p>
                                                 <p>※ 인증 후 비밀번호 수정은 마이페이지에서 가능합니다.</p>
                                             </div>
-                                            <!--
                                             <div class="form_btn form_btn_m">
-                                                <button type="button" onClick="password()">비밀번호 찾기</button>
+                                                <button type="button" onClick="id_search_modal_open()">아이디 찾기</button>
                                             </div>
-                                            -->
                                         </div>
                                     </form>
+                                    <form method="post" action="#" id="id_search_form" name="id_search_form" return false; style="display:none">
+                                        <div class="form_con login_input_wrap">
+                                            <div class="form_size">
+                                                <div class="input_ob id_ob">
+                                                    <span>이름</span>
+                                                    <input type="text" placeholder="아이디를 입력해주세요." name="NAME" id="ID_NAME">
+                                                    <label class="blind" for="NAME">아이디</label>
+                                                </div>
+                                                <div class="input_ob pw_ob">
+                                                    <span>전화번호</span>
+                                                    <input type="password" placeholder="010을 제외한 전화번호를 입력해주세요." name="PHONE" id="ID_PHONE">
+                                                    <label class="blind" for="PHONE">전화번호</label>
+                                                </div>
+                                            </div>
+                                            <div class="form_btn login_btn">
+                                                <button type="button" onClick="id_search()" id="id_search_modal_open">아이디 찾기</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
                                 </div>
                             </div>
 
@@ -160,7 +177,7 @@
     </section>
     <!--본문 end-->
 
-    <footer id="new_ft" class="ft_wrap">
+	<footer id="new_ft" class="ft_wrap">
         <%@ include file="../include/footer.jsp" %>
     </footer>
     <%@ include file="../include/footerJs.jsp" %>
@@ -168,151 +185,197 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sub.css">
     <!--추가 css-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
-
-    <script type="text/javascript">
-        function password() {
-            location.href = '${pageContext.request.contextPath}/user/member/findPassword.do';
-        }
-
-        function login() {
-            if ($('#MEMBER_ID').val() == '') {
-                alert('아이디를 입력 해주세요');
-                return;
-            }
-            if ($('#PASSWORD').val() == '') {
-                alert('패스워드 입력 해주세요');
-                return;
-            }
-
-            var URL = '${pageContext.request.contextPath}/user/member/login.do'
-            var formData = $("#updateform").serialize();
-
-            console.log(formData);
-
-            $.ajax({
-                type: "POST",
-                url: URL,
-                cache: false,
-                data: formData,
-                success: function(result) {
-                    var s = result.indexOf("true");
-                    if (s > -1) {
-                        idchk = true;
-                        //location.href = '${pageContext.request.contextPath}/index.do';
-                        location.href = '${model.URL}';
-                        return;
-                    } else if (result.indexOf("false:-1") > -1) {
-                        alert('패스워드가 틀립니다.');
-                        return;
-                    } else if (result.indexOf("false:-2") > -1) {
-                        alert('아이디가 존재 하지 않습니다.');
-                        return;
-                    } else if (result.indexOf("false:-3") > -1) {
-                        alert('인증시도 회수가 초과 되었습니다.');
-                        return;
-                    } else if (result.indexOf("false:-4") > -1) {
-                        alert('접근 권한이 없습니다.');
-                        return;
-                    }        
-                }
-            });
-        }
-        var chk = 'N';
-
-        function certify() {
-            if ($('#PHONE').val() == '') {
-                alert('번호를 입력 해주세요');
-                return;
-            }
-            if ($('#NAME').val() == '') {
-                alert('이름을 입력 해주세요');
-                return;
-            }
-
-            var URL = '${pageContext.request.contextPath}/user/member/certify.do'
-            var formData = $("#updateform2").serialize();
+	<script type="text/javascript">
+		function id_search_modal_open(){
+			$('#id_search_form').css('display','block');
+		}
+		
+		function id_search(){
+			if($('#ID_NAME').val() == ''){
+				alert('이름을 적어주세요');
+				return;	
+			}
+			if($('#ID_PHONE').val() == ''){
+				alert('핸드폰 번호를 적어주세요.');
+				return
+			}
+			if($('#ID_PHONE').val().length != 8){
+				console.log($('#ID_PHONE').val().length);
+				alert('010을 제외한 8자리를 입력하여주세요');
+				return
+			}
+			
+			var URL = '${pageContext.request.contextPath}/user/member/id_search.do'
+			var formData = $("#id_search_form").serialize();
+			var NAME = $('#ID_NAME').val();
 			console.log(formData);
-            $.ajax({
-                type: "GET",
-                url: URL,
-                cache: false,
-                data: formData,
-                success: function(result) {
-                    chk = 'Y';
-                    var s = result.indexOf("true");
-                    console.log(s);
-                    console.log(result);
-                    if (s > -1) {
-                        alert('인증번호가 발송되었습니다.');
-                        return;
-                    } else if (result.indexOf("false:-2") > -1) {
-                        alert('계정이 존재 하지 않습니다.');
-                        return;
-                    } else if (result.indexOf("false:-3") > -1) {
-                        alert('인증시도 회수가 초과 되었습니다.');
-                        return;
-                    } else if (result.indexOf("false:-4") > -1) {
-                        alert('접근 권한이 없습니다.');
-                        return;
-                    }
+			$.ajax({
+				type : "POST",
+				url : URL,
+				cache : false,
+				data : formData,
+				dataType : "json",
+				success : function(data,status,xhr) {
+					if(data == null){
+						alert('아이디가 없습니다.');	
+					}else{
+						alert(NAME+'님의 아이디는 '+data+'입니다.');
+						$('#id_search_form').css('display','none');
+						
+					}
+					//alert(result);
 
-                }
+				}
 
-            });
-        }
+			});
+			
+		}
+	</script>
+    <script type="text/javascript">
+					function password() {
+						location.href = '${pageContext.request.contextPath}/user/member/findPassword.do';
+					}
 
-        function login2() {
-            if ($('#PHONE').val() == '') {
-                alert('번호를 입력 해주세요');
-                return;
-            }
-            if ($('#NAME').val() == '') {
-                alert('이름을 입력 해주세요');
-                return;
-            }
+					function login() {
+						if ($('#MEMBER_ID').val() == '') {
+							alert('아이디를 입력 해주세요');
+							return;
+						}
+						if ($('#PASSWORD').val() == '') {
+							alert('패스워드 입력 해주세요');
+							return;
+						}
 
-            if (chk != 'Y') {
-                alert('인증번호 발송을 해주세요');
-                return;
-            }
+						var URL = '${pageContext.request.contextPath}/user/member/login.do'
+						var formData = $("#updateform").serialize();
 
-            var URL = '${pageContext.request.contextPath}/user/member/smsLogin.do'
-            var formData = $("#updateform2").serialize();
+						console.log(formData);
 
-            console.log(formData);
+						$.ajax({
+							type : "POST",
+							url : URL,
+							cache : false,
+							data : formData,
+							success : function(result) {
+								var s = result.indexOf("true");
+								if (s > -1) {
+									idchk = true;
+									//location.href = '${pageContext.request.contextPath}/index.do';
+									location.href = '${model.URL}';
+									return;
+								} else if (result.indexOf("false:-1") > -1) {
+									alert('패스워드가 틀립니다.');
+									return;
+								} else if (result.indexOf("false:-2") > -1) {
+									alert('아이디가 존재 하지 않습니다.');
+									return;
+								} else if (result.indexOf("false:-3") > -1) {
+									alert('인증시도 회수가 초과 되었습니다.');
+									return;
+								} else if (result.indexOf("false:-4") > -1) {
+									alert('접근 권한이 없습니다.');
+									return;
+								}
+							}
+						});
+					}
+					var chk = 'N';
 
-            $.ajax({
-                type: "POST",
-                url: URL,
-                cache: false,
-                data: formData,
-                success: function(result) {
-                    var s = result.indexOf("true");
-                    if (s > -1) {
-                        idchk = true;
-                        location.href = '${pageContext.request.contextPath}/index.do';
-                        return;
-                    } else if (result.indexOf("false:-2") > -1) {
-                        alert('계정이 존재 하지 않습니다.');
-                        return;
-                    } else if (result.indexOf("false:-3") > -1) {
-                        alert('인증번호가 틀렸습니다.');
-                        return;
-                    }     
-                }
-            });    
-        }
+					function certify() {
+						if ($('#PHONE').val() == '') {
+							alert('번호를 입력 해주세요');
+							return;
+						}
+						if ($('#NAME').val() == '') {
+							alert('이름을 입력 해주세요');
+							return;
+						}
 
+						var URL = '${pageContext.request.contextPath}/user/member/certify.do'
+						var formData = $("#updateform2").serialize();
+						console.log(formData);
+						$.ajax({
+							type : "GET",
+							url : URL,
+							cache : false,
+							data : formData,
+							success : function(result) {
+								chk = 'Y';
+								var s = result.indexOf("true");
+								console.log(s);
+								console.log(result);
+								if (s > -1) {
+									alert('인증번호가 발송되었습니다.');
+									return;
+								} else if (result.indexOf("false:-2") > -1) {
+									alert('계정이 존재 하지 않습니다.');
+									return;
+								} else if (result.indexOf("false:-3") > -1) {
+									alert('인증시도 회수가 초과 되었습니다.');
+									return;
+								} else if (result.indexOf("false:-4") > -1) {
+									alert('접근 권한이 없습니다.');
+									return;
+								}
 
-        $('input[type="password"]').keydown(function() {
+							}
 
-            if (event.keyCode === 13) {
-                login();
-                event.preventDefault();
-            };
-        });
-        
-    </script>
+						});
+					}
+
+					function login2() {
+						if ($('#PHONE').val() == '') {
+							alert('번호를 입력 해주세요');
+							return;
+						}
+						if ($('#NAME').val() == '') {
+							alert('이름을 입력 해주세요');
+							return;
+						}
+
+						if (chk != 'Y') {
+							alert('인증번호 발송을 해주세요');
+							return;
+						}
+
+						var URL = '${pageContext.request.contextPath}/user/member/smsLogin.do'
+						var formData = $("#updateform2").serialize();
+
+						console.log(formData);
+
+						$
+								.ajax({
+									type : "POST",
+									url : URL,
+									cache : false,
+									data : formData,
+									
+									success : function(result) {
+										var s = result.indexOf("true");
+										if (s > -1) {
+											idchk = true;
+											location.href = '${pageContext.request.contextPath}/index.do';
+											return;
+										} else if (result.indexOf("false:-2") > -1) {
+											alert('계정이 존재 하지 않습니다.');
+											return;
+										} else if (result.indexOf("false:-3") > -1) {
+											alert('인증번호가 틀렸습니다.');
+											return;
+										}
+									}
+								});
+					}
+
+					$('input[type="password"]').keydown(function() {
+
+						if (event.keyCode === 13) {
+							login();
+							event.preventDefault();
+						}
+						;
+					});
+				</script>
 
 </body>
 </html>

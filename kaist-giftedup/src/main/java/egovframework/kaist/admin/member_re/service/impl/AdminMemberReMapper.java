@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import egovframework.kaist.admin.dcmnt.model.DcmntVo;
 import egovframework.kaist.admin.member_re.model.AdminDcmntVo;
 import egovframework.kaist.admin.member_re.model.AdminMemberReVo;
+import egovframework.kaist.admin.member_re.model.AdminReMemberVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("adminMember_reMapper")
@@ -39,5 +40,19 @@ public interface AdminMemberReMapper {
 	public List<?> getStat();
 
 	public List<?> getMeStat();
+
+	public void setReInsert(AdminReMemberVo vo);
+
+	public List<AdminReMemberVo> getReMember(AdminReMemberVo adminReMemberVo);
+
+	public AdminReMemberVo getReMemberMentoCheck(AdminReMemberVo vo);
+
+	public void setReUpdate(AdminReMemberVo vo);
+
+	public AdminReMemberVo getReMemberStudentCheck(AdminReMemberVo vo);
+
+	public List<?> getReList(AdminReMemberVo adminReMemberVo);
+
+	public int getReListCnt(AdminReMemberVo adminReMemberVo);
 
 }

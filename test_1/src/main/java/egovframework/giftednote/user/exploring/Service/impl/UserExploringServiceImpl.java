@@ -31,4 +31,16 @@ public class UserExploringServiceImpl implements UserExploringService {
 		// TODO Auto-generated method stub
 		userExploringMapper.setExplor(userExploringVo);
 	}
+
+	@Override
+	public int getClassCheck(UserExploringVo userExploringVo) {
+		// TODO Auto-generated method stub
+		return userExploringMapper.getClassCheck(userExploringVo);
+	}
+
+	@Override
+	public void setExploringDelete(UserExploringVo userExploringVo) {
+		// TODO Auto-generated method stub
+		userExploringMapper.setExploringDelete(userExploringVo);
+	}
 }

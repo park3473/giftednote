@@ -16,4 +16,6 @@ public interface UserSrceService {
 
 	public void setUpdate(UserSrceVo userSrceVo);
 
+	public ModelMap getTeamList(UserSrceVo userSrceVo);
+
 }

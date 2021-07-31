@@ -27,4 +27,6 @@ public interface UserPortfolioMapper {
 	
 	public HashMap<String,String> getSummary(UserPortfolioVo userPortfolioVo);
 	
+	public HashMap<String,String> getSummary2021(UserPortfolioVo userPortfolioVo);
+	
 }

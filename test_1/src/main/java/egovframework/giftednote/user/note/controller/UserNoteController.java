@@ -68,14 +68,14 @@ public class UserNoteController {
 		
 		UserNoteVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
 		UserNoteVo.setOFFSET(pagelimit);
-		System.out.println(request.getParameter("DEAD"));
-		if(request.getParameter("DEAD") != null){
-		UserNoteVo.setDEAD(request.getParameter("DEAD"));
-		}
-		UserNoteVo.setEMAIL(request.getParameter("EMAIL"));
+		UserNoteVo.setUr_userid(request.getParameter("USER_ID"));
+		UserNoteVo.setType(request.getParameter("TYPE"));
 		model = userNoteService.getList(UserNoteVo);
 		
-		
+		if(model.equals(null)) {
+			model.put("note_list", "no");
+		}
+		System.out.println(model);
 		model.put("SEARCH_TYPE", UserNoteVo.getSEARCH_TYPE());
 		model.put("SEARCH_TEXT", UserNoteVo.getSEARCH_TEXT());
 		
@@ -118,9 +118,15 @@ public class UserNoteController {
 	@RequestMapping(value="/note/detail.do" , method = RequestMethod.GET)
 	public ModelAndView Detail(@ModelAttribute("UserNoteDetailVo") UserNoteDetailVo UserNoteDetailVo, HttpServletRequest request, HttpServletResponse response) {
 		ModelMap model = new ModelMap();
-		String n_idx = request.getParameter("N_IDX");
-		UserNoteDetailVo.setN_IDX(n_idx);
+		String lab_id = request.getParameter("lab_id");
+		
+		String user_id = request.getParameter("user_idx");
+		UserNoteDetailVo.setLab_id(lab_id);
+		UserNoteDetailVo.setP_USER_IDX(user_id);
 		model = userNoteService.getDetail(UserNoteDetailVo);
+		model.put("lab_id", lab_id);
+		model.put("p_user_idx", user_id);
+		
 		
 		return new ModelAndView("user/note/detail" , "model", model);
 	}
@@ -157,6 +163,41 @@ public class UserNoteController {
 	@RequestMapping(value="/user/note/comment_delete.do" , method = RequestMethod.POST)
 	public void COMMENTDELETE(@ModelAttribute("UserCommentVo") UserCommentVo UserCommentVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		userNoteService.CommentDelete(UserCommentVo);
+	}
+	
+	@RequestMapping(value="/user/note/view.do" , method = RequestMethod.GET)
+	public ModelAndView View(@ModelAttribute("UserNoteDetailVo") UserNoteDetailVo UserNoteDetailVo, HttpServletRequest request, HttpServletResponse response) {
+		ModelMap model = new ModelMap();
+		String lab_id = request.getParameter("lab_id");
+		
+		String user_id = request.getParameter("user_idx");
+		UserNoteDetailVo.setLab_id(lab_id);
+		UserNoteDetailVo.setP_USER_IDX(user_id);
+		model = userNoteService.getDetail(UserNoteDetailVo);
+		model.put("lab_id", lab_id);
+		model.put("p_user_idx", user_id);
+		
+		
+		
+		return new ModelAndView("user/note/view" , "model", model);
+	}
+	
+	@RequestMapping(value="/user/note/schedule.do" , method = RequestMethod.GET)
+	public String schedule(HttpServletRequest request, HttpServletResponse response) {
+		return "/user/note/schedule";
+	}
+	
+	
+	@RequestMapping(value="/user/note/teamlist.do" , method = RequestMethod.GET)
+	public ModelAndView TeamList(@ModelAttribute("UserNoteVo") UserNoteVo userNoteVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		userNoteVo.setLab_id(request.getParameter("lab_id"));
+		
+		ModelMap model = new ModelMap();
+		
+		model = userNoteService.getTeamList(userNoteVo);
+		
+		return new ModelAndView("/user/note/teamlist","model", model);
 	}
 	
 	

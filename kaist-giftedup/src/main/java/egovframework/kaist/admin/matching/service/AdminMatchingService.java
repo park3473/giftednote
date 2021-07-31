@@ -31,4 +31,6 @@ public interface AdminMatchingService {
 
 	public ModelMap getMatchingNotMemberList(AdminMatchingVo adminMatchingVo);
 
+	public ModelMap getOneList(AdminMatchingVo vo);
+
 }

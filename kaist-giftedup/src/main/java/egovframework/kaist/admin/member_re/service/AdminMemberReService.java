@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import egovframework.kaist.admin.dcmnt.model.DcmntVo;
 import egovframework.kaist.admin.member_re.model.AdminDcmntVo;
 import egovframework.kaist.admin.member_re.model.AdminMemberReVo;
+import egovframework.kaist.admin.member_re.model.AdminReMemberVo;
 
 public interface AdminMemberReService {
 
@@ -33,6 +34,16 @@ public interface AdminMemberReService {
 	public void setAllComplete();
 
 	public ModelMap getStat();
+
+	public void setReInsert(AdminReMemberVo vo);
+
+	public ModelMap ReMemberMentoCheck(AdminReMemberVo vo);
+
+	public void setReUpdate(AdminReMemberVo vo);
+
+	public ModelMap ReMemberStudentCheck(AdminReMemberVo vo);
+
+	public ModelMap getReList(AdminReMemberVo adminReMemberVo);
 
 
 

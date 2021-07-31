@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
 import egovframework.giftednote.user.member.Service.UserMemberService;
+import egovframework.giftednote.user.member.model.SchoolVo;
+import egovframework.giftednote.user.member.model.UserInquiryVo;
 import egovframework.giftednote.user.member.model.UserMemberVo;
 import egovframework.giftednote.user.note.model.UserNoteVo;
 
@@ -59,6 +61,53 @@ public class UserMemberServiceImpl implements UserMemberService {
 	public void setMyInfo(UserMemberVo userMemberVo) {
 		// TODO Auto-generated method stub
 		userMemberMapper.setMyInfo(userMemberVo);
+	}
+	@Override
+	public ModelMap getSchool(SchoolVo schoolVo) {
+		// TODO Auto-generated method stub
+		ModelMap model = new ModelMap();
+		
+		List<?> list = userMemberMapper.getSchool(schoolVo);
+		model.addAttribute("list", list);
+		
+		return model;
+	}
+	@Override
+	public int setCheckId(UserMemberVo userMemberVo) {
+		// TODO Auto-generated method stub
+		int result = userMemberMapper.setCheckId(userMemberVo);
+		
+		return result;
+	}
+	@Override
+	public List<?> getMyInquiry(UserInquiryVo userInquiryVo) {
+		
+		List<?> list = userMemberMapper.getMyInquiry(userInquiryVo);
+		
+		
+		return list;
+	}
+	@Override
+	public void setInquiryInsert(UserInquiryVo userInquiryVo) {
+		// TODO Auto-generated method stub
+		userMemberMapper.setInquiryInsert(userInquiryVo);
+	}
+	@Override
+	public void setInquiryUpdate(UserInquiryVo userInquiryVo) {
+		// TODO Auto-generated method stub
+		userMemberMapper.setInquiryUpdate(userInquiryVo);
+		
+	}
+	@Override
+	public ModelMap getInquiry(UserInquiryVo userInquiryVo) {
+		// TODO Auto-generated method stub
+		ModelMap model = new ModelMap();
+		UserInquiryVo vo = userMemberMapper.getInquiry(userInquiryVo);
+		
+		model.put("view", vo);
+		System.out.println(model);
+		
+		return model;
 	}
 	
 

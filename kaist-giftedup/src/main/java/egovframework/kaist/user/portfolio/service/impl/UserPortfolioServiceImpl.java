@@ -125,5 +125,10 @@ public class UserPortfolioServiceImpl implements UserPortfolioService {
 	public HashMap<String,String> getSummary(UserPortfolioVo userPortfolioVo) {
 		return userPortfolioMapper.getSummary(userPortfolioVo);
 	}
+	
+	@Override
+	public HashMap<String,String> getSummary2021(UserPortfolioVo userPortfolioVo) {
+		return userPortfolioMapper.getSummary2021(userPortfolioVo);
+	}
 		
 }

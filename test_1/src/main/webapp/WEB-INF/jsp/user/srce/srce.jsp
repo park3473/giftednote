@@ -16,7 +16,7 @@
 
 <style>
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
     .test_div > .test_p{
@@ -40,10 +40,67 @@
 	.tbl_th{
 		background-color : #d0dcef;
 	}
-</style>
+	.join_table {
+    height: auto;
+    max-height: 720px;
+	}
+	
+	.table_two {
+	    width: -webkit-calc((100% - 51px) / 2);
+	    width: calc((100% - 51px) / 2);
+	    margin-right: 50px;
+	    float: left;
+	}
+	
+	.all_table {
+	    width: 100%;
+	    height: auto;
+	    position: relative;
+	}
+	
+	.table_two:last-of-type {
+	    margin-right: 0;
+	}
+		
+	.all_table_3 .all_table_box tr th {
+	    background-color: #f7f7f7;
+	    border-bottom: 1px solid #dedede;
+	    border-right: 1px solid #dedede;
+	    padding: 10px 5px;
+	    letter-spacing: -1px;
+	    text-align: center;
+	    font-size: 0.938rem;
+	}
+	
+	.all_table_3 .all_table_box tr th:last-of-type {
+	    border-right: 0;
+	}
+	
+	.all_table_3 .all_table_box tr td {
+	    border-bottom: 1px solid #dedede;
+	    padding: 10px 15px;
+	    text-align: center;
+	    color: #595959;
+	    letter-spacing: -.5px;
+	}
+	
+	.all_table_3 .all_table_box tr td {
+	    border-right: 1px solid #dedede;
+	}
+	
+	.all_table_3 .all_table_box tr td:last-of-type {
+	    border-right: 0;
+	}
+	
+	.all_table_3 .all_table_box tr:hover {
+	    background-color: #fdfdfd;
+	}
+		
+	
+	</style>
 <div style="display:none">
 	<input type="hidden" value="${fn:length(model.list)}" id="teamcount">
-	<input type="hidden" value="${model.N_IDX }" id="_MAIN_N_IDX">
+	<input type="hidden" value="${model.lab_id }" id="_MAIN_LAB_ID">
 </div>
 <section id="new_sc" class="sc_wrap">
         <div class="sc_area">
@@ -68,6 +125,87 @@
                                 <div class="meeting_wrap">
 
                                     <!-- 공통타이틀 -->
+                                    <div class="all_title" style="margin-bottom:30px;">
+                                        <div class="line"><span></span></div>
+                                        <h2>▣ 평가 방법</h2>
+                                    </div>
+                                    <div style="margin-bottom:40px;">
+                                    	<p>- 지도한 학생 개개인에 대해서 세부 항목에 대해 각 영역별로 연구역량을 평가해주시기 바랍니다.</p>
+                                    	<p>- 모든 항목에 대해 1~5점으로 표기해주시고, 모든 영역 점수가 동일하거나 개개인의 평가 결과가 동일한 경우에는 관리부서로부터 평가지를 재작성하도록 요청받을 수 있습니다.</p>
+                                    </div>
+                                    
+                                    <div class="all_title" style="margin-bottom:20px;">
+                                        <div class="line"><span></span></div>
+                                        <h2>▣ 작성 항목 및 기준</h2>
+                                        <div class="join_table">
+                                        <div class="all_table all_table_3">
+                                        <table class="all_table_box">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="subject">항목</th>
+                                                        <th class="group_infro">내용</th>
+                                                        <th class="group_name">평가</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            연구역량 기초 역량
+                                                        </td>
+                                                        <td>
+                                                           <ul>
+                                                           		<li>연구 윤리에 대한 이해</li>
+                                                           		<li>실험실 안전 관리</li>
+                                                           		<li>연구 참여자간의 소통능력</li>
+                                                           </ul>
+                                                        </td>
+                                                        <td rowspan="4">
+                                                            1~5점<br>Likert 척도
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            사전 연구
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+                                                           		<li>지도자(멘토)연구 분야에 대한 이해</li>
+                                                           		<li>연구 주제 파악 및 전공 지식에 대한 이해</li>
+                                                           		<li>실험설계 및 연구활동 계획 수립 능력</li>
+                                                           </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            집중 연구
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+                                                           		<li>실험 주제 설정 및 연구 수행</li>
+                                                           		<li>데이터 정리와 분석,연구노트 작성 능력</li>
+                                                           		<li>연구결과에 대한 피드백과 비판적 검토 능력</li>
+                                                           </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            사후 연구
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+                                                           		<li>데이터 결과 해석 (타당성,논리성,체계성)</li>
+                                                           		<li>데이터 시각화 및 표현 능력</li>
+                                                           		<li>연구 결과 및 가치 이해</li>
+                                                           </ul>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
                                     <div class="all_title">
                                         <div class="line"><span></span></div>
                                         <h2>학생연구역량평가</h2>
@@ -93,7 +231,7 @@
 											    <th class="tg-0lax">연구역량</th>
 											    <th class="tg-0lax">평가 문항</th>
 											    <c:forEach items="${model.list }" var="item" varStatus="Status">
-													<th class="tg-0lax" id="teamname_${Status.index }" idx="${item.IDX }" name="${item.NAME }">${item.NAME }</th>
+													<th class="tg-0lax" id="teamname_${Status.index }" idx="${item.ur_id }" name="${item.std_name }">${item.std_name }</th>
 											    </c:forEach>
 											  </tr>
 											</thead>
@@ -463,7 +601,7 @@
 											    <td class="tg-0lax">연구의 가치, 유용성, 기대효과 등을 설명할 수 있는가?</td>
 											    <c:forEach items="${model.list }" var="item" varStatus="Status">
 													<th class="tg-0lax">
-														<select name="SCORE" id="${item.NAME }_${Status.index}">
+														<select name="SCORE" id="${item.NAME }_${Status.index}" >
 															<option value="">선택해주세요</option>
 															<option value="1">1</option>
 															<option value="2">2</option>
@@ -505,6 +643,7 @@ if('${check}' == 'fail'){
 	alert("성공")
 }
 */
+	$('select').attr('what_set','insert');
 	var teamcount = $('#teamcount').val();
 	for(x = 0; x < teamcount; x++){
 		AJAX(x);
@@ -513,14 +652,14 @@ if('${check}' == 'fail'){
 	
 	function AJAX(x){
 		var IDX = $('#teamname_'+x).attr('idx');
-		var N_IDX = $('#_MAIN_N_IDX').val();
+		var lab_id = $('#_MAIN_LAB_ID').val();
 		//console.log(IDX);
 		$.ajax({
 			type : "POST",
 			url : "/srce/srce.do?",
 			cache : false,
 			data : ({
-				N_IDX : N_IDX,
+				lab_id : lab_id,
 				IDX : IDX,
 			}),
 			dataType : "json",
@@ -529,27 +668,31 @@ if('${check}' == 'fail'){
 				//console.log(data[0]);
 				if(check != "" && check != null){
 					const srce_table = document.getElementById('SRCE_TABLE');
-					for(y = 1; y < 25; y++){
-							//console.log(data[y-1].NAME)
+					console.log(data.length);
+					for(y = 1; y < data.length+1; y++){
+							console.log(data);
+							console.log(data.length);
+							console.log(data[y-1].NAME);
+							var line = data[y-1].S_IDX;
 							var z = 0;
-							if((y-1) == 0 || (y-1)%6 == 0){
+							if((line-1) == 0 || (line-1)%6 == 0){
 								z = 3+x;
-							}else if(y%2 == 0){
+							}else if(line%2 == 0){
 								z = 1+x;
-							}else if(y%2 == 1){
+							}else if(line%2 == 1){
 								z = 2+x;
 							}
-							//console.log("x"+x+"y"+y+"z"+z);
-							//console.log(data[(y-1)].SCORE);
-							//console.log(y-1);
-							//console.log(data[0].SCORE);
-							srce_table.rows[y].cells[z].getElementsByTagName('select').namedItem('SCORE').value = data[(y-1)].SCORE;
-							
+							console.log("x"+x+"y"+line+"z"+z);
+							console.log(data[(y-1)].SCORE);
+							console.log(y-1);
+							console.log(line);
+							srce_table.rows[line].cells[z].getElementsByTagName('select').namedItem('SCORE').value = data[(y-1)].SCORE;
+							srce_table.rows[line].cells[z].getElementsByTagName('select').namedItem('SCORE').setAttribute('what_set','update');
 						}
 
-					$('#teamname_'+x).attr('if_set','update');
+					$('#teamname_'+x).attr('what_set','update');
 				}else{
-					$('#teamname_'+x).attr('if_set','insert');
+					$('#teamname_'+x).attr('what_set','insert');
 				}
 				}
 				
@@ -571,11 +714,11 @@ if('${check}' == 'fail'){
 					z = 2+x;
 				}
 				var SCORE = srce_table.rows[y].cells[z].getElementsByTagName('select').namedItem('SCORE').value;
-				var what = $('#teamname_'+x).attr('if_set');
+				var what = srce_table.rows[y].cells[z].getElementsByTagName('select').namedItem('SCORE').getAttribute('what_set');
 				if(SCORE != ''){
 					if(what == 'update'){
 						//console.log("update"+SCORE)
-						var N_IDX = $('#_MAIN_N_IDX').val();
+						var lab_id = $('#_MAIN_LAB_ID').val();
 						var SCORE = SCORE;
 						var IDX = $('#teamname_'+x).attr('idx');
 						var S_IDX = y;
@@ -586,7 +729,7 @@ if('${check}' == 'fail'){
 							cache : false,
 							data : ({
 								IDX : IDX,
-								N_IDX : N_IDX,
+								lab_id : lab_id,
 								S_IDX : S_IDX,
 								NAME : NAME,
 								SCORE : SCORE
@@ -594,11 +737,12 @@ if('${check}' == 'fail'){
 							dataType : "json",
 							success: function(data , status, xhr){
 								console.log(data);
+								
 								}
 						})
 					}else if(what == 'insert'){
 						//console.log("insert"+SCORE)
-						var N_IDX = $('#_MAIN_N_IDX').val();
+						var lab_id = $('#_MAIN_LAB_ID').val();
 						var SCORE = SCORE;
 						var IDX = $('#teamname_'+x).attr('idx');
 						var S_IDX = y;
@@ -609,7 +753,7 @@ if('${check}' == 'fail'){
 							cache : false,
 							data : ({
 								IDX : IDX,
-								N_IDX : N_IDX,
+								lab_id : lab_id,
 								S_IDX : S_IDX,
 								NAME : NAME,
 								SCORE : SCORE

@@ -7,15 +7,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!--삭제금지-->
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!--삭제금지-->
 <!--공통상단-->
-<%@ include file="./include/header.jsp" %>
 <!--CSS-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/all.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tail.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/index.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/login.css" type="text/css">
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
@@ -62,131 +63,71 @@
 영어
 </c:if>
 -->
-<section id="new_sc" class="sc_wrap">
-        <div class="sc_area">
-            <div class="sc_con">
-                <div class="sc_size">
 
-                    <!-- 공통 탑 -->
-                    <div class="sc_top">
-                        <div class="sc_top_size">
-                            <div class="top_home">
-                                <div class="home_btn">
-                                    <a href="${pageContext.request.contextPath}/">HOME</a>
-                                </div>
-                                <div class="home_title">
-                                    <h2>연구노트</h2>
-                                </div>
-                            </div>
-                            <div class="gt_menu_cont">
-                                <ul class="gt_menu_box">
-                                	<c:if test="${session_login == 'ok' }">
-                                    <li>
-                                        <p>
-                                            <span>${session_name }</span>님
-                                        </p>
-                                    </li>
-                                    
-                                    <li class="logout_btn">
-                                        <a onclick="location.href='/user/member/logout.do'">로그아웃</a>
-                                    </li>
-                                    </c:if>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 공통 탑 end-->
-
-                    <!-- 본문 내용-->
-                    <div class="sc_section">
-                        <div class="sc_section_con">
-                            <!--사이트맵-->
-                            <div class="sitemap">
-                                <ul class="sitemap_box">
-                                    <li><span><img src="${pageContext.request.contextPath}/resources/img/home_icon.png"></span>메인</li>
-                                    <li>로그인</li>
-                                </ul>
-                            </div>
-                            <!--사이트맵 end-->
-
-                            <div class="sc_section_size">
-                                <!-- 진행중인 회의 -->
-                                <div class="meeting_wrap">
-
-                                    <!-- 공통타이틀 -->
-                                    <div class="all_title">
-                                        <div class="line"><span></span></div>
-                                        <h2>로그인</h2>
-                                    </div>
-                                    <!-- 공통타이틀 -->
-
-                                    <!-- 양식 리스트 -->
-                                    <div class="form_list_con">
-                                        <!--메인버튼 끝-->
-                                        <div>
-                                        	<img src="${pageContext.request.contextPath }/resources/img/logo.png">
-                                        </div>
-										<div class="form_list_login">
-											<form action="#" method="post" id="member_login_form" name="member_login_form" >
-												<ul>
-													<li><input type="text" id="ID" onkeyup="login_enter();" name="EMAIL" placeholder="이메일"></li>
-													<li><input type="password" onkeyup="login_enter();" class="login_input" id="PASSWORD" name="PASSWORD" placeholder="비밀번호"></li>
-												</ul>
-												<ul class="form_list_bt">
-													<li><button type="button" onclick="javascript:login()">로그인</button></li>
-													<li><button type="button" onclick="location.href='${pageContext.request.contextPath}/user/member/register.do'">회원가입</button></li>
-													<li><button type="button" id="bt_pw" onclick="javascript:bt_pwss()">비밀번호 찾기</button></li>
-												</ul>
-											</form>
-										</div>
-                                    </div>
-                                    <!-- 양식 리스트 end-->
-
-                                </div>
-                                <!-- 진행중인 회의 end -->
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- 본문 내용 end-->
-
+    
+<!-- 로그인 폼 -->
+<section id="new_login" class="login_wrap">
+    <div class="login_area">
+        <div class="login_con">
+            <div class="login_size">
+                <div class="logo_box">
+                    <img src="${pageContext.request.contextPath }/resources/img/logo.png">
                 </div>
-            </div>
-        </div>
-    </section>
-
-<!--  -->
-<div id="meeting_form_modal" class="all_modal">
-        <div class="all_modal_con">
-            <div class="modal_box">
-
-                <div class="modal_title">
-                    <!-- 공통타이틀 -->
-                    <div class="all_title">
-                        <div class="line"><span></span></div>
-                        <h2>비밀번호 찾기</h2>
-                    </div>
-                    <!-- 공통타이틀 -->
-
-                    <!-- 닫기 -->
-                    <div id="close_btn" class="close_btn">
-                        <a href="#">
-                            <i class="las la-times"></i>
-                        </a>
+                <div class="login_cont">
+                    <div class="login_form">
+                        <form class="form" action="#" method="post" id="member_login_form" name="member_login_form">
+                            <ul class="login_input">
+                            	<li class="login_input_check_type">
+                            		<div class="login_input_size">
+                            			<ul>
+                            				<li id="login_input_radio_li">
+                            					<span>회원 유형</span>
+                            				</li>
+                            				<li id="login_input_radio_li">
+                            					<input type="radio" name="type" id="type_student" value="student">
+                            					<label for="type">학생</label>
+                            				</li>
+                            				<li id="login_input_radio_li">
+                            					<input type="radio" name="type" id="type_mento" value="mento">
+                            					<label for="type">교사</label>
+                            				</li>
+                            			</ul>
+                            		</div>
+                            	</li>
+                                <li class="login_input_ob id_input">
+                                    <div class="txt">
+                                        <span>아이디</span>
+                                    </div>
+                                    <div class="login_input_size">
+                                        <input type="text" id="ID" onkeyup="login_enter();" name="ur_userid" placeholder="아이디">
+                                    </div>
+                                </li>
+                                <li class="login_input_ob pw_input">
+                                    <div class="txt">
+                                        <span>이름</span>
+                                    </div>
+                                    <div class="login_input_size">
+                                        <input type="text" onkeyup="login_enter();" class="login_input" id="ur_name" name="ur_name" placeholder="이름">
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="button_box">
+                                <button type="button" id="login_button" onclick="javascript:login()">로그인</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-				<div id="password_modal">
-											<div>
-													<input type="text" onkeyup="password_re_search()"id="password_re_email" name="EMAIL">
-													<input type="button" onclick="javascript:password_re_search()" id="pw_re" value="비밀번호 찾기">
-											</div>
-										</div>
-										<div>
-											${PASSWORD}
-										</div>
             </div>
         </div>
     </div>
+</section>
+<!-- 로그인 폼 end -->
+
+
+
+<!-- 비밀번호 찾기 end -->
+
+    
 
 <!--공통하단-->
 <%@ include file="./include/footer.jsp" %>
@@ -195,16 +136,21 @@
 <script type="text/javascript">
 	//alert('${ip_session}');
 	function bt_pwss(){
-		$('#meeting_form_modal').show();
+		$('#pw_modal').show();
 		
 	}
 	function login() {
+		if($('input[name="type"]:checked').val() == null){
+			alert('회원 유형을 선택해 주세요.');
+	        return;
+		}
+		
 	    if ($('#ID').val() == '') {
 	        alert('아이디를 입력 해주세요');
 	        return;
 	    }
-	    if ($('#PASSWORD').val() == '') {
-	        alert('패스워드 입력 해주세요');
+	    if ($('#NAME').val() == '') {
+	        alert('이름 입력 해주세요');
 	        return;
 	    }
 	
@@ -222,7 +168,7 @@
 	            var s = result.indexOf("true");
 	            if (s > -1) {
 	                idchk = true;
-	                location.href = '${pageContext.request.contextPath}/note/list.do?EMAIL='+$('#ID').val();
+	                location.href = '${pageContext.request.contextPath}/note/list.do?USER_ID='+$('#ID').val()+'&TYPE='+$('input[name="type"]:checked').val()+'';
 	                return;
 	            } else if (result.indexOf("false:-1") > -1) {
 	                Swal.fire('이메일 혹은 패스워드를 재확인 해주십시오.');
@@ -231,7 +177,7 @@
 	        }
 	    });
 	}
-
+	/* 비밀번호 찾기 기능 제거
 	function password_re_search(){
 		var EMAIL = $('#password_re_email').val() 
 		$.ajax({
@@ -250,7 +196,7 @@
 		        }
 		    });
 	}
-	
+	*/
 	function login_enter(){
 		if(window.event.keyCode == 13){
 			login();

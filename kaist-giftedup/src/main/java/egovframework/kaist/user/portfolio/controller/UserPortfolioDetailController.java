@@ -96,7 +96,9 @@ public class UserPortfolioDetailController {
 		
 		model.put("USER", userMemberService.getView(userPortfolioVo.getMEMBER_ID()));
 		
-		model.put("SUMM", userPortfolioService.getSummary(userPortfolioVo));
+		model.put("SUMM2020", userPortfolioService.getSummary(userPortfolioVo));
+		
+		model.put("SUMM2021", userPortfolioService.getSummary2021(userPortfolioVo));
 
 		return new ModelAndView("user/portfolio/detail/list", "model", model);
 	}

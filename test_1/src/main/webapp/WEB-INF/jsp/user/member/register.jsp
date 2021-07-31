@@ -11,113 +11,231 @@
 
 <!--삭제금지-->
 <!--공통상단-->
-<%@ include file="../../include/header.jsp" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/register.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/all.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/login.css" type="text/css">
 <!--공통상단 끝-->
 
 <style>
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
+    
+    .address_input input{
+    	width : 50% !important;
+    	float: left;
+    }
 </style>
+<%@ include file="../../include/head.jsp" %>
+    
+    
+    
 
-<section id="new_sc" class="sc_wrap">
-        <div class="sc_area">
-            <div class="sc_con">
-                <div class="sc_size">
-
-                    <!-- 공통 탑 -->
-                    <%@ include file="../../include/top.jsp" %>
-                    <!-- 공통 탑 end-->
-
-                    <!-- 본문 내용-->
-                    <div class="sc_section">
-                        <div class="sc_section_con">
-                            <!--사이트맵-->
-                            <div class="sitemap">
-                                <ul class="sitemap_box">
-                                    <li><span><img src="${pageContext.request.contextPath}/resources/img/home_icon.png"></span>메인</li>
-                                    <li>로그인</li>
+<!-- 로그인 폼 -->
+<section id="new_login" class="login_wrap">
+    <div class="login_area">
+        <div class="login_con">
+            <div class="login_size">
+                <div class="logo_box">
+                    <img src="${pageContext.request.contextPath }/resources/img/logo.png">
+                </div>
+                <div class="login_cont">
+                    <div class="login_form">
+                        <form class="form" action="${pageContext.request.contextPath}/user/member/register.do" method="post" id="member_login_form" name="member_login_form">
+                            <ul class="login_input login_input_full">
+                                <li class="login_input_ob name_input">
+                                    <div class="txt">
+                                        <span>이름</span>
+                                    </div>
+                                    <div class="login_input_size">
+                                        <input type="text" id="name" name="NAME" placeholder="이름을 입력해주세요">
+                                    </div>
+                                </li>
+                                <li class="login_input_ob id_input">
+                                    <div class="txt">
+                                        <span>이메일</span>
+                                    </div>
+                                    <button  type="button" onclick="id_check()">중복 검색</button>
+                                    <div class="login_input_size">
+                                        <input type="text" id="ID" name="EMAIL" placeholder="이메일을 입력해주세요" id_check="">
+                                        
+                                    </div>
+                                </li>
+                                <li class="login_input_ob pw_input">
+                                    <div class="txt">
+                                        <span>비밀번호</span>
+                                    </div>
+                                    <div class="login_input_size">
+                                        <input type="password" onkeyup="login_enter();" class="login_input" id="PASSWORD" name="PASSWORD" placeholder="비밀번호">
+                                    </div>
+                                </li>
+                                <li class="login_input_ob pw_input">
+                                    <div class="txt">
+                                        <span>주소</span>
+                                    </div>
+                                    <button type="button" onclick="zipCode();">주소 검색</button>
+                                    <div class="login_input_size address_input">
+                                        <input type="text" id="address" name="RODE_ADDRESS" placeholder="주소를 검색하여주세요.">
+                                        <input type="text" id="address_detail" name="ADDRESS_DETAIL" placeholder="상세주소를 입력하여주세요.">
+                                        <input type="hidden" id="address_full" name="ADDRESS">
+                                    </div>
+                                </li>
+                                 <li class="login_input_ob pw_input">
+                                    <div class="txt">
+                                        <span>학교검색</span>
+                                    </div>
+                                    <button type="button" onclick="javascript:void(window.open('/user/member/school.do', '학교 검색','width=930, height=500'))">학교검색</button>
+                                    <div class="login_input_size">
+                                        <input type="text" id="SCHOOL_NAME" name="SCHOOL_NAME" placeholder="학교를 검색하여주세요.">
+                                    </div>
+                                </li>
+                                <li class="login_input_ob pw_input">
+                                    <div class="txt">
+                                        <span>휴대폰</span>
+                                    </div>
+                                    <div class="login_input_size">
+                                        <input type="text" id="phone" name="PHONE" placeholder="휴대폰 번호를 입력해주세요.">
+                                    </div>
+                                </li>
+                                <li class="login_input_ob pw_input">
+                                    <div class="txt">
+                                        <span>직업 선택</span>
+                                    </div>
+                                    <div class="login_input_size">
+                                        <select  id="level" name="LEVEL" >
+                                            <option value="">
+                                                직업을 선택하여주세요.
+                                            </option>
+                                            <option value="2">
+                                                교수 or 조교
+                                            </option>
+                                            <option value="1">
+                                                학생
+                                            </option>
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="join_submit_btn">
+                                <div class="join_txt">
+                                    <p>※ 회원가입 후 "이메일 주소/비밀번호" 입력하여 로그인이 가능합니다.</p>
+                                </div>
+                                <ul class="join_btn">
+                                    <li class="submit_btn">
+                                        <input ID="RE_BT" type="button" onclick="insert_member();" id="REGISTER"  value="저장">
+                                    </li>
+                                    <li class="cancel_btn">
+                                        <input onclick="location.href='${pageContext.request.contextPath}/index.do'" value="취소">
+                                    </li>
                                 </ul>
                             </div>
-                            <!--사이트맵 end-->
-
-                            <div class="sc_section_size">
-                                <!-- 진행중인 회의 -->
-                                <div class="meeting_wrap">
-
-                                    <!-- 공통타이틀 -->
-                                    <div class="all_title">
-                                        <div class="line"><span></span></div>
-                                        <h2>회원가입</h2>
-                                    </div>
-                                    <!-- 공통타이틀 -->
-
-                                    <!-- 양식 리스트 -->
-                                    <div class="form_list_con">
-                                        <!--메인버튼 끝-->
-                                        <div>
-                                        	<img src="${pageContext.request.contextPath }/resources/img/logo.png">
-                                        </div>
-										<div class="form_list_login">
-											<form action="${pageContext.request.contextPath}/user/member/register.do" method="post" id="member_login_form" name="member_login_form" >
-												<div >
-													<ul class="form_list_bt">
-														<li>
-															<input type="text" id="ID" name="EMAIL" placeholder="이메일">
-														</li>
-														<li>
-															<input type="password" id="PASSWORD" name="PASSWORD" placeholder="비밀번호">
-														</li>
-														<li>
-															<input type="text" id="address" name="ADDRESS" placeholder="주소">
-														</li>
-														<li>
-															<input type="text" id="phone" name="PHONE" placeholder="핸드폰 번호">
-														</li>
-														<li>
-															<input type="text" id="name" name="NAME" placeholder="이름">
-														</li>
-														<li>
-															<select  id="level" name="LEVEL" >
-																<option value="">
-																	직업을 선택하여주세요.
-																</option>
-																<option value="2">
-																	교수 or 조교
-																</option>
-																<option value="1">
-																	학생
-																</option>
-															</select>
-														</li>
-														<li>
-															<input ID="RE_BT" type="submit" id="REGISTER"  value="회원가입">
-														</li>
-													</ul>
-												</div>
-											</form>
-										</div>
-                                    </div>
-                                    <!-- 양식 리스트 end-->
-
-                                </div>
-                                <!-- 진행중인 회의 end -->
-                            </div>
-
-                        </div>
+                        </form>
                     </div>
-                    <!-- 본문 내용 end-->
-
                 </div>
             </div>
         </div>
-    </section>
-<!--공통하단-->
-<%@ include file="../../include/footer.jsp" %>
-<!--공통하단 끝-->
+    </div>
+</section>
+<!-- 로그인 폼 end -->
 <!-- js 시작 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+function zipCode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            console.log(data);
+            $('#address').val(data.roadAddress);
+        }
+    }).open();
+}
+
+
+function id_check(){
+	if($('#ID').val() == ''){
+		alert('중복 검색할 아이디를 입력하여 주세요');
+		return;
+	}else if($('#ID').attr('id_check') == 'okok'){
+		alert('이미 중복 확인한 아이디입니다.');
+	}else{
+	
+		var EMAIL = $('#ID').val();
+		$.ajax({
+			type : "POST",
+			url : "/user/member/id_check.do",
+			cache : false,
+			data : ({
+				EMAIL : EMAIL
+			}),
+			dataType : "json",
+			success: function(data , status, xhr){
+					if(data == true){
+						var id_hold = confirm("사용하실수 있는 아이디 입니다. 사용하시겠습니까?");
+						if(id_hold == true){
+							$('#ID').attr('readonly','readonly');
+							$('#ID').attr('id_check','okok')
+						}else if(id_hold == false){
+							$('#ID').val('');
+						}
+					}else if(data == false){
+						alert("사용할수 없는 아이디 입니다.")
+					}else{
+						alert('오류 입니다.');
+					}
+				}
+		})
+	}
+	
+}
+
+
+function insert_member(){
+	if($('#ID').attr('id_check') != 'okok'){
+		alert('아이디 중복체크를 해주세요.')
+		return;
+	}
+	if($('#name').val() == ''){
+		alert('이름을 입력하여주세요')
+		return;
+	}
+	if($('#ID').val() == ''){
+		alert('아이디를 입력하여 주세요')
+		return;
+	}
+	if($('#PASSWORD').val() == ''){
+		alert('비밀번호를 입력하여 주세요')
+		return;
+	}
+	if($('#address').val() == ''){
+		alert('주소를 검색하여 입력하여 주세요')
+		return;
+	}
+	if($('#address_detail').val() == ''){
+		alert('상세 주소를 입력하여 주세요')
+		return;
+	}
+	
+	var full_address_name = $('#address').val() + "[" + $('#address_detail').val() + "]"
+	$('#address_full').val(full_address_name)
+	
+	
+	if($('#SCHOOL_NAME').val() == ''){
+		alert('학교를 검색하여 정보를 입력하세요')
+		return;
+	}
+	if($('#phone').val() == ''){
+		alert('핸드폰 번호를 입력하여주세요')
+		return;
+	}
+	if($('#LEVEL').val() == ''){
+		alert('권한을 설정하여 주세요')
+		return;
+	}
+	
+	console.log($("#member_login_form").serializeArray());
+	$('#member_login_form').submit();
+}
+
 </script>
+
+
 <!-- js 끝 -->

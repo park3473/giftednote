@@ -40,6 +40,8 @@ public interface UserMemberService {
 	public void setUpdateLoginTm(String member_ID);
 
 	public ModelMap getMatchingList(UserProgramApplyVo userProgramApplyDomain);
+
+	public String getID(UserMemberVo userMemberVo);
 	
 	
 

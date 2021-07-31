@@ -102,7 +102,7 @@ public class AcceptIpInterceptor extends HandlerInterceptorAdapter {
 	    	 return true;
 	     }else
 	     {
-	    	 response.sendRedirect(request.getContextPath()+ "/../view/");
+	    	 response.sendRedirect(request.getContextPath()+ "/../view");
 	    	 //접근 권한 없는 아이피
 	    	 log.debug("접근 권한 없는 아이피 접속 오류 CODE -1773");
 	    	 return false;

@@ -231,7 +231,7 @@ public class AdminMatchingController {
 		adminMemberVo2.setTYPE("2");
 		adminMemberVo2.setLIMIT(999999);
 		adminMemberService.getList(adminMemberVo2);
-		model.put("MEMBER2", adminMemberService.getList(adminMemberVo2));
+		model.put("MEMBER2", adminMemberService.getListNameOrder(adminMemberVo2));
 
 		
 		

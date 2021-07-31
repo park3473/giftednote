@@ -348,24 +348,28 @@
                                                         <label for="secret">비밀글</label>
                                                     </li>
                                                     </c:if>
-
+													
                                                     <li>
                                                         <span class="list_t">제목</span>
+                                                        ${fn:indexOf(requestURI, '/user/notices_data/13/')}
                                                         <input class="input_title" type="text" name="TITLE" id="TITLE">
                                                     </li>
                                                     <li>
-                                                        <span class="list_t">사진</span>
-                                                        <input class="input_size" type="text" name="picName" id="picName">
-                                                        <input type="file" id="file" name="file" onchange="changeValue1(this)" style="display: none;"/>
-                                                        <button type="button" id="btn-img-upload">사진선택</button>
-                                                        <span class="relate_b">115px X 150px jpg, gif</span>
-                                                    </li>
+		                                                <span class="list_t">파일선택</span>
+		                                                <input type="file" id="file" name="file1">
+		                                            </li>
                                                     <li>
-                                                        <span class="list_t">파일</span>
-                                                        <input class="input_size" type="text" name="fileName" id=fileName>
-                                                        <input type="file" id="file2" name="file2" onchange="changeValue2(this)" style="display: none;"/>
-                                                        <button type="button" id="btn-upload">파일선택</button>
-                                                    </li>
+		                                                <span class="list_t">파일선택</span>
+		                                                <input type="file" id="file" name="file2">
+		                                            </li>
+                                                    <li>
+		                                                <span class="list_t">파일선택</span>
+		                                                <input type="file" id="file" name="file3">
+		                                            </li>
+                                                    <li>
+		                                                <span class="list_t">파일선택</span>
+		                                                <input type="file" id="file" name="file4">
+		                                            </li>
                                                     <li class="pd-15">
                                                         <textarea name="CONTENT" id="CONTENT"></textarea>
                                                     </li>

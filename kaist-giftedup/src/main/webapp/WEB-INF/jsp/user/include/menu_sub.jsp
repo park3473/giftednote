@@ -23,6 +23,7 @@
                                 || fn:indexOf(requestURI, '/notices_data/8/') > -1
                                 || fn:indexOf(requestURI, '/notices_data/9/') > -1
                                 || fn:indexOf(requestURI, '/notices_data/10/') > -1
+                                || fn:indexOf(requestURI, '/notices_data/13/') > -1
                                 || fn:indexOf(requestURI, '/subpage/program/camp/') > -1
                                 || fn:indexOf(requestURI, '/subpage/program/find/') > -1
                                 || fn:indexOf(requestURI, '/subpage/program/mentoring/') > -1
@@ -52,7 +53,7 @@
                                 
                                 <c:if test="${
                                 fn:indexOf(requestURI, '/user/member_re/') > -1}">
-                                선발
+                                모집
                                 </c:if>
 
                                 <c:if test="${
@@ -81,7 +82,7 @@
                                 <li><a href="${pageContext.request.contextPath}/user/subpage/program/study/index.do">학생 프로그램</a></li>
                                 <li><a href="${pageContext.request.contextPath}/user/program/201/list.do">교사 프로그램</a></li>
                                 <li><a href="${pageContext.request.contextPath}/user/notices_data/1/list.do">커뮤니티</a></li>
-                                <li><a href="${pageContext.request.contextPath}/user/member_re/check.do">선발</a></li>
+                                <li><a href="${pageContext.request.contextPath}/user/member_re/check.do">모집</a></li>
                                 <li><a href="${pageContext.request.contextPath}/user/member/view.do">마이페이지</a></li>
                             </ul>
                         </li>
@@ -96,6 +97,7 @@
                                 || fn:indexOf(requestURI, '/notices_data/8/') > -1
                                 || fn:indexOf(requestURI, '/notices_data/9/') > -1
                                 || fn:indexOf(requestURI, '/notices_data/10/') > -1
+                                || fn:indexOf(requestURI, '/notices_data/13/') > -1
                                 || fn:indexOf(requestURI, 'user/mentoring/') > -1}">
                                 찾아가는 영재교육 프로그램
                                 </c:if>
@@ -145,12 +147,7 @@
                                 <c:if test="${fn:indexOf(requestURI, '/notices_data/11/') > -1}">알림마당</c:if>
                                 
                                 <c:if test="${
-                                fn:indexOf(requestURI, '/user/member_re/check.do') > -1
-                                || fn:indexOf(requestURI, '/user/member_re/insert.do') > -1
-                                || fn:indexOf(requestURI, '/user/member_re/mento_all.do') > -1
-                                || fn:indexOf(requestURI, '/user/member_re/view.do') > -1
-                                || fn:indexOf(requestURI, '/user/member_re/student_update.do') > -1
-                                || fn:indexOf(requestURI, '/user/member_re/update.do') > -1}">신입생 지원</c:if>
+                                fn:indexOf(requestURI, '/user/member_re/check.do') > -1}">신규 참가자 지원</c:if>
                                 <c:if test="${fn:indexOf(requestURI, '/user/member_re/inquiry.do') > -1}">지원서/합격자 조회</c:if>
                                 <c:if test="${fn:indexOf(requestURI, '/user/member_re/mento_check.do') > -1}">멘토교사 지원</c:if>
 
@@ -165,6 +162,7 @@
                             || fn:indexOf(requestURI, '/notices_data/8/') > -1
                             || fn:indexOf(requestURI, '/notices_data/9/') > -1
                             || fn:indexOf(requestURI, '/notices_data/10/') > -1
+                            || fn:indexOf(requestURI, '/notices_data/13/') > -1
 
                             || fn:indexOf(requestURI, '/subpage/program/camp/') > -1
                             || fn:indexOf(requestURI, '/subpage/program/find/') > -1
@@ -217,8 +215,8 @@
                             fn:indexOf(requestURI, '/user/member_re/') > -1}">
 
                             <ul class="sub_ul_menu">
-                                <li><a href="${pageContext.request.contextPath}/user/member_re/check.do">신입생 지원</a></li>
-                                <li><a href="${pageContext.request.contextPath}/user/member_re/inquiry.do">지원서/합격자 조회</a></li>
+                                <li><a href="${pageContext.request.contextPath}/user/member_re/check.do">신규 참가자 지원</a></li>
+                                <li><a href="${pageContext.request.contextPath}/user/member_re/new_inquiry.do">지원서 조회</a></li>
                             </ul>
                             </c:if>
 
@@ -266,6 +264,7 @@
                         || fn:indexOf(requestURI, '/notices_data/8/') > -1
                         || fn:indexOf(requestURI, '/notices_data/9/') > -1
                         || fn:indexOf(requestURI, '/notices_data/10/') > -1
+                        || fn:indexOf(requestURI, '/notices_data/13/') > -1
                         || fn:indexOf(requestURI, 'user/mentoring/') > -1}">
 
                         <li class="sub_nav_menu">
@@ -278,6 +277,7 @@
                                 <c:if test="${fn:indexOf(requestURI, '/notices_data/8/') > -1}">온라인학습멘토링</c:if>
                                 <c:if test="${fn:indexOf(requestURI, '/notices_data/9/') > -1}">온라인학습멘토링</c:if>
                                 <c:if test="${fn:indexOf(requestURI, '/notices_data/10/') > -1}">온라인학습멘토링</c:if>
+                                <c:if test="${fn:indexOf(requestURI, '/notices_data/13/') > -1}">온라인학습멘토링</c:if>
                                 <c:if test="${fn:indexOf(requestURI, 'user/mentoring/') > -1}">전문가멘토링</c:if>
 
                                 <span><img src="${pageContext.request.contextPath}/resources/img/sub/down_arrow.png" alt="다운" /></span>
@@ -291,10 +291,13 @@
                                 <li>
                                     <a href="${pageContext.request.contextPath}/user/notices_data/7/list.do">온라인학습멘토링</a>
                                     <ul class="sub_ul_menu sub_box">
+                                    	<li><a href="${pageContext.request.contextPath}/user/notices_data/13/list.do">공지사항</a></li>
                                         <li><a href="${pageContext.request.contextPath}/user/notices_data/7/list.do">학습도전</a></li>
                                         <li><a href="${pageContext.request.contextPath}/user/notices_data/8/list.do">학습질문</a></li>
+                                        <!--
                                         <li><a href="${pageContext.request.contextPath}/user/notices_data/9/list.do">학습작품</a></li>
                                         <li><a href="${pageContext.request.contextPath}/user/notices_data/10/list.do">학습상담</a></li>
+                                    	 -->
                                     </ul>
                                 </li>
                                 <li><a href="${pageContext.request.contextPath}/user/mentoring/list.do">전문가멘토링</a></li>

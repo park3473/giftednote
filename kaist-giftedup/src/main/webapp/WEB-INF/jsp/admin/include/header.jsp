@@ -191,7 +191,7 @@
                                     </ul>
                                 </li>
                                 <li <c:if test="${fn:indexOf(requestURI, 'member_re') > -1
-                                    && fn:indexOf(requestURI, '/participation/') == -1}">
+                                    && fn:indexOf(requestURI, '/member_re/excelUpload.do') == -1}">
                                     class="adm_menu_active"
                                     </c:if>>
                                     <a href="${pageContext.request.contextPath}/admin/member_re/list.do">
@@ -211,12 +211,15 @@
                                         <li <c:if test="${fn:indexOf(requestURI, 'member_re/member_re_to') > -1}">class="nav_active"</c:if>>
                                             <a href="${pageContext.request.contextPath}/admin/member_re/member_re_to.do">· 신입생 지원 통계</a>
                                         </li>
+                                        <li <c:if test="${fn:indexOf(requestURI, 'member_re/excel_upload') > -1}">class="nav_active"</c:if>>
+                                            <a href="${pageContext.request.contextPath}/admin/member_re/excel_upload.do">· 신입생 지원 업로드</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li <c:if test="${fn:indexOf(requestURI, 'portfolio') > -1
                                     && fn:indexOf(requestURI, '/stat/') == -1}">
                                     class="adm_menu_active"
-                                    </c:if>>
+                                    </c:if> >
                                     <a href="${pageContext.request.contextPath}/admin/portfolio/stat.do">
                                         <img src="${pageContext.request.contextPath}/resources/img/admin/portfolio_icon.png" alt="포트폴리오" />
                                     </a>

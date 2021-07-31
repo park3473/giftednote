@@ -43,5 +43,7 @@ public interface UserMemberMapper {
 	public void setUpdateLoginTm(String member_ID);
 
 	public List<?> getMatchingList(UserProgramApplyVo userProgramApplyDomain);
+
+	public String getID(UserMemberVo userMemberVo);
 	
 }

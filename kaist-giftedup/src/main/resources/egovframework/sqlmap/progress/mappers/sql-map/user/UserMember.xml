@@ -380,5 +380,12 @@
 	    	</if>
 	    </if>
 	</select>
-
+	
+	<select id="getID" resultType="string" parameterType="egovframework.kaist.user.member.model.UserMemberVo">
+		SELECT MEMBER_ID
+		FROM TBL_MEMBER
+		WHERE NAME = #{NAME} AND PHONE LIKE '%${PHONE}'
+		ORDER BY CREATE_TM DESC LIMIT 1
+	</select>
+	
 </mapper>

@@ -203,6 +203,14 @@ public class UserMemberServiceImpl implements UserMemberService {
 		System.out.println("------------------size : " + list.size());
 		return modelMap;
 	}
+
+	@Override
+	public String getID(UserMemberVo userMemberVo) {
+		// TODO Auto-generated method stub
+		String search_id = userMemberMapper.getID(userMemberVo);
+		
+		return search_id;
+	}
 	
 	
 

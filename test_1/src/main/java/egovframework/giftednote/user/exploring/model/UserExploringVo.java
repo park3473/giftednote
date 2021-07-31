@@ -13,6 +13,10 @@ public class UserExploringVo {
 	String FELT = "";
 	String OTHER ="";
 	
+	//new note
+			String lab_prog_id = "";
+			String lab_id = "";
+	
 	public String getN_IDX() {
 		return N_IDX;
 	}
@@ -78,6 +82,18 @@ public class UserExploringVo {
 	}
 	public void setOTHER(String oTHER) {
 		OTHER = oTHER;
+	}
+	public String getLab_prog_id() {
+		return lab_prog_id;
+	}
+	public void setLab_prog_id(String lab_prog_id) {
+		this.lab_prog_id = lab_prog_id;
+	}
+	public String getLab_id() {
+		return lab_id;
+	}
+	public void setLab_id(String lab_id) {
+		this.lab_id = lab_id;
 	}
 	
 	

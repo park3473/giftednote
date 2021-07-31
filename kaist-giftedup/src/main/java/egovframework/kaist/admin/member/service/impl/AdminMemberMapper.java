@@ -45,5 +45,11 @@ public interface AdminMemberMapper {
 	public int getListPortfolioCnt(AdminMemberVo adminMemberVo);
 
 	public List<HashMap> getListPortfolioMemberIdIn(String mEMBER_ID);
+
+	public AdminMemberVo getCheckView(AdminMemberVo vo);
+
+	public void setInsert2021(AdminMemberVo vo);
+
+	public List<?> getListNameOrder(AdminMemberVo adminMemberVo);
 	
 }

@@ -10,7 +10,7 @@
                         <div class="sc_top_size">
                             <div class="top_home">
                                 <div class="home_title">
-                                    <h2>카이스트 연구노트</h2>
+                                    <h2 onclick="location.href='${pageContext.request.contextPath}/'">카이스트 연구노트</h2>
                                 </div>
                             </div>
                             <div class="gt_menu_cont">

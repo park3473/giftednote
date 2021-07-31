@@ -1,5 +1,8 @@
 package egovframework.giftednote.admin.Interceptor;
 
+import java.io.PrintWriter;
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,17 +33,50 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		
 		HttpSession session = request.getSession();
-		String level = session.getAttribute("session_level") + "";
-		if(level.equals("3"))
+		session.setAttribute("requestURI", request.getRequestURI());
+		String ip = (String) session.getValue("ip_session");
+		
+		ip = "115.91.131.154";
+		
+		//접속 가능한 아이피들 목록
+		String[] adminip = {"115.91.131.154",""};
+		
+		boolean what = false;
+		
+		what = Arrays.asList(adminip).contains(ip);
+		
+		
+		
+		if(what)
 		{
+			if(session.getAttribute("session_login") == "ok") {
+				
+				
+				
+			}else {
+				
+				session.setAttribute("session_login", "ok");
+				session.setAttribute("session_name", "관리자");
+				session.setAttribute("session_id", "관리자");
+				session.setAttribute("session_ip", ip);
+				session.setAttribute("session_level", "99");
+				session.setAttribute("session_type", "admin");
+			}
+			
+			
 			return true;
+			
+			
 		}else 
 		{
-			response.sendRedirect(request.getContextPath()+"/index.do");
+			response.setContentType("text/html; charset=utf-8");
+			response.setCharacterEncoding("utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('허용된 IP로 접속해주시기 바랍니다.'); location.href='/index.do';</script>");
+			out.flush();
+			
 			return false;
 		}
-		
-
 		
 		
 	}

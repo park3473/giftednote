@@ -1,7 +1,10 @@
 ﻿package egovframework.kaist.user.member_re.service;
 
+import java.util.List;
+
 import org.springframework.ui.ModelMap;
 
+import egovframework.kaist.admin.member_re.model.AdminReMemberVo;
 import egovframework.kaist.user.member_re.model.UserMemberReVo;
 import egovframework.kaist.user.school.model.UserSchoolVo;
 
@@ -34,6 +37,9 @@ public interface UserMemberReService {
 	public ModelMap getDcmntTypes();
 
 	public ModelMap getDcmnt_name(String eligibility);
+
+	public List<AdminReMemberVo> getReCheck(AdminReMemberVo adminReMemberVo);
+
 
 
 

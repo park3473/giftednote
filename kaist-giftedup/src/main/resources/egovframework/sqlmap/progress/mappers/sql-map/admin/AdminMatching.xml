@@ -164,7 +164,7 @@
 			YEAR= #{YEAR}, 
 			SCHOOL_YEAR= #{SCHOOL_YEAR}, 
 			SCHOOL_GROUP= #{SCHOOL_GROUP}, 
-			 
+			SCHOOL_NAME = #{SCHOOL_NAME},
 			ENROLLMENT_STATUS= #{ENROLLMENT_STATUS}, 
 			<if test="FILES != ''"> 
 			FILES= #{FILES}, 
@@ -198,6 +198,11 @@
 		WHERE B.MEMBER_ID IS NULL AND ADDRESS_LOCAL = #{LOCATION}
 	</select>
 	
+	<select id="getOneList" resultType="hashMap" parameterType="egovframework.kaist.admin.matching.model.AdminMatchingVo">
+		SELECT * FROM TBL_MATCHING
+		WHERE MEMBER_ID = #{MEMBER_ID}
+		AND PROFESSOR_MEMBER_ID = #{PROFESSOR_MEMBER_ID}
+	</select>
 	
 
     

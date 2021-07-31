@@ -14,11 +14,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta property="og:image" content="${pageContext.request.contextPath}/resources/img/kakao_bg.png" />
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
@@ -28,6 +29,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.datetimepicker.full.min.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 
 <!--CSS-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/all.css" type="text/css">
@@ -51,6 +53,10 @@
 			left:50%;
 			z-index:9999;
 		}
+		
+	.sub_menu_ob a{
+		color:#4c4c4c;
+	}
 </style>
 </head>
 <body>
@@ -86,57 +92,59 @@
 	</c:if>
 	<!-- 내정보 -->
 </div>
-<c:set var='urlname' value="${pageContext.request.requestURL}" />
+<c:set var='urlname' value="${requestURI}" />
+<input type="hidden" value="${urlname}">
 <header id="new_hd" class="hd_wrap">
         <div class="hd_area">
             <div class="hd_con">
                 <div class="hd_size">
                     <div class="menu_bar">
-                    	<c:if test="${session_login == 'ok' }">
+                    	<c:if test="${session_login == 'ok'}">
                         <ul class="main_menu">
+                        	<c:if test="${session_level != '99' }">
                             <li class="main_menu_ob main_menu_ob_01 
-								<c:if test="${fn:indexOf(urlname,'/note/') > -1 }">menu_active</c:if> ">
-                                <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?EMAIL=${session_email}'"></a>
+								<c:if test="${fn:indexOf(requestURI,'/note/list.do') > -1 
+											|| fn:indexOf(requestURI,'/user/note/pdf_view.do') > -1
+											|| fn:indexOf(requestURI,'/note/detail.do') > -1
+											|| fn:indexOf(requestURI,'/user/note/view.do') > -1
+											|| fn:indexOf(requestURI,'/exploring/exploring.do') > -1
+											|| fn:indexOf(requestURI,'/record/list.do') > -1
+											|| fn:indexOf(requestURI,'/srce/srce.do') > -1
+								}">menu_active</c:if> ">
+                                <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?USER_ID=${session_id}&TYPE=${session_class}'"></a>
                                 <div class="sub_menu_con">
                                     <div class="sub_menu_title">
                                         <h2>노트리스트</h2>
                                     </div>
                                     <ul class="sub_menu_box">
                                         <li class="sub_menu_ob">
-                                            <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?DEAD=NO&EMAIL=${session_email}'">진행중인 노트</a>
-                                        </li>
-                                        <li class="sub_menu_ob">
-                                            <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?DEAD=COMPLETE&EMAIL=${session_email}'">마감된 노트</a>
-                                        </li>
-                                        <li class="sub_menu_ob">
-                                            <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?EMAIL=${session_email}'">전체 노트</a>
+                                            <a onclick="location.href='${pageContext.request.contextPath}/note/list.do?USER_ID=${session_id}&TYPE=${session_class}'">진행중인 노트</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                            <li class="main_menu_ob main_menu_ob_02 <c:if test="${fn:indexOf(urlname,'/myinfo/') > -1 }">menu_active</c:if> ">
-                                <a onclick="location.href='${pageContext.request.contextPath}/user/myinfo/view.do?EMAIL=${session_email }'"></a>
-                                <div class="sub_menu_con">
-                                    <div class="sub_menu_title">
-                                        <h2>회원관리</h2>
-                                    </div>
-                                    <ul class="sub_menu_box">
-                                        <li class="sub_menu_ob">
-                                            <a href="#">회원정보</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <c:if test="${session_level == '3' }">
-                            <li class="main_menu_ob main_menu_ob_03 <c:if test="${fn:indexOf(urlname,'/admin/') > -1 }">menu_active</c:if> ">
+                            </c:if>
+                            <c:if test="${session_level == '99' }">
+                            <li class="main_menu_ob main_menu_ob_02 
+                            	<c:if test="${fn:indexOf(requestURI,'/admin/member/list.do') > -1 
+                            				|| fn:indexOf(requestURI,'/admin/team/note_list.do') > -1
+                            				|| fn:indexOf(requestURI,'/admin/member/login.do') > -1
+                            				|| fn:indexOf(requestURI,'/admin/team/getTeamList.do') > -1
+                            				|| fn:indexOf(requestURI,'/admin/inquiry/list.do') > -1
+                            				|| fn:indexOf(requestURI,'/admin/inquiry/answer.do') > -1
+                            				|| fn:indexOf(requestURI,'/admin/member/insert.do') > -1
+                            				}">menu_active</c:if> ">
                                 <a onclick="location.href='${pageContext.request.contextPath}/admin/member/list.do'"></a>
                                 <div class="sub_menu_con">
                                     <div class="sub_menu_title">
-                                        <h2>회원관리</h2>
+                                        <h2>관리</h2>
                                     </div>
                                     <ul class="sub_menu_box">
                                         <li class="sub_menu_ob">
-                                            <a href="#">회원관리</a>
+                                            <a href="${pageContext.request.contextPath }/admin/member/list.do">회원관리</a>
+                                        </li>
+                                        <li class="sub_menu_ob">
+                                            <a href="${pageContext.request.contextPath }/admin/team/note_list.do">노트관리</a>
                                         </li>
                                     </ul>
                                 </div>

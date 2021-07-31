@@ -41,6 +41,7 @@
                             || fn:indexOf(requestURI, '/notices_data/8/') > -1
                             || fn:indexOf(requestURI, '/notices_data/9/') > -1
                             || fn:indexOf(requestURI, '/notices_data/10/') > -1
+                            || fn:indexOf(requestURI, '/notices_data/13/') > -1
                             || fn:indexOf(requestURI, 'user/mentoring/') > -1}">
                             <h2>찾아가는 영재교육 프로그램</h2>
                             </c:if>
@@ -69,7 +70,7 @@
                         </div>
                         <ul class="right_nav_area">
 
-                            <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
+                            <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1 || fn:indexOf(requestURI, '/notices_data/13/') > -1}">
                             <li>
                                 <a href="${pageContext.request.contextPath}/user/subpage/program/study/index.do">프로그램소개 <span><img src="${pageContext.request.contextPath}/resources/img/sub/down_arrow.png" alt="화살표"></span></a>
                             </li>
@@ -82,27 +83,33 @@
                             </li>
                             </c:if>
                             -->
-                            <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
+                            <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1 || fn:indexOf(requestURI, '/notices_data/13/') > -1}">
                             <li>
                                 <a href="${pageContext.request.contextPath}/user/program/101/list.do">융합과학 프로젝트 <span><img src="${pageContext.request.contextPath}/resources/img/sub/down_arrow.png" alt="화살표"></span></a>
                             </li>
                             </c:if>
 
                             <li>
-                                <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
+                                <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1 || fn:indexOf(requestURI, '/notices_data/13/') > -1}">
                                 <a href="${pageContext.request.contextPath}/user/notices_data/7/list.do">온라인학습멘토링 <span><img src="${pageContext.request.contextPath}/resources/img/sub/down_arrow.png" alt="화살표"></span></a>
                                 </c:if>
                                 <ul>
-                                    <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
+                                	<c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1  || fn:indexOf(requestURI, '/notices_data/13/') > -1}">
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/user/notices_data/13/list.do">공지사항</a>
+                                    </li>
+                                    </c:if>
+                                    <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1  || fn:indexOf(requestURI, '/notices_data/13/') > -1}">
                                     <li>
                                         <a href="${pageContext.request.contextPath}/user/notices_data/7/list.do">학습도전</a>
                                     </li>
                                     </c:if>
-                                    <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
+                                    <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1  || fn:indexOf(requestURI, '/notices_data/13/') > -1}">
                                     <li>
                                         <a href="${pageContext.request.contextPath}/user/notices_data/8/list.do">학습질문</a>
                                     </li>
                                     </c:if>
+                                    <!-- 
                                     <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
                                     <li>
                                         <a href="${pageContext.request.contextPath}/user/notices_data/9/list.do">학습작품</a>
@@ -113,9 +120,10 @@
                                         <a href="${pageContext.request.contextPath}/user/notices_data/10/list.do">학습상담</a>
                                     </li>
                                     </c:if>
+                                    -->
                                 </ul>
                             </li>
-                            <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
+                            <c:if test="${fn:indexOf(requestURI, '/user/notices_data/6/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1  || fn:indexOf(requestURI, '/notices_data/13/') > -1}">
                             <li>
                                 <a href="${pageContext.request.contextPath}/user/mentoring/list.do">전문가 멘토링 <span><img src="${pageContext.request.contextPath}/resources/img/sub/down_arrow.png" alt="화살표"></span></a>
                             </li>
@@ -317,10 +325,13 @@
                                             <c:if test="${'1' == ssion_level && model.noticesid != '1' && model.noticesid != '2'}">         
                                             <a class="delete" href="javascript:deleteArrClick()">선택삭제</a>
                                             </c:if>
-                                            
-                                            
-                                            <c:if test="${'okok' == ssion_login}">
-                                            <a class="register" href="./insert.do">글쓰기</a>
+                                            <c:if test="${'okok' == ssion_login && model.NOTICES.pageDomain.NOTICES  == '13'}">
+                                            	<c:if test="${'1' == ssion_level }">
+                                            	<a class="register" href="./insert.do">글쓰기</a>
+                                            	</c:if>
+                                            </c:if>
+                                            <c:if test="${'okok' == ssion_login && model.NOTICES.pageDomain.NOTICES  != '13'}">
+                                            	<a class="register" href="./insert.do">글쓰기</a>
                                             </c:if>
                                         </div>
                                         </c:if>

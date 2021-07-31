@@ -4,28 +4,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.giftednote.user.srce.Service.impl.UserSrceMapper">
 	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
-		SELECT * FROM TBL_TEAM
-		WHERE N_IDX = #{N_IDX} AND LEVEL = '1'
-		ORDER BY IDX
+		SELECT STUDENTS.* , USERS.ur_id FROM TBL_PREURP_STUDENTS STUDENTS JOIN TBL_PREURP_USERS USERS 
+		WHERE STUDENTS.std_ur_userid = USERS.ur_userid AND std_selected_lab_id = #{lab_id}
+		ORDER BY std_id
 	</select>
 	
 	<select id="getListAJAX" resultType="hashMap" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
 		SELECT * FROM TBL_SRCE
-		WHERE N_IDX = #{N_IDX} AND IDX = #{IDX}
+		WHERE lab_id = #{lab_id} AND IDX = #{IDX}
 		ORDER BY S_IDX
 	</select>
 	
 	<insert id="setInsert" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
 		INSERT INTO TBL_SRCE
-		(N_IDX , IDX , S_IDX , SCORE , NAME) 
+		(lab_id , IDX , S_IDX , SCORE , NAME) 
 		VALUES 
-		(#{N_IDX} , #{IDX} , #{S_IDX} , #{SCORE}, #{NAME})
+		(#{lab_id} , #{IDX} , #{S_IDX} , #{SCORE}, #{NAME})
 	</insert>
 	
 	<update id="setUpdate" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
 		UPDATE TBL_SRCE
 		SET SCORE = #{SCORE}
-		WHERE S_IDX = #{S_IDX} AND N_IDX = #{N_IDX} AND IDX = #{IDX}
+		WHERE S_IDX = #{S_IDX} AND lab_id = #{lab_id} AND IDX = #{IDX}
 	</update>
+	
+	<select id="getTeamList" resultType="hashMap" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
+		SELECT STUDENTS.* , USERS.ur_id FROM TBL_PREURP_STUDENTS STUDENTS JOIN TBL_PREURP_USERS USERS 
+		WHERE STUDENTS.std_ur_userid = USERS.ur_userid AND std_selected_lab_id = #{lab_id}
+		ORDER BY std_id
+	</select>
+	
+	<select id="getScoreList" resultType="hashMap" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
+		SELECT * FROM TBL_SRCE
+		WHERE lab_id = #{lab_id} AND IDX = #{IDX}
+		ORDER BY S_IDX ASC;
+	
+	</select>
 	
 </mapper>

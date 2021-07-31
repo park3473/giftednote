@@ -343,25 +343,37 @@
                                                         <span class="list_t">제목</span>
                                                         <input class="input_title" type="text" name="TITLE" id="TITLE" value="${model.pageDomain.TITLE}">
                                                     </li>
-                                                    <li>
-                                                        <span class="list_t">사진</span>
-                                                        <input class="input_size" type="text" name="picName" id="picName" value="${model.pageDomain.IMAGE}">
-                                                        <input type="file" id="file" name="file" onchange="changeValue1(this)" style="display: none;"/>
-                                                        <button type="button" id="btn-img-upload">사진선택</button>
-                                                        <span class="relate_b">115px X 150px jpg, gif</span>
-                                                        <c:if test="${model.pageDomain.IMAGE != '' && model.pageDomain.IMAGE != null}">
-                                                        <a href="${pageContext.request.contextPath}/fileDown.do?path=${pageContext.request.contextPath}/resources/${pageContext.request.contextPath}/upload/notices_data/${model.pageDomain.IMAGE}">다운로드</a>
-                                                        </c:if>
-                                                    </li>
-                                                    <li>
-                                                        <span class="list_t">파일</span>
-                                                        <input class="input_size" type="text" name="fileName" id="fileName"  value="${model.pageDomain.FILES}">
-                                                        <input type="file" id="file2" name="file2" onchange="changeValue2(this)" style="display: none;"/>
-                                                        <button type="button" id="btn-upload">파일선택</button>
-                                                        <c:if test="${model.pageDomain.FILES != '' && model.pageDomain.FILES != null}">
-                                                        <a href="${pageContext.request.contextPath}/resources/${pageContext.request.contextPath}/upload/notices_data/${model.pageDomain.FILES}">다운로드</a>
-                                                        </c:if>
-                                                    </li>
+                                                
+                                                <li>
+                                                <c:forEach var="item" items="${model.fileLIst}" varStatus="status">
+                                                <c:if test="${item != '' && item != null}">
+                                            	<div id="fileDiv_${status.index}">
+                                            	<a class="relate_c" href="javascript:fileDown('${pageContext.request.contextPath}/resources/${pageContext.request.contextPath}/upload/notices_data/${item}')">다운로드</a>
+                                            	<input type="hidden" id="file_${status.index}"  value="${item}" />
+												<!--<a class="relate_c" href="javascript:fileRemove('${item}', '${status.index}')">(삭제)</a>
+												-->
+												<a class="relate_c" href="javascript:fileRemove('${status.index}', '${status.index}')">(삭제)</a>
+                                            	&nbsp; &nbsp; 
+                                            	</div>
+                                            	</c:if>
+	                                            </c:forEach>
+	                                            </li>
+	                                            <li>
+	                                                <span class="list_t">파일선택</span>
+	                                                <input type="file" id="file" name="file3"> 
+	                                            </li>
+	                                            <li>
+	                                                <span class="list_t">파일선택</span>
+	                                                <input type="file" id="file" name="file4"> 
+	                                            </li>                                            
+	                                            <li>
+	                                                <span class="list_t">파일선택</span>
+	                                                <input type="file" id="file" name="file5"> 
+	                                            </li>                                            
+	                                            <li>
+	                                                <span class="list_t">파일선택</span>
+	                                                <input type="file" id="file" name="file6"> 
+	                                            </li> 
                                                     <li class="pd-15">
                                                         <textarea name="CONTENT" id="CONTENT">${model.pageDomain.CONTENT}</textarea>
                                                     </li>

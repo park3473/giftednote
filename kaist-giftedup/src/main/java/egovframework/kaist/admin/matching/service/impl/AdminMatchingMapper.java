@@ -33,5 +33,7 @@ public interface AdminMatchingMapper {
 
 	public List<?> getMatchingNotMemberList(AdminMatchingVo adminMatchingVo);
 
+	public AdminMatchingVo getOneList(AdminMatchingVo vo);
+
 	
 }

@@ -17,6 +17,7 @@ import com.system.util.PageVO;
 import egovframework.kaist.admin.dcmnt.model.DcmntVo;
 import egovframework.kaist.admin.member_re.model.AdminDcmntVo;
 import egovframework.kaist.admin.member_re.model.AdminMemberReVo;
+import egovframework.kaist.admin.member_re.model.AdminReMemberVo;
 import egovframework.kaist.admin.member_re.service.AdminMemberReService;
 
 @Service("adminMember_reService")
@@ -94,6 +95,7 @@ public class AdminMember_reServiceImpl implements AdminMemberReService {
 		} else {
 			modelMap.put("itempagenext", "false");
 		}
+		System.out.println(pageVo.getItempage());
 		modelMap.put("page", pageVo.getItempage());
 		modelMap.put("itemCount", pageVo.getItemCount());
 		modelMap.put("itempagestart", pageVo.getItempagestart());
@@ -140,6 +142,83 @@ public class AdminMember_reServiceImpl implements AdminMemberReService {
 		System.out.println("--------size : " + list.size());
 		return modelMap;
 		
+	}
+
+	@Override
+	public void setReInsert(AdminReMemberVo vo) {
+		// TODO Auto-generated method stub
+		System.out.println(vo.getID());
+		System.out.println(vo.getTEACHER_NAME());
+		System.out.println(vo.getTEACHER_PHONE());
+		System.out.println(vo.getSTUDENT_NAME());
+		System.out.println(vo.getSTUDENT_PHONE());
+		adminMember_reMapper.setReInsert(vo);
+	}
+
+	@Override
+	public ModelMap ReMemberMentoCheck(AdminReMemberVo vo) {
+		// TODO Auto-generated method stub
+		ModelMap model = new ModelMap();
+		AdminReMemberVo vo2 = adminMember_reMapper.getReMemberMentoCheck(vo);
+		model.put("check", vo2);
+		
+		return model;
+	}
+
+	@Override
+	public void setReUpdate(AdminReMemberVo vo) {
+		// TODO Auto-generated method stub
+		System.out.println(vo.getID());
+		System.out.println(vo.getTEACHER_NAME());
+		System.out.println(vo.getTEACHER_PHONE());
+		System.out.println(vo.getSTUDENT_NAME());
+		System.out.println(vo.getSTUDENT_PHONE());
+		System.out.println(vo.getMAIN_FILE_1());
+		System.out.println(vo.getMAIN_FILE_2());
+		System.out.println(vo.getMAIN_FILE_3());
+		System.out.println(vo.getMAIN_FILE_4());
+		System.out.println(vo.getTYPE());
+		System.out.println(vo.getTYPE_FILE_1());
+		System.out.println(vo.getTYPE_FILE_2());
+		System.out.println(vo.getTYPE_FILE_3());
+		System.out.println(vo.getTYPE_FILE_4());
+		adminMember_reMapper.setReUpdate(vo);
+	}
+
+	@Override
+	public ModelMap ReMemberStudentCheck(AdminReMemberVo vo) {
+		ModelMap model = new ModelMap();
+		AdminReMemberVo vo2 = adminMember_reMapper.getReMemberStudentCheck(vo);
+		model.put("check", vo2);
+		
+		
+		return model;
+	}
+
+	@Override
+	public ModelMap getReList(AdminReMemberVo adminReMemberVo) {
+		ModelMap modelMap = new ModelMap();
+		List<?> list = adminMember_reMapper.getReList(adminReMemberVo);
+		modelMap.addAttribute("list", list);
+		System.out.println("------------------size : " + list.size());
+		int itemtotalcount = adminMember_reMapper.getReListCnt(adminReMemberVo);
+		int itemCount = adminReMemberVo.getITEM_COUNT();
+		int itempage = adminReMemberVo.getPAGE();
+		PageVO pageVo = new PageVO(itemCount, itemtotalcount, itempage);
+		if (pageVo.isItempagenext() == true) {
+			modelMap.put("itempagenext", "true");
+		} else {
+			modelMap.put("itempagenext", "false");
+		}
+		System.out.println(pageVo.getItempage());
+		modelMap.put("page", pageVo.getItempage());
+		
+		modelMap.put("itemCount", pageVo.getItemCount());
+		modelMap.put("itempagestart", pageVo.getItempagestart());
+		modelMap.put("itempageend", pageVo.getItempageend());
+		modelMap.put("itemtotalcount", pageVo.getItemtotalcount());
+		modelMap.put("itemtotalpage", pageVo.getItemtotalpage());
+		return modelMap;
 	}
 
 }

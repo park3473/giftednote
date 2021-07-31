@@ -42,6 +42,7 @@
                                             <li>
                                                 <span class="list_t">학년도＊</span>
                                                 <select class="input_size mr" id="YEAR" name="YEAR">
+                                                	<option>2021</option>
                                                     <option>2020</option>
                                                     <option>2019</option>
                                                 </select>

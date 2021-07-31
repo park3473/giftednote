@@ -7,8 +7,8 @@
 
 
 <script type="text/javascript">
-$("#close_btn").click(function() {
-    $("#meeting_form_modal").hide();
+$(".close_btn").click(function() {
+    $(".join_modal").hide();
 });
 
 </script>

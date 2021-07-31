@@ -17,7 +17,6 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<!-- 
 	<filter>
 	    <filter-name>HtmlTagFilter</filter-name>
 	    <filter-class>
@@ -35,8 +34,6 @@
 	    <url-pattern>/</url-pattern>
 	    <url-pattern>/**</url-pattern>
   	</filter-mapping>	
-	
-	 -->
 	
 	
 	

@@ -415,20 +415,57 @@
 	                                            
 	                                            <tr>
 	                                                <th>시간</th>
-	                                                <td>${model.SUMM.SUM_1}</td>
-	                                                <td>${model.SUMM.SUM_2}</td>
-	                                                <td>${model.SUMM.SUM_3}</td>
-	                                                <td>${model.SUMM.SUM_4}</td>
-	                                                <td>${model.SUMM.SUM_A}</td>
+	                                                <td>${model.SUMM2020.SUM_1}</td>
+	                                                <td>${model.SUMM2020.SUM_2}</td>
+	                                                <td>${model.SUMM2020.SUM_3}</td>
+	                                                <td>${model.SUMM2020.SUM_4}</td>
+	                                                <td>${model.SUMM2020.SUM_A}</td>
 	                                                <td>
 	                                                	<c:choose>
-	                                                		<c:when test="${model.SUMM.SUM_A > 47}"><p class="port_btn">수료</p></c:when>
+	                                                		<c:when test="${model.SUMM2020.SUM_A > 47}"><p class="port_btn">수료</p></c:when>
 	                                                		<c:otherwise><p class="port_btn_02">미수료</p></c:otherwise>
 	                                                	</c:choose>
 	                                                </td>
 	                                            </tr>
 	                                        </table>
                                         </div>
+                                        <div class="title mr-0">
+                                            <h2>
+                                                2021 영재키움 프로젝트 수료 여부
+                                            </h2>
+                                        </div>
+                                        
+                                        <div class="table_scroll">
+	                                        <table class="txt project_txt">
+	                                            <tr>
+	                                                <th class="number">과목</th>
+	                                                <th class="program_name">찾아가는 영재교육</th>
+	                                                <th class="program_name">체험진로탐색</th>
+	                                                <th class="program_name">창의융합캠프</th>
+	                                                <th class="program_name">기타</th>
+	                                                <th class="time">합계</th>
+	                                                <th class="level">수료 여부</th>
+	                                            </tr>
+	                                            
+	                                            <tr>
+	                                                <th>시간</th>
+	                                                <td>${model.SUMM2021.SUM_1}</td>
+	                                                <td>${model.SUMM2021.SUM_2}</td>
+	                                                <td>${model.SUMM2021.SUM_3}</td>
+	                                                <td>${model.SUMM2021.SUM_4}</td>
+	                                                <td>${model.SUMM2021.SUM_A}</td>
+	                                                <td>
+	                                                	<c:choose>
+	                                                		<c:when test="${model.SUMM2021.SUM_A > 47}"><p class="port_btn">수료</p></c:when>
+	                                                		<c:otherwise><p class="port_btn_02">미수료</p></c:otherwise>
+	                                                	</c:choose>
+	                                                </td>
+	                                            </tr>
+	                                        </table>
+                                        </div>
+                                        
+                                        
+                                        
                                         
                                     </div>
                                 </div>
@@ -489,8 +526,8 @@
         if (page >= endpage) {
             page = endpage;
         }
-
-        var URL = "list.do?PAGE="+page;
+        
+        var URL = "list.do?MEMBER_ID=${model.MEMBER_ID}&PAGE="+page;
 
         if('${model.beforeDomain.ITEM_COUNT}}' == '') {
             URL = URL + "&ITEM_COUNT=" + '10';

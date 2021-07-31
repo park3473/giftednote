@@ -584,6 +584,7 @@ textarea {
     width: 100%;
     height: auto;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .join_submit_btn > .join_txt > p {
@@ -595,6 +596,7 @@ textarea {
 .join_submit_btn > .join_btn {
     width: auto;
     display: table;
+    margin: 0 auto;
 }
 
 .join_submit_btn > .join_btn > li {
@@ -604,26 +606,27 @@ textarea {
     height: 30px;
 }
 
-.join_submit_btn > .join_btn > li > button {
+.join_submit_btn > .join_btn > li > input {
     width: 100%;
     height: 100%;
     border: 1px solid #ddd;
+    text-align: center;
 }
 
-.join_submit_btn > .join_btn > li.submit_btn > button {
+.join_submit_btn > .join_btn > li.submit_btn > input {
     background-color: #737e95;
     color: #fff;
 }
 
-.join_submit_btn > .join_btn > li.submit_btn > button:hover {
+.join_submit_btn > .join_btn > li.submit_btn > input:hover {
     background-color: #3e4d6b;
 }
 
-.join_submit_btn > .join_btn > li.cancel_btn > button {
+.join_submit_btn > .join_btn > li.cancel_btn > input {
     background-color: #efefef;
 }
 
-.join_submit_btn > .join_btn > li.cancel_btn > button:hover {
+.join_submit_btn > .join_btn > li.cancel_btn > input:hover {
     background-color: #d8d8d8;
 }
 
@@ -633,11 +636,11 @@ textarea {
     left: 0
 }
 
-.join_submit_btn > .join_btn > li.del_btn > button {
+.join_submit_btn > .join_btn > li.del_btn > input {
     background-color: #fffce5;
 }
 
-.join_submit_btn > .join_btn > li.del_btn > button:hover {
+.join_submit_btn > .join_btn > li.del_btn > input:hover {
     background-color: #ffef77;
 }
 
@@ -1507,11 +1510,28 @@ textarea {
 
 /*채팅박스 end*/
 
+.answer-complete{
+		background: #009ca5;
+	    color: #fff;
+	    padding: 2px 4px;
+	    border-radius: 2px;
+	    font-size: 12px;
+    }
+    
+    .answer-waiting{
+    	background: #807d77;
+	    color: #fff;
+	    padding: 2px 4px;
+	    border-radius: 2px;
+	    font-size: 12px;
+    }
+
+
 /*페이징*/
 .paging_con {
     width: 100%;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .paging_con .paging_box {

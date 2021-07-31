@@ -36,6 +36,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			HttpServletResponse response, Object handler) throws Exception {
 		
 		HttpSession session = request.getSession();
+		boolean rtn = true;
 		String langage = session.getAttribute("ssion_langage") + "";
 		if(langage.equals("")
 			|| langage.equals("null"))
@@ -54,6 +55,35 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			}
 			
 		}
+		
+		session.setAttribute("requestURI", request.getRequestURI());
+		
+		
+		//LOGIN 관려
+		
+		String check = (String) session.getAttribute("session_login");
+		if(check == null) {
+			rtn = false;
+		}else if(!check.equals("ok")){
+			rtn = false;
+		}
+		System.out.println("login_status:=="+rtn);
+		if(rtn == false) {
+			String url = request.getRequestURI();
+			System.out.println(request.getRequestURI());
+			if(request.getRequestURI().indexOf("/index.do") > -1 
+				|| request.getRequestURI().indexOf("/login.do") > -1
+				|| request.getRequestURI().indexOf("/admin/member/list.do") > -1 
+				|| request.getRequestURI().indexOf("/admin/team/list.do") > -1 ){
+					System.out.println("????");
+			}else {
+				log.info(" sendRedirect _login_ " + rtn);
+				response.sendRedirect(request.getContextPath()+"/index.do");
+				//response.sendRedirect(request.getContextPath()+"/index.do?URL="+request.getRequestURI());
+				return false;
+			}
+		}
+		
 		
 		String ip_test = (String) session.getAttribute("ip_session");
 		System.out.println(ip_test);

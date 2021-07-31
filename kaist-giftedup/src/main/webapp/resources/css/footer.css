@@ -523,3 +523,128 @@
 }
 
 /*주의 모달 end*/
+
+/*지원 확인 모달*/
+.view_bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999991;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.view_modal_area {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: auto;
+    z-index: 999992;
+    display: none;
+}
+
+.view_modal_area .view_modal_con {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    border-radius: 15px;
+    -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 518px;
+    padding: 35px 30px;
+    height: auto;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+}
+
+.view_modal_area .view_modal_con .view_icon {
+    width: 100px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-bottom: 15px;
+}
+
+.view_modal_area .view_modal_con .view_icon > img {
+    width: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+.view_modal_area .view_modal_con .view_txt {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.view_modal_area .view_modal_con .view_txt > h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    word-break: keep-all;
+    margin-bottom: 15px;
+}
+
+.view_modal_area .view_modal_con .view_txt > h2 > span {
+    font-weight: 600;
+    color: #009dc4;
+}
+
+.view_modal_area .view_modal_con .view_txt > p {
+    font-size: 0.875rem;
+    font-weight: 300;
+    word-break: keep-all;
+    margin: 0;
+}
+
+.view_modal_area .view_btn_box {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    text-align: center;
+}
+
+.view_modal_area .view_btn_box > li {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.view_modal_area .view_btn_box > li:last-of-type {
+    margin-right: 0;
+}
+
+.view_modal_area .view_btn_box > li > a {
+    display: block;
+    padding: 10px 15px;
+    font-size: 0.875rem;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.view_modal_area .view_btn_box > li.view_btn_01 > a,
+.view_modal_area .view_btn_box > li.view_btn_02 > button {
+    background-color: #d9dfec;
+    color: #000;
+    cursor: pointer;
+}
+
+.view_modal_area .view_btn_box > li.view_btn_02 > a,
+.view_modal_area .view_btn_box > li.view_btn_01 > button {
+    background-color: #009dc4;
+    color: #fff;
+}
+
+/*주의 모달 end*/
+

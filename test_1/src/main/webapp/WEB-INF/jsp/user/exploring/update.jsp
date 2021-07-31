@@ -16,7 +16,7 @@
 
 <style>
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
     .test_div > .test_p{
@@ -59,6 +59,19 @@
                                 <div class="meeting_wrap">
 
                                     <!-- 공통타이틀 -->
+                                    <div class="all_title">
+                                        <div class="line"><span></span></div>
+                                        <h2>탐구일지 작성법</h2>
+                                    </div>
+                                    <div>
+                                    	<p>1. 교수님과 조교 선생님, 누구에게 지도를 받았는지 표시합니다. 교수님과 조교님 중복체크도 가능합니다.</p>
+                                    	<p>2. 교육을 어떤 장소에서 받았는지 체크표시합니다. 이것도 중복체크 가능합니다.</p>
+                                    	<p>3. 교육방법을 표시합니다. 중복체크가 가능하고, 선택지의 예시에 해당하지 않는다면 기타에 타이핑합니다.</p>
+                                    	<p>4. 참여도는 클릭해 5~1의 숫자를 선택합니다. <span style="color:#e95504">(5: 매우 적극 참여, 4: 적극 참여, 3: 보통 참여, 2: 비적극적 참여 1: 매우 비적극적 참여)</span></p>
+                                    	<p>5. 이해도 또한 위와 마찬가지로 클릭해 5~1의 숫자를 선택합니다. <span style="color:#e95504">(5: 매우 이해함 4: 이해함, 3:보통함, 2: 이해하지 못함 1: 매우 이해하지 못함)</span></p>
+                                    </div>
+                                    
+                                    
                                     <div class="all_title">
                                         <div class="line"><span></span></div>
                                         <h2>탐구일지</h2>
@@ -236,7 +249,7 @@
     </section>
 <div>
 	<input type="hidden" value="${model.IDX }" id="IDX">
-	<input type="hidden" value="${model.N_IDX }" id="N_IDX">
+	<input type="hidden" value="${model.lab_id }" id="lab_id">
 </div>
 <!--공통하단-->
 <%@ include file="../../include/footer.jsp" %>
@@ -295,14 +308,14 @@ if('${check}' == 'fail'){
 		var LEARN = $('#LEARN').val();
 		var FELT = $('#FELT').val();
 		var IDX = $('#IDX').val();
-		var N_IDX = $('#N_IDX').val();
+		var lab_id = $('#lab_id').val();
 		$.ajax({
 			type : "POST",
 			url : "/exploring/setExplor.do?",
 			cache : false,
 			data : ({
 				IDX : IDX,
-				N_IDX : N_IDX,
+				lab_id : lab_id,
 				LEADER_TYPE : LEADER_TYPE,
 				CLASS_TYPE : CLASS_TYPE,
 				CLASS_TM : CLASS_TM,
@@ -331,7 +344,7 @@ if('${check}' == 'fail'){
 			})
 	}
 	
-	
+	/*
 	function update(index){
 		$('.update_list').remove();
 		var inner = document.getElementById('list_'+index).innerHTML;
@@ -348,6 +361,7 @@ if('${check}' == 'fail'){
 		$('#class_tm_update').append('<input type="text" id="CLASS_TM" class="datecalendar" value="'+date+'">');
 		dateload();
 	}
+	*/
 
 
 $.datetimepicker.setLocale('ko');

@@ -71,6 +71,11 @@
                                 <a href="${pageContext.request.contextPath}/user/notices_data/7/list.do">온라인학습멘토링 <span><img src="${pageContext.request.contextPath}/resources/img/sub/down_arrow.png" alt="화살표"></span></a>
                                 </c:if>
                                 <ul>
+                                	<c:if test="${fn:indexOf(requestURI, '/notices_data/7/') > -1 || fn:indexOf(requestURI, '/notices_data/8/') > -1 || fn:indexOf(requestURI, '/notices_data/9/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/user/notices_data/13/list.do">공지사항</a>
+                                    </li>
+                                    </c:if>
                                     <c:if test="${fn:indexOf(requestURI, '/notices_data/7/') > -1 || fn:indexOf(requestURI, '/notices_data/8/') > -1 || fn:indexOf(requestURI, '/notices_data/9/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
                                     <li>
                                         <a href="${pageContext.request.contextPath}/user/notices_data/7/list.do">학습도전</a>
@@ -82,7 +87,7 @@
                                         <a href="${pageContext.request.contextPath}/user/notices_data/8/list.do">학습질문</a>
                                     </li>
                                     </c:if>
-                                    
+                                    <!--
                                     <c:if test="${fn:indexOf(requestURI, '/notices_data/7/') > -1 || fn:indexOf(requestURI, '/notices_data/8/') > -1 || fn:indexOf(requestURI, '/notices_data/9/') > -1 || fn:indexOf(requestURI, '/notices_data/10/') > -1}">
                                     <li>
                                         <a href="${pageContext.request.contextPath}/user/notices_data/9/list.do">학습작품</a>
@@ -94,6 +99,7 @@
                                         <a href="${pageContext.request.contextPath}/user/notices_data/10/list.do">학습상담</a>
                                     </li>
                                     </c:if>
+                                     -->
                                 </ul>
                             </li>
                             

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!--삭제금지-->
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+
+<!--삭제금지-->
+<!--공통상단-->
+<%@ include file="../../include/header.jsp" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/exploring.css" type="text/css">
+<!--공통상단 끝-->
+
+<style>
+    a {
+        color: #ffffff;
+        text-decoration: none !important;
+    }
+    .test_div > .test_p{
+    	display:none;
+    }
+    #detail_show > .test_p{
+    	display:block;
+    }
+	
+	.tg  {border-collapse:collapse;border-spacing:0;}
+	.tg td{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
+	  overflow:hidden;padding:10px 5px;word-break:normal;}
+	.tg th{border-color:#3364b1;border-style:solid;border-width:1px;font-family:'Noto Sans KR', sans-serif;font-size:14px;
+	  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+	.tg .tg-0pky{border-color:#3364b1;}
+	table{
+		width:100%;
+	}
+	.tbl_th{
+		background-color : #d0dcef;
+	}
+</style>
+<section id="new_sc" class="sc_wrap">
+        <div class="sc_area">
+            <div class="sc_con">
+                <div class="sc_size">
+					<%@ include file="../../include/top.jsp" %>
+
+                    <!-- 본문 내용-->
+                    <div class="sc_section">
+                        <div class="sc_section_con">
+                            <!--사이트맵-->
+                            <div class="sitemap">
+                                <ul class="sitemap_box">
+                                    <li><span><img src="${pageContext.request.contextPath}/resources//img/home_icon.png"></span>노트</li>
+                                    <li>탐구일지</li>
+                                </ul>
+                            </div>
+                            <!--사이트맵 end-->
+
+                            <div class="sc_section_size">
+                                <!-- 진행중인 회의 -->
+                                <div class="meeting_wrap">
+
+                                    <!-- 공통타이틀 -->
+                                    <div class="all_title">
+                                        <div class="line"><span></span></div>
+                                        <h2>탐구일지 작성법</h2>
+                                    </div>
+                                    <div>
+                                    	<p>1. 교수님과 조교 선생님, 누구에게 지도를 받았는지 표시합니다. 교수님과 조교님 중복체크도 가능합니다.</p>
+                                    	<p>2. 교육을 어떤 장소에서 받았는지 체크표시합니다. 이것도 중복체크 가능합니다.</p>
+                                    	<p>3. 교육방법을 표시합니다. 중복체크가 가능하고, 선택지의 예시에 해당하지 않는다면 기타에 타이핑합니다.</p>
+                                    	<p>4. 참여도는 클릭해 5~1의 숫자를 선택합니다. <span style="color:#e95504">(5: 매우 적극 참여, 4: 적극 참여, 3: 보통 참여, 2: 비적극적 참여 1: 매우 비적극적 참여)</span></p>
+                                    	<p>5. 이해도 또한 위와 마찬가지로 클릭해 5~1의 숫자를 선택합니다. <span style="color:#e95504">(5: 매우 이해함 4: 이해함, 3:보통함, 2: 이해하지 못함 1: 매우 이해하지 못함)</span></p>
+                                    	<p>6. 배운점 또는 느낀점은 최대 500자 까지 입력이 가능합니다.</p>
+                                    </div>
+                                    
+                                    
+                                    <div class="all_title">
+                                        <div class="line"><span></span></div>
+                                        <h2>탐구일지</h2>
+                                    </div>
+
+                                    <!-- 양식 리스트 -->
+                                    <div>
+										<table class="tg" style="width:100%">
+											<thead>
+											  <tr class="tbl_th">
+											    <th class="tg-0pky" rowspan="2">수업일</th>
+											    <th class="tg-0pky" colspan="2">지도자</th>
+											    <th class="tg-0lax" colspan="2">교육장소</th>
+											    <th class="tg-0lax" colspan="5">교육방법</th>
+											    <th class="tg-0lax" rowspan="2">참여도</th>
+											    <th class="tg-0lax" rowspan="2">이해도</th>
+											    <th class="tg-0lax" rowspan="2">배운점</th>
+											    <th class="tg-0lax" rowspan="2">느낀점</th>
+											  </tr>
+											  <tr class="tbl_th">
+											    <td class="tg-0pky">교수</td>
+											    <td class="tg-0lax">조교</td>
+											    <td class="tg-0lax">자택</td>
+											    <td class="tg-0lax">고교</td>
+											    <td class="tg-0lax">실시간강의</td>
+											    <td class="tg-0lax">영상강의</td>
+											    <td class="tg-0lax">실험</td>
+											    <td class="tg-0lax">세미나(토론)</td>
+											    <td class="tg-0lax">기타</td>
+											  </tr>
+											</thead>
+											<tbody id="set">
+												<tr id="setList">
+												    <td class="tg-0pky"><input class="input_size datecalendar" type="text" name="CLASS_TM" id="CLASS_TM"></td>
+												    <td class="tg-0lax"><input type="checkbox" name="MENTO" value="교수"></td>
+												    <td class="tg-0lax"><input type="checkbox" name="MENTO" value="조교"></td>
+												    <td class="tg-0lax"><input type="checkbox" name="PLACE" value="자택"></td>
+												    <td class="tg-0lax"><input type="checkbox" name="PLACE" value="고교"></td>
+												    <td class="tg-0lax"><input type="checkbox" name="CLASS_PLACE" value="실시간강의"></td>
+												    <td class="tg-0lax"><input type="checkbox" name="CLASS_PLACE" value="영상강의"></td>
+												    <td class="tg-0lax"><input type="checkbox" name="CLASS_PLACE" value="실험"></td>
+												    <td class="tg-0lax"><input type="checkbox" name="CLASS_PLACE" value="세미나"></td>
+												    <td class="tg-0lax"><input type="text" name="TYPE" id="type_what"></td>
+												    <td class="tg-0lax"><select id="join"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+												    <td class="tg-0lax"><select id="uptake"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+												    <td class="tg-0lax"><textarea maxlength="500" name="LEARN" id="LEARN"></textarea></td>
+												    <td class="tg-0lax"><textarea maxlenght="500" name="FELT" id="FELT"></textarea></td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="meeting_search">
+
+	                                        <div id="meeting_form_btn" class="meeting_add floatR" >
+	                                            <a onclick="javascript:setexplor()">저장</a>
+	                                        </div>
+	
+	                                    </div>
+									</div>
+                                    <!-- 양식 리스트 end-->
+
+                                </div>
+                                <!-- 진행중인 회의 end -->
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- 본문 내용 end-->
+
+                </div>
+            </div>
+        </div>
+    </section>
+<div>
+	<input type="hidden" value="${model.IDX }" id="IDX">
+	<input type="hidden" value="${model.lab_id }" id="lab_id">
+</div>
+<!--공통하단-->
+<%@ include file="../../include/footer.jsp" %>
+<!--공통하단 끝-->
+<!-- js 시작 -->
+<script type="text/javascript">
+/*
+alert('${ip_session}');
+if('${check}' == 'fail'){
+	alert("실패");
+}else{
+	alert("성공")
+}
+*/
+	function setexplor(){
+		var CLASS_TM = $('#CLASS_TM').val();
+		var lab_id = $('#lab_id').val();
+		var IDX = $('#IDX').val();
+		$.ajax({
+			type : "POST",
+			url : "/user/exploring_class_check.do?",
+			cache : false,
+			data : ({
+				lab_id : lab_id,
+				CLASS_TM : CLASS_TM,
+				IDX : IDX
+			}),
+			dataType : "text",
+			success: function(result){
+				if(result == "true"){
+					var LEADER_TYPE = "";
+					for(i = 0; i < 2 ; i++){
+						if($("input[name='MENTO']").eq(i).is(':checked') == true){
+							if(LEADER_TYPE == ''){
+								LEADER_TYPE = LEADER_TYPE + $("input[name='MENTO']").eq(i).val();
+							}else{
+								LEADER_TYPE = LEADER_TYPE + ",";
+								LEADER_TYPE = LEADER_TYPE + $("input[name='MENTO']").eq(i).val();	
+							}
+						}
+					}
+					var CLASS_TYPE = "";
+					for(i = 0 ; i < 2 ; i++){
+						if($("input[name='PLACE']").eq(i).is(':checked') == true){
+							if(CLASS_TYPE == ''){
+								CLASS_TYPE = CLASS_TYPE + $("input[name='PLACE']").eq(i).val();
+							}else{
+								CLASS_TYPE = CLASS_TYPE + ",";
+								CLASS_TYPE = CLASS_TYPE + $("input[name='PLACE']").eq(i).val();	
+							}
+						}
+					}
+					var CLASS_PLACE = "";
+					for(i = 0 ; i < 4 ; i++){
+						if($("input[name='CLASS_PLACE']").eq(i).is(':checked') == true){
+							if(CLASS_PLACE == ''){
+								CLASS_PLACE = CLASS_PLACE + $("input[name='CLASS_PLACE']").eq(i).val();
+							}else{
+								CLASS_PLACE = CLASS_PLACE + ",";
+								CLASS_PLACE = CLASS_PLACE + $("input[name='CLASS_PLACE']").eq(i).val();	
+							}
+						}
+					}
+					var OTHER = "";
+					if($('#type_what').val() != ''){
+						OTHER += $('#type_what').val()
+					}
+					var SCORE_JOIN = $('#join').val();
+					var SCORE_UPTAKE = $('#uptake').val();
+					var LEARN = $('#LEARN').val();
+					var FELT = $('#FELT').val();
+					$.ajax({
+						type : "POST",
+						url : "/exploring/setExplor.do?",
+						cache : false,
+						data : ({
+							IDX : IDX,
+							lab_id : lab_id,
+							LEADER_TYPE : LEADER_TYPE,
+							CLASS_TYPE : CLASS_TYPE,
+							CLASS_TM : CLASS_TM,
+							SCORE_JOIN : SCORE_JOIN,
+							SCORE_UPTAKE : SCORE_UPTAKE,
+							OTHER : OTHER,
+							CLASS_PLACE : CLASS_PLACE,
+							LEARN : LEARN,
+							FELT : FELT
+						}),
+						dataType : "json",
+						success: function(data , status, xhr){
+							console.log(data);
+							}
+					})
+					Swal.fire({
+						  text: "탐구일지가 정상적으로 저장되었습니다!!",
+						  icon: 'success',
+						  showCancelButton: false,
+						  confirmButtonColor: '#3085d6',
+						  confirmButtonText: 'Yes!'
+						}).then((result) => {
+						  if (result.isConfirmed) {
+							  location.href='${pageContext.request.contextPath}/';
+						  }
+						})
+				}else{
+					alert('이미 등록된 수업일 입니다.');
+					return false;
+				}
+			}
+		})
+		
+		
+	}
+	
+	/*
+	function update(index){
+		$('.update_list').remove();
+		var inner = document.getElementById('list_'+index).innerHTML;
+		var list = '<tr id="update_list_'+index+'" class="update_list">'+inner+'</tr>';
+		console.log(list);
+		list = list.replace('<td class="tg-0pky" id="index_list">','<td class="tg-0pky" id="index_update">');
+		list = list.replace('<td class="tg-0pky" id="class_tm_list">','<td class="tg-0pky" id="class_tm_update">');
+		$('#setList').remove();
+		$('#set').append(list);
+		$('#index_update').remove();
+		$('#create_tm_update').remove();
+		var date = $('#class_tm_update').text();
+		$('#class_tm_update').text('');
+		$('#class_tm_update').append('<input type="text" id="CLASS_TM" class="datecalendar" value="'+date+'">');
+		dateload();
+	}
+	*/
+
+
+$.datetimepicker.setLocale('ko');
+jQuery('.datecalendar').datetimepicker({
+	format : 'Y-m-d',
+	lang : "ko",
+	timepicker : false
+});
+
+function dateload(){
+	$.datetimepicker.setLocale('ko');
+	jQuery('.datecalendar').datetimepicker({
+		format : 'Y-m-d',
+		lang : "ko",
+		timepicker : false
+	});
+}
+</script>
+<!-- js 끝 -->

@@ -45,9 +45,12 @@ public class UserHomeController {
 	@Autowired
 	AdminPopupService adminPopupService;
 	
+	@RequestMapping(value="/Newindex.do" , method = RequestMethod.GET)
+	public ModelAndView NewIndex(HttpServletRequest request, HttpServletResponse response) {
+		return new ModelAndView("user/NewIndex");
+	}
 	
-	
-	@RequestMapping(value = {"/index.do","/","/view"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/index.do","/view" , "/"}, method = RequestMethod.GET)
 	public ModelAndView calender(HttpServletRequest request, HttpServletResponse response) {
 		
 		
@@ -56,7 +59,7 @@ public class UserHomeController {
 		//공지사항
 		UserNoticesDataVo userNoticesDataVo = new UserNoticesDataVo();
 		
-		userNoticesDataVo.setLIMIT(5);
+		userNoticesDataVo.setLIMIT(3);
 		userNoticesDataVo.setPAGE(0);
 		userNoticesDataVo.setNOTICES_IDX("1");
 		
@@ -85,7 +88,7 @@ public class UserHomeController {
 		ModelMap notices3 = userNoticesDataService.getList(userNoticesDataVo);
 		
 		//알림마당
-		userNoticesDataVo.setLIMIT(4);
+		userNoticesDataVo.setLIMIT(3);
 		userNoticesDataVo.setNOTICES_IDX("11");
 		userNoticesDataVo.setMEMBER_ID("");
 		ModelMap notices11 = userNoticesDataService.getList(userNoticesDataVo);
@@ -164,4 +167,14 @@ public class UserHomeController {
 		return new ModelAndView("user/subpage/"+type+"/"+page, model);	
 		
 	}
+	
+	@RequestMapping(value="/Mobile.do" , method = RequestMethod.GET)
+	public String MoblieWrap(HttpServletRequest request , HttpServletResponse response) {
+		return "redirect:http://m.site.naver.com/0MoV7";
+	}
+	
+	
+	
+	
+	
 }
