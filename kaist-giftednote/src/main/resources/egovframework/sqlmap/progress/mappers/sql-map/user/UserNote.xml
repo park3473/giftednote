@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.giftednote.user.note.service.impl.UserNoteMapper">
+	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		SELECT * 
+		FROM TBL_NOTE N JOIN TBL_TEAM T
+		WHERE N.N_IDX = T.N_IDX 
+			AND 1=1 	     	
+		<if test="EMAIL != ''">
+	    	AND T.EMAIL = #{EMAIL}
+	    </if>
+	    <if test="DEAD != ''">
+	    	AND N.DEAD = #{DEAD}
+	    </if>
+	</select>
+	
+	<select id="getListCnt" resultType="int" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		SELECT count(*) 
+		FROM TBL_NOTE N JOIN TBL_TEAM T
+		WHERE N.N_IDX = T.N_IDX 
+		AND 1=1
+		<if test="EMAIL != ''">
+	    	AND T.EMAIL = #{EMAIL}
+	    </if>
+	</select>
+	
+	<insert id="setNote" parameterType="egovframework.giftednote.user.note.model.UserNoteVo" useGeneratedKeys="true" keyProperty="N_IDX">
+		INSERT INTO TBL_NOTE 
+		(IDX , IMAGE , TITLE , TOPIC , LEADER , ASSI , INTRO , DEAD , START_TM) 
+		VALUES 
+		(#{IDX} , #{IMAGE} , #{TITLE} , #{TOPIC} , #{LEADER} , #{ASSI} , #{INTRO} , 'NO' , now())
+	</insert>
+	
+	<update id="NoteComplete" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		UPDATE TBL_NOTE
+		SET DEAD = 'COMPLETE' , END_TM = now()
+		WHERE N_IDX = #{N_IDX}
+	</update>
+	
+	<insert id="setTeam" parameterType="egovframework.giftednote.user.team.model.UserTeamVo">
+		INSERT INTO TBL_TEAM
+		(N_IDX , IDX , NAME , SCHOOL_YEAR , SCHOOL_NAME , LEVEL , EMAIL) 
+		VALUES 
+		(#{N_IDX} , #{IDX} , #{NAME} , #{SCHOOL_YEAR} , #{SCHOOL_NAME} , #{LEVEL} , #{EMAIL})
+	</insert>
+	
+	<select id="getDetail" resultType="hashMap" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		SELECT *
+		FROM TBL_NOTE_DETAIL 
+		WHERE N_IDX = #{N_IDX}
+		<if test="P_IDX != ''">
+	    	AND P_IDX = #{P_IDX}
+	    </if>
+	    <if test="P_IDX == ''">
+	    	AND P_IDX = '1'
+	    </if>
+	</select>
+	
+	<select id="getDetailCnt" resultType="int" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		SELECT count(*)
+		FROM TBL_NOTE_DETAIL 
+		WHERE N_IDX = #{N_IDX}
+	</select>
+	
+	<select id="getContent" resultType="hashMap" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		SELECT CONTENT
+		FROM TBL_NOTE_DETAIL
+		WHERE N_IDX = #{N_IDX} AND P_IDX = #{P_IDX}
+	</select>
+	
+	<update id="setDetail" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		UPDATE TBL_NOTE_DETAIL
+		SET N_IDX = #{N_IDX} , P_IDX =#{P_IDX} , CONTENT =#{CONTENT}
+		WHERE N_IDX = #{N_IDX} AND P_IDX = #{P_IDX}
+	</update>
+	
+	<insert id="InsertPage" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		INSERT INTO TBL_NOTE_DETAIL
+		(N_IDX , P_IDX , CONTENT) 
+		VALUES 
+		(#{N_IDX} , #{P_IDX} , #{CONTENT})
+	</insert>
+	
+	<insert id="setFirstPage" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		INSERT INTO TBL_NOTE_DETAIL
+		(N_IDX , P_IDX , CONTENT) 
+		VALUES 
+		(#{N_IDX} , '1' , '')
+	</insert>
+	
+	<select id="getComment" resultType="hashMap" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		SELECT *
+		FROM TBL_COMMENT
+		WHERE N_IDX =#{N_IDX}
+	</select>
+	
+	<insert id="CommentSet" parameterType="egovframework.giftednote.user.comment.model.UserCommentVo">
+		INSERT INTO TBL_COMMENT
+		(N_IDX , IDX , CONTENT , CREATE_TM , NAME) 
+		VALUES 
+		(#{N_IDX} , #{IDX} , #{CONTENT} , now() , #{NAME})
+	</insert>
+	
+	<update id="CommentUpdate" parameterType="egovframework.giftednote.user.comment.model.UserCommentVo">
+		UPDATE TBL_COMMENT
+		SET CONTENT = #{CONTENT}
+		WHERE C_IDX = #{C_IDX}
+	</update>
+	
+	<delete id="CommentDelete" parameterType="egovframework.giftednote.user.comment.model.UserCommentVo">
+		DELETE FROM TBL_COMMENT
+		WHERE C_IDX = #{C_IDX}
+	</delete>
+	
+</mapper>

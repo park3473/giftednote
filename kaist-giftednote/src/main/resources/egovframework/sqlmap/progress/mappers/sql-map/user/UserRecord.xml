@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.giftednote.user.record.Service.impl.UserRecordMapper">
+	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.user.record.model.UserRecordVo">
+		SELECT * FROM TBL_RECORD
+		WHERE N_IDX = #{N_IDX}
+		ORDER BY CLASS_TM , IDX
+	</select>
+	
+	<select id="getTeamList" resultType="hashMap" parameterType="egovframework.giftednote.user.record.model.UserRecordVo">
+		SELECT * FROM TBL_TEAM
+		WHERE N_IDX = ${N_IDX}
+		AND LEVEL = '1'
+		ORDER BY IDX
+	</select>
+		
+	<select id="getDayList" resultType="hashMap" parameterType="egovframework.giftednote.user.record.model.UserRecordVo">
+		SELECT DISTINCT CLASS_TM , CREATE_TM , RECORD FROM TBL_RECORD
+		WHERE N_IDX = #{N_IDX}
+		ORDER BY CLASS_TM ASC
+	</select>
+	
+	<select id="getTeamCount" resultType="int" parameterType="egovframework.giftednote.user.record.model.UserRecordVo">
+		SELECT COUNT(*) FROM TBL_TEAM 
+		WHERE N_IDX =#{N_IDX} AND LEVEL = '1';
+	</select>
+	
+	<select id="getDayCount" resultType="int" parameterType="egovframework.giftednote.user.record.model.UserRecordVo">
+		SELECT COUNT(DISTINCT CLASS_TM) FROM TBL_RECORD
+		WHERE N_IDX = #{N_IDX}
+	</select>
+	
+	<insert id="setRecord" parameterType="egovframework.giftednote.user.record.model.UserRecordVo">
+		INSERT INTO TBL_RECORD 
+		(N_IDX , IDX , CLASS_TM , CREATE_TM , NAME , SCORE_JOIN , SCORE_UPTAKE , RECORD) 
+		VALUES 
+		(#{N_IDX} , #{IDX} , #{CLASS_TM} , now() ,  #{NAME} , #{SCORE_JOIN} , #{SCORE_UPTAKE} , #{RECORD})
+	</insert>
+	
+</mapper>

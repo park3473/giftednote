@@ -1,0 +1,10 @@
+@charset "euc-kr";
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+.con { width:1920px; height:1080px; overflow:hidden; position:relative; }
+.warp {font-family: 'Song Myung', serif; background: url('../img/certificate_img.jpg') center center, no-repeat;
+ width:1200px; height:795px; margin:0 auto; }
+.certificate_warp {  margin:0 auto; text-align:center; width:400px; font-size:1.3rem; }
+
+.certificate_warp > .certificate_name { padding-top: 410px; padding-left:20px; font-size:2.8rem; letter-spacing: 20px; color:#996633; } 
+.certificate_warp > .certificate_day { padding: 150px 0; text-align: right; color:#996633; }
