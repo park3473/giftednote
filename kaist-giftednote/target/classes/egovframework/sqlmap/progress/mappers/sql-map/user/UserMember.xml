@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.giftednote.user.member.Service.impl.UserMemberMapper">
+	<select id="getView" parameterType="egovframework.giftednote.user.member.model.UserMemberVo" resultType="egovframework.giftednote.user.member.model.UserMemberVo">
+		SELECT * FROM TBL_MEMBER WHERE EMAIL = #{EMAIL} AND PASSWORD = #{PASSWORD}
+	</select>
+	<select id="getPW" parameterType="egovframework.giftednote.user.member.model.UserMemberVo" resultType="String">
+		SELECT PASSWORD FROM TBL_MEMBER WHERE EMAIL = #{EMAIL} 
+	</select>
+	<insert id="insertMember" parameterType="egovframework.giftednote.user.member.model.UserMemberVo">
+		INSERT INTO TBL_MEMBER 
+		(EMAIL , PASSWORD , ADDRESS , PHONE , NAME , LEVEL) 
+		VALUES 
+		(#{EMAIL} , #{PASSWORD} , #{ADDRESS} , #{PHONE} , #{NAME} , #{LEVEL})
+	</insert>
+	<select id="getListAll" parameterType="egovframework.giftednote.user.member.model.UserMemberVo" resultType="egovframework.giftednote.user.member.model.UserMemberVo">
+		SELECT *
+		FROM TBL_MEMBER
+	</select>
+	<select id="getList" parameterType="egovframework.giftednote.user.member.model.UserMemberVo" resultType="egovframework.giftednote.user.member.model.UserMemberVo">
+		SELECT *
+		FROM TBL_MEMBER
+		WHERE EMAIL = #{EMAIL}
+		<if test="LEVEL != ''">
+	    	AND LEVEL = #{LEVEL}
+	    </if>
+	</select>
+	<select id="getMyInfo" parameterType="egovframework.giftednote.user.member.model.UserMemberVo" resultType="egovframework.giftednote.user.member.model.UserMemberVo">
+		SELECT * FROM TBL_MEMBER WHERE EMAIL = #{EMAIL}
+	</select>
+	<update id="setMyInfo" parameterType="egovframework.giftednote.user.member.model.UserMemberVo">
+		UPDATE TBL_MEMBER SET NAME = #{NAME} , PHONE = #{PHONE} , ADDRESS = #{ADDRESS} , BIRTH = #{BIRTH}
+		WHERE IDX = #{IDX} AND EMAIL = #{EMAIL}
+	</update>
+	
+</mapper>
