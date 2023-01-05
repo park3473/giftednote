@@ -67,19 +67,18 @@ public class UserNoteController {
 		int pagelimit = UserNoteVo.getPAGE() * UserNoteVo.getITEM_COUNT();
 		
 		UserNoteVo.setLIMIT(Integer.parseInt(ITEM_COUNT));
-		UserNoteVo.setOFFSET(pagelimit);
-		System.out.println(request.getParameter("DEAD"));
-		if(request.getParameter("DEAD") != null){
-		UserNoteVo.setDEAD(request.getParameter("DEAD"));
-		}
-		UserNoteVo.setEMAIL(request.getParameter("EMAIL"));
-		model = userNoteService.getList(UserNoteVo);
-		
-		
-		model.put("SEARCH_TYPE", UserNoteVo.getSEARCH_TYPE());
-		model.put("SEARCH_TEXT", UserNoteVo.getSEARCH_TEXT());
-		
-		model.put("beforeDomain", UserNoteVo);
+	    UserNoteVo.setOFFSET(pagelimit);
+	    UserNoteVo.setUr_userid(request.getParameter("USER_ID"));
+	    UserNoteVo.setType(request.getParameter("TYPE"));
+	    if (model.equals(null)) {
+	        model.put("note_list", "no");
+	      }
+	      System.out.println(model);
+	      model.put("SEARCH_TYPE", UserNoteVo.getSEARCH_TYPE());
+	      model.put("SEARCH_TEXT", UserNoteVo.getSEARCH_TEXT());
+	      
+	      model.put("beforeDomain", UserNoteVo);
+	      
 
 		return new ModelAndView("user/note/main", "model", model);
 	}
@@ -158,6 +157,26 @@ public class UserNoteController {
 	public void COMMENTDELETE(@ModelAttribute("UserCommentVo") UserCommentVo UserCommentVo, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		userNoteService.CommentDelete(UserCommentVo);
 	}
+	
+	@RequestMapping(value="/user/note/schedule.do" , method = RequestMethod.GET)
+	public String schedule(HttpServletRequest request , HttpServletResponse response) {
+		return "/user/note/schedule";
+	}
+	
+	@RequestMapping(value="/note/teamlist.do" , method = RequestMethod.GET)
+	public ModelAndView TeamList(@ModelAttribute("UserNoteVo")UserNoteVo UserNoteVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		UserNoteVo.setLab_id(request.getParameter("lab_id"));
+	    
+	    ModelMap model = new ModelMap();
+	    
+	    model = userNoteService.getTeamList(UserNoteVo);
+	    
+	    return new ModelAndView("/user/note/teamlist", "model", model);
+	    
+	}
+	
+	
 	
 	
 }

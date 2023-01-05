@@ -1,5 +1,6 @@
 package egovframework.giftednote.user.srce.Service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -42,5 +43,33 @@ public class UserSrceServiceImpl implements UserSrceService {
 	public void setUpdate(UserSrceVo userSrceVo) {
 		// TODO Auto-generated method stub
 		userSrceMapper.setUpdate(userSrceVo);
+	}
+
+	@Override
+	public String getLabName(UserSrceVo userSrceVo) {
+		String lab_name = this.userSrceMapper.getLabName(userSrceVo);
+	    
+	    return lab_name;
+	}
+
+	@Override
+	public ModelMap getTeamList(UserSrceVo userSrceVo) {
+		ModelMap model = new ModelMap();
+	    
+	    List<?> TeamName = this.userSrceMapper.getTeamList(userSrceVo);
+	    model.put("TeamList", TeamName);
+	    for (int i = 0; i < TeamName.size(); i++)
+	    {
+	      HashMap hashmap = (HashMap)TeamName.get(i);
+	      
+	      String IDX = String.valueOf(hashmap.get("ur_id"));
+	      System.out.println(String.valueOf(hashmap.get("ur_id")));
+	      userSrceVo.setIDX(IDX);
+	      System.out.println(IDX);
+	      List<?> ScoreList = this.userSrceMapper.getScoreList(userSrceVo);
+	      
+	      model.put("TeamScoreList" + i, ScoreList);
+	    }
+	    return model;
 	}
 }

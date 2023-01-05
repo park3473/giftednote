@@ -3,28 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.giftednote.user.note.service.impl.UserNoteMapper">
-	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
-		SELECT * 
-		FROM TBL_NOTE N JOIN TBL_TEAM T
-		WHERE N.N_IDX = T.N_IDX 
-			AND 1=1 	     	
-		<if test="EMAIL != ''">
-	    	AND T.EMAIL = #{EMAIL}
-	    </if>
-	    <if test="DEAD != ''">
-	    	AND N.DEAD = #{DEAD}
-	    </if>
+	<select id="getMentoNoteList" resultType="hashMap" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		SELECT LAB.* FROM TBL_PREURP_LABS LAB JOIN TBL_PREURP_UR_LAB UR_LAB 
+		WHERE LAB.lab_id = UR_LAB.urlab_lab_id 
+		AND UR_LAB.urlab_ur_userid = #{ur_userid}
 	</select>
 	
-	<select id="getListCnt" resultType="int" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
-		SELECT count(*) 
-		FROM TBL_NOTE N JOIN TBL_TEAM T
-		WHERE N.N_IDX = T.N_IDX 
-		AND 1=1
-		<if test="EMAIL != ''">
-	    	AND T.EMAIL = #{EMAIL}
-	    </if>
+	<select id="getStudentNoteList" resultType="hashMap" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		SELECT LAB.* FROM TBL_PREURP_LABS LAB JOIN TBL_PREURP_STUDENTS UR_LAB 
+		WHERE LAB.lab_id = UR_LAB.std_selected_lab_id 
+		AND UR_LAB.std_ur_userid = #{ur_userid}
 	</select>
+	
+	<select id="getMentoListCnt" resultType="int" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		SELECT COUNT(*) FROM TBL_PREURP_LABS LAB JOIN TBL_PREURP_UR_LAB UR_LAB 
+		WHERE LAB.lab_id = UR_LAB.urlab_lab_id 
+		AND UR_LAB.urlab_ur_userid = #{ur_userid}
+	</select>
+	
+	<select id="getStudentListCnt" resultType="int" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		SELECT COUNT(*) FROM TBL_PREURP_LABS LAB JOIN TBL_PREURP_STUDENTS UR_LAB 
+		WHERE LAB.lab_id = UR_LAB.std_selected_lab_id 
+		AND UR_LAB.std_ur_userid = #{ur_userid}
+	</select>
+	
+	
 	
 	<insert id="setNote" parameterType="egovframework.giftednote.user.note.model.UserNoteVo" useGeneratedKeys="true" keyProperty="N_IDX">
 		INSERT INTO TBL_NOTE 
@@ -49,7 +52,7 @@
 	<select id="getDetail" resultType="hashMap" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
 		SELECT *
 		FROM TBL_NOTE_DETAIL 
-		WHERE N_IDX = #{N_IDX}
+		WHERE lab_id = #{lab_id}
 		<if test="P_IDX != ''">
 	    	AND P_IDX = #{P_IDX}
 	    </if>
@@ -61,26 +64,26 @@
 	<select id="getDetailCnt" resultType="int" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
 		SELECT count(*)
 		FROM TBL_NOTE_DETAIL 
-		WHERE N_IDX = #{N_IDX}
+		WHERE lab_id = #{lab_id}
 	</select>
 	
 	<select id="getContent" resultType="hashMap" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
 		SELECT CONTENT
 		FROM TBL_NOTE_DETAIL
-		WHERE N_IDX = #{N_IDX} AND P_IDX = #{P_IDX}
+		WHERE lab_id = #{lab_id} AND P_IDX = #{P_IDX}
 	</select>
 	
 	<update id="setDetail" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
 		UPDATE TBL_NOTE_DETAIL
-		SET N_IDX = #{N_IDX} , P_IDX =#{P_IDX} , CONTENT =#{CONTENT}
-		WHERE N_IDX = #{N_IDX} AND P_IDX = #{P_IDX}
+		SET lab_id = #{lab_id} , P_IDX =#{P_IDX} , CONTENT =#{CONTENT} , P_UPDATE_TM = now()
+		WHERE lab_id = #{lab_id} AND P_IDX = #{P_IDX}
 	</update>
 	
 	<insert id="InsertPage" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
 		INSERT INTO TBL_NOTE_DETAIL
-		(N_IDX , P_IDX , CONTENT) 
+		(lab_id , P_IDX  , CONTENT , P_CREATE_TM , P_UPDATE_TM) 
 		VALUES 
-		(#{N_IDX} , #{P_IDX} , #{CONTENT})
+		(#{lab_id} , #{P_IDX} , #{CONTENT} , now() , now())
 	</insert>
 	
 	<insert id="setFirstPage" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
@@ -113,5 +116,22 @@
 		DELETE FROM TBL_COMMENT
 		WHERE C_IDX = #{C_IDX}
 	</delete>
+	
+	
+	<select id="getDetailAll" resultType="hashMap" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		SELECT * FROM TBL_NOTE_DETAIL WHERE lab_id = #{lab_id}
+	</select>
+	
+	<select id="getNote" resultType="egovframework.giftednote.user.note.model.UserNoteVo" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		SELECT * FROM TBL_PREURP_LABS WHERE lab_id = #{lab_id}
+	</select>
+	
+	<select id="getCollCd" resultType="String" parameterType="egovframework.giftednote.user.note_detail.model.UserNoteDetailVo">
+		SELECT lab_coll_cd FROM TBL_PREURP_LABS WHERE lab_id = #{lab_id}
+	</select>
+	
+	<select id="getTeamList" resultType="hashMap" parameterType="egovframework.giftednote.user.note.model.UserNoteVo">
+		SELECT STUDENTS.* , USERS.ur_id FROM TBL_PREURP_STUDENTS STUDENTS JOIN TBL_PREURP_USERS USERS WHERE STUDENTS.std_ur_userid = USERS.ur_userid AND STUDENTS.std_selected_lab_id = #{lab_id}
+	</select>
 	
 </mapper>

@@ -5,13 +5,30 @@
 <mapper namespace="egovframework.giftednote.user.exploring.Service.impl.UserExploringMapper">
 	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.user.exploring.model.UserExploringVo">
 		SELECT * FROM TBL_EXPLORING
-		WHERE N_IDX = #{N_IDX} AND IDX = #{IDX}
+		WHERE lab_id = #{lab_id} AND IDX = #{IDX}
 	</select>
 	
 	<insert id="setExplor" parameterType="egovframework.giftednote.user.exploring.model.UserExploringVo">
 		INSERT INTO TBL_EXPLORING
-		(N_IDX , IDX , CLASS_TM , LEADER_TYPE , CLASS_TYPE , CLASS_PLACE , SCORE_JOIN , SCORE_UPTAKE , LEARN , FELT , OTHER)
+		(lab_id , IDX , CLASS_TM , LEADER_TYPE , CLASS_TYPE , CLASS_PLACE , SCORE_JOIN , SCORE_UPTAKE , LEARN , FELT , OTHER)
 		VALUES
-		(#{N_IDX} , #{IDX} , #{CLASS_TM} , #{LEADER_TYPE} , #{CLASS_TYPE} , #{CLASS_PLACE} , #{SCORE_JOIN} , #{SCORE_UPTAKE} , #{LEARN} , #{FELT} , #{OTHER})
+		(#{lab_id} , #{IDX} , #{CLASS_TM} , #{LEADER_TYPE} , #{CLASS_TYPE} , #{CLASS_PLACE} , #{SCORE_JOIN} , #{SCORE_UPTAKE} , #{LEARN} , #{FELT} , #{OTHER})
 	</insert>
+	
+	<select id="getClassCheck" resultType="int" parameterType="egovframework.giftednote.user.exploring.model.UserExploringVo">
+		SELECT COUNT(*) FROM TBL_EXPLORING WHERE lab_id = #{lab_id} AND DATE_FORMAT(CLASS_TM,'%Y-%m-%d') = #{CLASS_TM} AND IDX = #{IDX}
+	</select>
+	
+	<delete id="setExploringDelete" parameterType="egovframework.giftednote.user.exploring.model.UserExploringVo">
+		DELETE FROM TBL_EXPLORING WHERE DATE_FORMAT(CLASS_TM,'%Y-%m-%d') = #{CLASS_TM} AND lab_id = #{lab_id} AND IDX = #{IDX}
+	</delete>
+	
+	<select id="getAllNameList" parameterType="egovframework.giftednote.user.exploring.model.UserExploringVo" resultType="hashMap">
+		SELECT std_ur_userid , std_id , std_name , lab_num FROM TBL_PREURP_STUDENTS st JOIN TBL_PREURP_LABS la ON st.std_selected_lab_id = la.lab_id WHERE st.std_prog_id = #{lab_prog_id} ORDER BY std_ur_userid 
+	</select>
+	
+	<select id="getDateExploringList" parameterType="egovframework.giftednote.user.exploring.model.UserExploringVo" resultType="hashMap">
+		SELECT ur_userid , score_join , score_uptake FROM TBL_PREURP_USERS ur JOIN TBL_PREURP_STUDENTS st ON ur.ur_userid = st.std_ur_userid JOIN TBL_EXPLORING ex ON ur.ur_id = ex.IDX WHERE st.std_prog_id = #{lab_prog_id} AND ex.lab_prog_id = #{lab_prog_id} AND ex.class_tm = #{CLASS_TM} ORDER BY ur.ur_userid
+	</select>
+	
 </mapper>

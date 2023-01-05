@@ -10,13 +10,13 @@
 
 <!--삭제금지-->
 <!--공통상단-->
-<%@ include file="../../include/header.jsp" %>
+<%@ include file="../include/header.jsp" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/main.css" type="text/css">
 
 <style>
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
     .form_list_ob > .form_list_note > .test_p{
@@ -27,6 +27,8 @@
     }
     #main_btn{
     	margin:0;
+    	width: auto;
+    	display: table;
     }
     #main_btn li{
     margin-right:50px;
@@ -42,12 +44,33 @@
     	margin-bottom:6px;
     }
     
+    #detail_student{
+   	float: left;
+    margin-right: 10px;
+    
+    height: 30px;
+    
+    }
+    
+    #detail_mento{
+   	float: left;
+    margin-right: 10px;
+    /* width: 0px; */
+    height: 30px;
+    
+    }
+    
+    
+    #detail_mento button{
+    	margin-left: 10px;
+    }
+    
 </style>
 <section id="new_sc" class="sc_wrap">
         <div class="sc_area">
             <div class="sc_con">
                 <div class="sc_size">
-					<%@ include file="../../include/top.jsp" %>
+					<%@ include file="../include/top.jsp" %>
 
                     <!-- 본문 내용-->
                     <div class="sc_section">
@@ -68,11 +91,12 @@
                                     <!-- 공통타이틀 -->
                                     <div class="all_title">
                                         <div class="line"><span></span></div>
-                                        <h2>리스트</h2>
+                                        <h2>참여 연구 리스트</h2>
                                     </div>
                                     <!-- 공통타이틀 -->
 
                                     <!-- 공통서치 -->
+                                    <!-- 07 - 26 삭제
                                     <div class="meeting_search">
 
                                         <div id="meeting_form_btn" class="meeting_add floatR" >
@@ -80,6 +104,7 @@
                                         </div>
 
                                     </div>
+                                    -->
                                     <!-- 공통서치 end-->
 
                                     <!-- 양식 리스트 -->
@@ -87,17 +112,15 @@
                                         <ul class="form_list_box">
                                             <c:forEach var="item" items="${model.list}" varStatus="var">
 								                <li class="form_list_ob">
-								                    <div class="form_list_note form_img" onclick="javascript:detail(${item.N_IDX})" id="${item.N_IDX }_detail">
-								                        <img src="${pageContext.request.contextPath}/resources/upload/note_img/${item.IMAGE }.jpg">
+								                    <div class="form_list_note form_img" onclick="javascript:detail(${item.lab_id})" id="${item.lab_id }_detail">
+								                        <img src="${pageContext.request.contextPath}/resources/img/note_img/${item.lab_coll_cd }.png">
 								                        
-									                    <div id="${item.N_IDX }_idx" class="test_p" dead="${item.DEAD }">
+									                    <div id="${item.N_IDX }_idx" class="test_p">
 									                        <ul>
-									                        	<li><p class="form_list_li">제목</p><p class="form_list_li_p">${item.TITLE }</p></li>
-									                        	<li><p class="form_list_li">주제</p><p class="form_list_li_p">${item.TOPIC }</p></li>
-									                        	<li><p class="form_list_li">담당 교수</p><p class="form_list_li_p">${item.LEADER }</p></li>
-									                        	<li><p class="form_list_li">담당 조교</p><p class="form_list_li_p">${item.ASSI }</p></li>
-									                        	<li><p class="form_list_li">연구일지 시작일</p><p class="form_list_li_p">${item.START_TM }</p></li>
-									                        	<li><p class="form_list_li">연구일지 마감일</p><p class="form_list_li_p">${item.END_TM }</p></li>
+									                        	<li><p class="form_list_li">연구 주제</p><p class="form_list_li_p">${item.lab_study_title }</p></li>
+									                        	<li><p class="form_list_li">연구실 명</p><p class="form_list_li_p">${item.lab_name }</p></li>
+									                        	<li><p class="form_list_li">실험실 명칭</p><p class="form_list_li_p">${item.lab_room_name }</p></li>
+									                        	<li><p class="form_list_li">실험실 위치</p><p class="form_list_li_p">${item.lab_room_position }</p></li>
 									                        </ul>
 													    </div>
 												    </div>
@@ -129,7 +152,7 @@
                     <!-- 공통타이틀 -->
                     <div class="all_title">
                         <div class="line"><span></span></div>
-                        <h2>노트 상세 보기</h2>
+                        <h2>연구실 상세 보기</h2>
                     </div>
                     <!-- 공통타이틀 -->
 
@@ -152,13 +175,14 @@
                     <div class="join_submit_btn" id="detail_wrap" style="display:none" >
                         <ul class="join_btn" id="main_btn">
                         	<li id="detail_student" class="submit_btn">
-                        		<button id="detail_wrap_bt">작성</button>
-								<button id="detail_exploring">탐구일지</button>
+                        		<button id="detail_wrap_bt">연구 노트 작성</button>
+                        		<button id="view_wrap_bt">연구 노트 보기</button>
+								<button id="detail_exploring">탐구일지 보기</button>
                         	</li>
                         	<li id="detail_mento" class="submit_btn">
-								<button id="detail_record">지도일지</button>
-								<button id="detail_complete">마감하기</button>
-								<button id="detail_srce">학생평가</button>
+                        		<button id="detail_record">지도일지 작성</button>
+								<button id="detail_srce">학생 평가 작성</button>
+								<button id="detail_team">연구 학생 확인</button>
 							</li>
                         </ul>
                     </div>
@@ -167,7 +191,7 @@
         </div>
     </div>
 <!--공통하단-->
-<%@ include file="../../include/footer.jsp" %>
+<%@ include file="../include/footer.jsp" %>
 <!--공통하단 끝-->
 <!-- js 시작 -->
 <script type="text/javascript">
@@ -179,6 +203,7 @@ if('${check}' == 'fail'){
 	alert("성공")
 }
 */
+/*
 	function note_insert_check(){
 	if(${session_level} == '2' ){
 		location.href='${pageContext.request.contextPath}/note/insert.do?IDX=${session_idx}'
@@ -187,24 +212,30 @@ if('${check}' == 'fail'){
 	}	
 	
 	}
-	
+*/	
 	function detail(idx){
 		const element = document.getElementById(idx+'_detail');
 		  //alert(element.innerHTML);
 		  $('#detail_show').html(element.innerHTML);
 		  $('#meeting_form_modal').show();
 		  $('#detail_wrap').show();
-		  $('#detail_wrap_bt').attr('onclick','location.href="/note/detail.do?N_IDX='+idx+'"');
-		  $('#detail_exploring').attr('onclick','location.href="/exploring/exploring.do?N_IDX='+idx+'&IDX='+${session_idx}+'"')
+		  $('#detail_wrap_bt').attr('onclick','location.href="/note/detail.do?lab_id='+idx+'"');
+		  $('#view_wrap_bt').attr('onclick','location.href="/user/note/view.do?lab_id='+idx+'"');
+		  $('#detail_exploring').attr('onclick','location.href="/exploring/exploring.do?lab_id='+idx+'&user_idx='+${session_idx}+'"')
+		  // view 로 변경 - $('#detail_pdf_view').attr('onclick','location.href="/user/note/pdf_view.do?lab_id='+idx+'"')
 		  if(${session_level} == '2'){
-		  		$('#detail_complete').attr('onclick','javascript:complete('+idx+')');
-		  		$('#detail_record').attr('onclick','location.href="/record/list.do?N_IDX='+idx+'"');
-		  		$('#detail_srce').attr('onclick','location.href="/srce/srce.do?N_IDX='+idx+'"');
+		  		$('#detail_record').attr('onclick','location.href="/record/list.do?lab_id='+idx+'"');
+		  		$('#detail_srce').attr('onclick','location.href="/srce/srce.do?lab_id='+idx+'"');
+		  		$('#detail_team').attr('onclick','location.href="/user/note/teamlist.do?lab_id='+idx+'"');
+		  		$('#detail_student').hide();
 		  }else{
 				$('#detail_mento').hide();
 		  }
 	}
 	
+	/*
+	
+	 07 - 26 // 마감 기능 삭제
 	function complete(n_idx){
 		if($('#'+n_idx+'_idx').attr('dead') == 'COMPLETE'){
 			Swal.fire('이미 마감된 연구노트 입니다.')
@@ -224,11 +255,10 @@ if('${check}' == 'fail'){
 				})
 		}
 	}
-
+	*/
     $("#close_btn").click(function() {
         $("#meeting_form_modal").hide();
     });
-
 	
 </script>
 <!-- js 끝 -->

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.ui.ModelMap;
 
+import egovframework.giftednote.user.member.model.SchoolVo;
 import egovframework.giftednote.user.member.model.UserMemberVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -22,4 +23,8 @@ public interface UserMemberMapper {
 	public UserMemberVo getMyInfo(UserMemberVo userMemberVo);
 
 	public void setMyInfo(UserMemberVo userMemberVo);
+
+	public List<?> getSchool(SchoolVo schoolVo);
+
+	public int setCheckId(UserMemberVo userMemberVo);
 }

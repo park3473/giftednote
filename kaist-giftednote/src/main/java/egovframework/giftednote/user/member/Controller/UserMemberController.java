@@ -2,8 +2,10 @@ package egovframework.giftednote.user.member.Controller;
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.enterprise.inject.Model;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import egovframework.giftednote.user.member.Service.UserMemberService;
+import egovframework.giftednote.user.member.model.SchoolVo;
 import egovframework.giftednote.user.member.model.UserMemberVo;
 
 @Controller
@@ -126,6 +129,54 @@ public class UserMemberController {
 	public void MyInfoUpdate(@ModelAttribute("UserMemberVo")UserMemberVo UserMemberVo,HttpServletRequest request , HttpServletResponse response) throws IOException {
 		userMemberService.setMyInfo(UserMemberVo);
 		response.getWriter().println("true");
+	}
+	
+	@RequestMapping(value="/user/school.do" , method = RequestMethod.GET)
+	public ModelAndView School(@ModelAttribute("SchoolVo") SchoolVo SchoolVo , HttpServletRequest request , HttpServletResponse response) {
+		
+		 ModelMap model = new ModelMap();
+		    
+		    model = userMemberService.getSchool(SchoolVo);
+		    
+		    return new ModelAndView("user/member/school", "model", model);
+		
+	}
+	
+	@RequestMapping(value="/user/member/id_check.do" , method = RequestMethod.POST)
+	@ResponseBody
+	public void ID_CHECK(@ModelAttribute("UserMemberVo") UserMemberVo UserMemberVo , HttpServletRequest request , HttpServletResponse response) throws IOException {
+		
+		int result = userMemberService.setCheckId(UserMemberVo);
+		
+		if(result == 1) {
+			PrintWriter out = response.getWriter();
+			out.println(false);
+		}
+		else if(result == 0) {
+			PrintWriter out = response.getWriter();
+			out.print(true);
+		}
+		else {
+			
+			PrintWriter out = response.getWriter();
+			out.println("오류");
+					
+		}
+		
+	}
+	
+	@RequestMapping(value = "/user/member/check.do" , method = RequestMethod.GET)
+	public String Check(HttpServletRequest request , HttpServletResponse response) {
+		
+		return "/user/member/check";
+		
+	}
+	
+	@RequestMapping(value="/user/member/sms_test" , method = RequestMethod.GET)
+	public String sms_test(HttpServletRequest request , HttpServletResponse response) {
+		System.out.println("dd");
+		
+		return "redirect:/";
 	}
 	
 	

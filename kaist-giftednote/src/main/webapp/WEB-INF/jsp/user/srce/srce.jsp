@@ -10,13 +10,13 @@
 
 <!--삭제금지-->
 <!--공통상단-->
-<%@ include file="../../include/header.jsp" %>
+<%@ include file="../include/header.jsp" %>
 <!--공통상단 끝-->
 
 
 <style>
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
     .test_div > .test_p{
@@ -100,13 +100,13 @@
 	</style>
 <div style="display:none">
 	<input type="hidden" value="${fn:length(model.list)}" id="teamcount">
-	<input type="hidden" value="${model.N_IDX }" id="_MAIN_N_IDX">
+	<input type="hidden" value="${model.lab_id }" id="_MAIN_LAB_ID">
 </div>
 <section id="new_sc" class="sc_wrap">
         <div class="sc_area">
             <div class="sc_con">
                 <div class="sc_size">
-					<%@ include file="../../include/top.jsp" %>
+					<%@ include file="../include/top.jsp" %>
 
                     <!-- 본문 내용-->
                     <div class="sc_section">
@@ -216,6 +216,7 @@
                                     <div class="meeting_search">
 
                                         <div id="meeting_form_btn" class="meeting_add floatR" >
+                                        	<a onclick="">
                                             <a onclick="javascript:srce_insert(${fn:length(model.list)})">저장</a>
                                         </div>
 
@@ -231,7 +232,7 @@
 											    <th class="tg-0lax">연구역량</th>
 											    <th class="tg-0lax">평가 문항</th>
 											    <c:forEach items="${model.list }" var="item" varStatus="Status">
-													<th class="tg-0lax" id="teamname_${Status.index }" idx="${item.IDX }" name="${item.NAME }">${item.NAME }</th>
+													<th class="tg-0lax" id="teamname_${Status.index }" idx="${item.ur_id }" name="${item.std_name }">${item.std_name }</th>
 											    </c:forEach>
 											  </tr>
 											</thead>
@@ -631,7 +632,7 @@
         </div>
     </section>
 <!--공통하단-->
-<%@ include file="../../include/footer.jsp" %>
+<%@ include file="../include/footer.jsp" %>
 <!--공통하단 끝-->
 <!-- js 시작 -->
 <script type="text/javascript">
@@ -652,14 +653,14 @@ if('${check}' == 'fail'){
 	
 	function AJAX(x){
 		var IDX = $('#teamname_'+x).attr('idx');
-		var N_IDX = $('#_MAIN_N_IDX').val();
+		var lab_id = $('#_MAIN_LAB_ID').val();
 		//console.log(IDX);
 		$.ajax({
 			type : "POST",
 			url : "/srce/srce.do?",
 			cache : false,
 			data : ({
-				N_IDX : N_IDX,
+				lab_id : lab_id,
 				IDX : IDX,
 			}),
 			dataType : "json",
@@ -718,7 +719,7 @@ if('${check}' == 'fail'){
 				if(SCORE != ''){
 					if(what == 'update'){
 						//console.log("update"+SCORE)
-						var N_IDX = $('#_MAIN_N_IDX').val();
+						var lab_id = $('#_MAIN_LAB_ID').val();
 						var SCORE = SCORE;
 						var IDX = $('#teamname_'+x).attr('idx');
 						var S_IDX = y;
@@ -729,7 +730,7 @@ if('${check}' == 'fail'){
 							cache : false,
 							data : ({
 								IDX : IDX,
-								N_IDX : N_IDX,
+								lab_id : lab_id,
 								S_IDX : S_IDX,
 								NAME : NAME,
 								SCORE : SCORE
@@ -737,12 +738,11 @@ if('${check}' == 'fail'){
 							dataType : "json",
 							success: function(data , status, xhr){
 								console.log(data);
-								
 								}
 						})
 					}else if(what == 'insert'){
 						//console.log("insert"+SCORE)
-						var N_IDX = $('#_MAIN_N_IDX').val();
+						var lab_id = $('#_MAIN_LAB_ID').val();
 						var SCORE = SCORE;
 						var IDX = $('#teamname_'+x).attr('idx');
 						var S_IDX = y;
@@ -753,14 +753,13 @@ if('${check}' == 'fail'){
 							cache : false,
 							data : ({
 								IDX : IDX,
-								N_IDX : N_IDX,
+								lab_id : lab_id,
 								S_IDX : S_IDX,
 								NAME : NAME,
 								SCORE : SCORE
 							}),
 							dataType : "json",
 							success: function(data , status, xhr){
-								console.log(data);
 								}
 						})
 					}else{
@@ -769,6 +768,17 @@ if('${check}' == 'fail'){
 				}
 			}
 		}
+		
+
+		Swal.fire({
+			text : "연구역량 평가가 등록되었습니다.",
+			confirmButtonText: 'Yes!'
+		}).then((result) => {
+			if(result.isConfirmed) {
+				location.href='${pageContext.request.contextPath}/';
+			}
+		})
+		
 	}
 	
 </script>

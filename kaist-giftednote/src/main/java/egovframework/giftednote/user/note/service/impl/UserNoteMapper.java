@@ -41,6 +41,20 @@ public interface UserNoteMapper {
 
 	public void setFirstPage(UserNoteVo userNoteVo);
 
+	public List<?> getStudentNoteList(UserNoteVo userNoteVo);
+
+	public int getStudentListCnt(UserNoteVo userNoteVo);
+
+	public List<?> getMentoNoteList(UserNoteVo userNoteVo);
+
+	public int getMentoListCnt(UserNoteVo userNoteVo);
+
+	public List<?> getDetailAll(UserNoteDetailVo userNoteDetailVo);
+
+	public String getCollCd(UserNoteDetailVo userNoteDetailVo);
+
+	public List<?> getTeamList(UserNoteVo userNoteVo);
+
 
 	
 

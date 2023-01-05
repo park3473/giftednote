@@ -4,11 +4,159 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.giftednote.admin.member.Service.impl.AdminMemberMapper">
 	<select id="getList" resultType="hashMap" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
-		SELECT * FROM TBL_MEMBER
+		SELECT * FROM TBL_PREURP_USERS
+		WHERE 1 = 1
+		<if test="ur_level != ''">
+			AND UR_LEVEL = #{ur_level}
+		</if>
+		ORDER BY ur_id DESC
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
 	</select>
+	<select id="getListCnt" resultType="int" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		SELECT COUNT(*) FROM TBL_PREURP_USERS
+		WHERE 1 = 1
+		<if test="ur_level != ''">
+			AND UR_LEVEL = #{ur_level}
+		</if>
+	</select>
+	
+	<!-- 학생 리스트 -->
+	<select id="getStudentList" resultType="hashMap" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		SELECT * 
+		FROM TBL_PREURP_USERS ur JOIN TBL_PREURP_STUDENTS st ON ur.ur_userid = st.std_ur_userid 
+		WHERE 1 = 1
+		<if test="std_prog_id != ''">
+		AND st.std_prog_id = #{std_prog_id}
+		</if>
+		<if test="SEARCH_TYPE != ''">
+			<if test="SEARCH_TYPE != 'ALL'">
+				AND ur.${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%' 
+			</if>
+			<if test="SEARCH_TYPE == 'ALL'">
+				AND ( ur.ur_name LIKE '%${SEARCH_TEXT}%' OR ur.ur_email LIKE '%${SEARCH_TEXT}%')
+			</if>
+		</if>
+		ORDER BY ur.ur_id DESC
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	<select id="getStudentListCnt" resultType="int" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		SELECT COUNT(*)
+		FROM TBL_PREURP_USERS ur JOIN TBL_PREURP_STUDENTS st ON ur.ur_userid = st.std_ur_userid
+		WHERE 1 = 1
+		<if test="std_prog_id != ''">
+		AND st.std_prog_id = #{std_prog_id}
+		</if>
+		<if test="SEARCH_TYPE != ''">
+			<if test="SEARCH_TYPE != 'ALL'">
+				AND ur.${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%' 
+			</if>
+			<if test="SEARCH_TYPE == 'ALL'">
+				AND ( ur.ur_name LIKE '%${SEARCH_TEXT}%' OR ur.ur_email LIKE '%${SEARCH_TEXT}%')
+			</if>
+		</if>
+	</select>
+	
+	
+	<!-- 지도자 리스트 -->
+	<select id="getLeaderList" resultType="hashMap" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		SELECT * 
+		FROM TBL_PREURP_USERS ur JOIN TBL_PREURP_UR_LAB la ON ur.ur_userid = la.urlab_ur_userid 
+		WHERE 1 = 1
+		<if test="urlab_lab_prog_id != ''">
+		AND la.urlab_lab_prog_id = #{urlab_lab_prog_id}
+		</if>
+		<if test="ur_coll_cd != ''">
+		AND ur.ur_coll_cd = #{ur_coll_cd}
+		</if>
+		<if test="SEARCH_TYPE != ''">
+			<if test="SEARCH_TYPE != 'ALL'">
+				AND ur.${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%' 
+			</if>
+			<if test="SEARCH_TYPE == 'ALL'">
+				AND ( ur_name LIKE '%${SEARCH_TEXT}%' OR ur_email LIKE '%${SEARCH_TEXT}%')
+			</if>
+		</if>
+		GROUP BY ur.ur_id
+		ORDER BY ur.ur_id DESC
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	<select id="getLeaderListCnt" resultType="int" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		SELECT count(DISTINCT ur.ur_id) 
+		FROM TBL_PREURP_USERS ur JOIN TBL_PREURP_UR_LAB la ON ur.ur_userid = la.urlab_ur_userid
+		WHERE 1 = 1
+		<if test="urlab_lab_prog_id != ''">
+		AND la.urlab_lab_prog_id = #{urlab_lab_prog_id}
+		</if>
+		<if test="ur_coll_cd != ''">
+		AND ur.ur_coll_cd = #{ur_coll_cd}
+		</if>
+		<if test="SEARCH_TYPE != ''">
+			<if test="SEARCH_TYPE != 'ALL'">
+				AND ur.${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%' 
+			</if>
+			<if test="SEARCH_TYPE == 'ALL'">
+				AND ( ur.ur_name LIKE '%${SEARCH_TEXT}%' OR ur.ur_email LIKE '%${SEARCH_TEXT}%')
+			</if>
+		</if>
+	</select>
+	
 	<update id="setMember" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
 		UPDATE TBL_MEMBER SET NAME = #{NAME} , PHONE = #{PHONE} , ADDRESS = #{ADDRESS} , BIRTH = #{BIRTH}
 		WHERE IDX = #{IDX} AND EMAIL = #{EMAIL}
 	</update>
 
+	<select id="setDelete" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		DELETE FROM TBL_MEMBER WHERE IDX = #{IDX}
+	</select>
+	
+	<select id="setTeamDelete" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		DELETE FROM TBL_TEAM WHERE IDX = #{IDX}
+	</select>
+	
+	<select id="setRecordDelete" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		DELETE FROM TBL_RECORD WHERE IDX = #{IDX}
+	</select>
+	
+	<select id="setSrceDelete" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		DELETE FROM TBL_SRCE WHERE IDX = #{IDX}
+	</select>
+	
+	<insert id="SetInsert" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo" >
+		INSERT INTO TBL_MEMBER 
+		(EMAIL , PASSWORD , ADDRESS , PHONE , NAME , LEVEL) 
+		VALUES 
+		(#{EMAIL} , #{PASSWORD} , #{ADDRESS} , #{PHONE} , #{NAME} , #{LEVEL})
+	</insert>
+	
+	<select id="IdCheck" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo" resultType="int">
+		SELECT COUNT(*) FROM TBL_MEMBER WHERE EMAIL = #{EMAIL}
+	</select>
+	
+	
+	<select id="setExploringDelete" parameterType="egovframework.giftednote.admin.member.Model.AdminMemberVo">
+		DELETE FROM TBL_EXPLORING WHERE IDX = #{IDX}
+	</select>
+	
+	<select id="getInquiryList" resultType="hashMap" parameterType="egovframework.giftednote.admin.member.Model.AdminInquiryVo">
+		SELECT * FROM TBL_INQUIRY
+		WHERE 1 =1
+		ORDER BY I_IDX DESC
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	<select id="getInquiryListCnt" resultType="int" parameterType="egovframework.giftednote.admin.member.Model.AdminInquiryVo">
+		SELECT COUNT(*) FROM TBL_INQUIRY
+	</select>
+	
+	<select id="getInquiry" resultType="egovframework.giftednote.admin.member.Model.AdminInquiryVo" parameterType="egovframework.giftednote.admin.member.Model.AdminInquiryVo">
+		SELECT * FROM TBL_INQUIRY WHERE IDX = #{IDX} AND I_IDX = #{I_IDX}
+	</select>
+	
+	<update id="setInquiry" parameterType="egovframework.giftednote.admin.member.Model.AdminInquiryVo">
+		UPDATE TBL_INQUIRY SET ANSWER = #{ANSWER} , A_NAME = #{A_NAME} , STAT = #{STAT} , A_CREATE_TM = now() WHERE I_IDX = #{I_IDX}
+	</update>
+	
+	<select id="getALLMEMBER" resultType="HashMap">
+		SELECT * FROM TBL_MEMBER
+	</select>
+	
 </mapper>

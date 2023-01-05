@@ -21,17 +21,31 @@ public class UserController {
 	
 	
 	@RequestMapping(value = {"/view/index.do", "/index.do", "/"}, method = RequestMethod.GET)
-	public String buseo(HttpServletRequest request, HttpServletResponse response
-			 ) {
+	public String buseo(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		//로그인 테스트
-		String session_login = (String) session.getAttribute("session_login");
-		String session_email = (String) session.getAttribute("session_email");
-		if(session_login == "ok") {
-			return "redirect:/note/list.do?EMAIL="+session_email;
-		}
-		
-		return "index";
+	    
+	    String session_login = (String)session.getAttribute("session_login");
+	    String session_user_id = (String)session.getAttribute("session_id");
+	    String session_user_type = (String)session.getAttribute("session_level");
+	    String type = "no";
+	    if (session_user_type == "1") {
+	      type = "student";
+	    } else if (session_user_type == "2") {
+	      type = "mento";
+	    }
+	    if (session_login == "ok") {
+	      return "redirect:/note/list.do?USER_ID=" + session_user_id + "&TYPE=" + type;
+	    }
+	    if (session.getAttribute("session_level") == "99") {
+	      return "redirect:/admin/member/list.do";
+	    }
+	    return "index";
+	}
+	
+	@RequestMapping(value = "test.do" , method = RequestMethod.GET)
+	public String test(HttpServletRequest request, HttpServletResponse response)
+	{
+	    return "/";
 	}
 	
 	

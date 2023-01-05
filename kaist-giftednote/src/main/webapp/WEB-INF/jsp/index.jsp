@@ -77,37 +77,47 @@
                     <div class="login_form">
                         <form class="form" action="#" method="post" id="member_login_form" name="member_login_form">
                             <ul class="login_input">
+                            	<li class="login_input_check_type">
+                            		<div class="login_input_size">
+                            			<ul>
+                            				<li id="login_input_radio_li">
+                            					<span>회원 유형</span>
+                            				</li>
+                            				<li id="login_input_radio_li">
+                            					<input type="radio" name="type" id="type_student" value="student">
+                            					<label for="type">학생</label>
+                            				</li>
+                            				<li id="login_input_radio_li">
+                            					<input type="radio" name="type" id="type_mento" value="mento">
+                            					<label for="type">지도자</label>
+                            				</li>
+                            			</ul>
+                            		</div>
+                            	</li>
                                 <li class="login_input_ob id_input">
                                     <div class="txt">
-                                        <span>이메일</span>
+                                        <span>아이디</span>
                                     </div>
                                     <div class="login_input_size">
-                                        <input type="text" id="ID" onkeyup="login_enter();" name="EMAIL" placeholder="이메일">
+                                        <input type="text" id="ID" onkeyup="login_enter();" name="ur_userid" placeholder="아이디">
                                     </div>
                                 </li>
                                 <li class="login_input_ob pw_input">
                                     <div class="txt">
-                                        <span>비밀번호</span>
+                                        <span>이름</span>
                                     </div>
                                     <div class="login_input_size">
-                                        <input type="password" onkeyup="login_enter();" class="login_input" id="PASSWORD" name="PASSWORD" placeholder="비밀번호">
+                                        <input type="text" onkeyup="login_enter();" class="login_input" id="ur_name" name="ur_name" placeholder="이름">
                                     </div>
                                 </li>
                             </ul>
                             <div class="button_box">
-                                <button type="button" onclick="javascript:login()">로그인</button>
+                                <button type="button" id="login_button" onclick="javascript:login()">로그인</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="login_button">
-                        <ul class="btn_box">
-                            <li id="join_btn" class="btn_ob btn_ob_01">
-                                <button type="button" onclick="location.href='${pageContext.request.contextPath}/user/member/register.do'">회원가입</button>
-                            </li>
-                            <li id="pw_btn" class="btn_ob btn_ob_02">
-                                <button type="button" id="bt_pw" onclick="javascript:bt_pwss()">비밀번호 찾기</button>
-                            </li>
-                        </ul>
+                        <div id="admin_button_box">
+                        		<button type="button" id="admin_login_button" class="${ip_session }" onclick="admin_login()">관리자 로그인</button>
+                        	</div>
                     </div>
                 </div>
             </div>
@@ -117,50 +127,13 @@
 <!-- 로그인 폼 end -->
 
 
-<!-- 비밀번호 찾기 -->
-<div id="pw_modal" class="join_modal">
-    <div class="join_modal_con">
-        <div class="pw_box">
-            <div class="join_title">
-                <!-- 공통타이틀 -->
-                <div class="all_title">
-                    <div class="line"><span></span></div>
-                    <h2>비밀번호 찾기</h2>
-                </div>
-                <!-- 공통타이틀 -->
-
-                <!-- 닫기 -->
-                <div class="close_btn">
-                    <a href="#">
-                        <i class="las la-times"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="pw_cont">
-                <div class="pw_cont_box">
-                    <div class="pw_title">
-                        <h2>비밀번호를 잊어버리셨나요?</h2>
-                        <p>기존에 가입하신 이메일을 입력하시면 알람창으로 확인이 가능합니다.</p>
-                    </div>
-                    <div class="pw_size">
-                        <input type="text" id="password_re_email" name="EMAIL">
-                    </div>
-                    <div class="pw_btn">
-                        <input type="button" onclick="javascript:password_re_search()" id="pw_re" value="비밀번호 찾기">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- 비밀번호 찾기 end -->
 
     
 
 <!--공통하단-->
-<%@ include file="./include/footer.jsp" %>
+<%@ include file="./user/include/footer.jsp" %>
 <!--공통하단 끝-->
 <!-- js 시작 -->
 <script type="text/javascript">
@@ -170,12 +143,17 @@
 		
 	}
 	function login() {
+		if($('input[name="type"]:checked').val() == null){
+			alert('회원 유형을 선택해 주세요.');
+	        return;
+		}
+		
 	    if ($('#ID').val() == '') {
 	        alert('아이디를 입력 해주세요');
 	        return;
 	    }
-	    if ($('#PASSWORD').val() == '') {
-	        alert('패스워드 입력 해주세요');
+	    if ($('#NAME').val() == '') {
+	        alert('이름 입력 해주세요');
 	        return;
 	    }
 	
@@ -193,16 +171,16 @@
 	            var s = result.indexOf("true");
 	            if (s > -1) {
 	                idchk = true;
-	                location.href = '${pageContext.request.contextPath}/note/list.do?EMAIL='+$('#ID').val();
+	                location.href = '${pageContext.request.contextPath}/note/list.do?USER_ID='+$('#ID').val()+'&TYPE='+$('input[name="type"]:checked').val()+'';
 	                return;
 	            } else if (result.indexOf("false:-1") > -1) {
-	                Swal.fire('이메일 혹은 패스워드를 재확인 해주십시오.');
+	                Swal.fire('아이디 또는 회원유형을 재확인 해주십시오.');
 	                return;
 	            }      
 	        }
 	    });
 	}
-
+	/* 비밀번호 찾기 기능 제거
 	function password_re_search(){
 		var EMAIL = $('#password_re_email').val() 
 		$.ajax({
@@ -221,11 +199,17 @@
 		        }
 		    });
 	}
-	
+	*/
 	function login_enter(){
+		
 		if(window.event.keyCode == 13){
 			login();
 		}
+		
+	}
+	
+	function admin_login(){
+		location.href="${pageContext.request.contextPath}/admin/team/note_list.do";
 	}
 	
 	

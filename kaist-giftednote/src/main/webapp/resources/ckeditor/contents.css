@@ -206,3 +206,4 @@ a > img {
 	max-height: 1080px;
 	margin:0 auto;
 }
+.youtube-embed-wrapper {position:relative;} .youtube-embed-wrapper iframe {position:absolute; top:0; left:0;}

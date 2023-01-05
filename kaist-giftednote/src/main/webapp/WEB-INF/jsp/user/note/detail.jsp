@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/detail.css" type="text/css">
 <!--삭제금지-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/config.js"></script>
 <script type="text/javascript">
     // ckeditor setting
     var ckeditor_config = {
@@ -18,19 +19,20 @@
         enterMode : CKEDITOR.ENTER_BR, // 엔터키를 <br> 로 적용함.
         shiftEnterMode : CKEDITOR.ENTER_P, // 쉬프트 +  엔터를 <p> 로 적용함.
         toolbarCanCollapse : true,
-        removePlugins : "elementspath", // DOM 출력하지 않음                        
+        //removePlugins : "elementspath", // DOM 출력하지 않음                        
         filebrowserUploadUrl : '${pageContext.request.contextPath}/ckeditor/file_upload.do', // 파일 업로드를 처리 할 경로 설정.
         height : '500px',
+        startupFocus : false,
         // 에디터에 사용할 기능들 정의
         toolbar : [
-            [  'Source','NewPage', 'Preview' ],
+            [  'Source','Youtube', 'Preview' ],
             [ 'Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo' ],
             [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ],
             ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
             [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ], '/',
             ['Image','Link','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
             ['Styles','Format','Font','FontSize'],['TextColor','BGColor'],['Maximize', 'ShowBlocks','-'],
-            [ 'About' ] ]
+            [ 'About'  ] ]
     };
 
     var editor = null;
@@ -40,6 +42,8 @@
         editor = CKEDITOR.replace("ckeditor", ckeditor_config);
     });
 
+    //CKEDITOR.config.resize_maxHeight=500;
+    CKEDITOR.config.extraPlugins='youtube';
     CKEDITOR.on('dialogDefinition', function( ev ){
         var dialogName = ev.data.name;
         var dialogDefinition = ev.data.definition;
@@ -52,18 +56,19 @@
                 break;
         }
     });
+    
     //CKEDITOR.replace('editor',{
     	//contentsCss: '${pageContext.request.contextPath}/ckeditor/test.css'
     //});
     //CKEDITOR.config.contentsCss = '${pageContext.request.contextPath}/resources/css/startupTemplate.css';
 </script>
 <!--공통상단-->
-<%@ include file="../../include/header.jsp" %>
+<%@ include file="../include/header.jsp" %>
 <!--공통상단 끝-->
 
 <style>
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
     .test_div > .test_p{
@@ -71,6 +76,9 @@
     }
     #detail_show > .test_p{
     	display:block;
+    }
+    .ck-editor_editable{
+    	max-height:400px !important; 
     }
 
 </style>
@@ -80,7 +88,7 @@
                 <div class="sc_size">
 
                     <!-- 공통 탑 -->
-                    <%@ include file="../../include/top.jsp" %>
+                    <%@ include file="../include/top.jsp" %>
                     <!-- 공통 탑 end-->
 
                     <!-- 본문 내용-->
@@ -118,7 +126,7 @@
 												</ul>
 												<ul style="display:none">
 													<li>${model.list[0].P_IDX }</li>
-													<li id="N_IDX" value="${model.list[0].N_IDX }">${model.list[0].N_IDX }</li>
+													<li id="lab_id" value="${model.lab_id}">${model.lab_id }</li>
 													<li id="CONTENT" content="${model.list[0].CONTENT }">${model.list[0].CONTENT }</li>
 												</ul>
                                     		</li>
@@ -126,12 +134,13 @@
                                     			<div>
 													<div id="cke">
 														<textarea name="CONTENT" id="ckeditor">
-															<!-- 콘텐츠 보이는곳 -->
 															${model.list[0].CONTENT }
 														</textarea>
 													</div>
 												</div>
                                     		</li>
+                                    		<!-- 
+                                    		07 - 26 댓글 기능 삭제
                                     		<li class="detail_modal_li" style="margin-left:2rem">
                                     			<div>
                                     				<p>댓글</p>
@@ -157,6 +166,7 @@
 													</ul>
 												</div>
                                     		</li>
+                                    		-->
                                     	</ul>
 									</div>
 
@@ -176,7 +186,7 @@
         </div>
     </section>
 <!--공통하단-->
-<%@ include file="../../include/footer.jsp" %>
+<%@ include file="../include/footer.jsp" %>
 <!--공통하단 끝-->
 <!-- js 시작 -->
 <script type="text/javascript">
@@ -188,15 +198,31 @@ if('${check}' == 'fail'){
 	alert("성공")
 }
 */
+
+	
+
+	$(document).ready(function(){
+		var ss = $('.ck-editor_editable').offsetHeight;
+		
+		console.log(ss);
+		
+		
+		if($('.ck-editor_editable').offsetHeight > 740){
+			alert('더이상 작성할수 없습니다.');
+			return false;
+		}
+	})
+	
+	
 	function content(P_IDX){
-		var N_IDX = $('#N_IDX').val();
+		var lab_id = $('#lab_id').val();
 		$.ajax({
 			type : "POST",
 			url : "/user/note/detail.do?",
 			cache : false,
 			data : ({
 				P_IDX : P_IDX,
-				N_IDX : N_IDX
+				lab_id : lab_id,
 			}),
 			dataType : "json",
 			success: function(data , status, xhr){
@@ -216,14 +242,14 @@ if('${check}' == 'fail'){
 		var editor = CKEDITOR.instances.ckeditor;
 		var CONTENT = editor.getData();
 		var P_IDX = $('#insert_bt').attr('P_IDX');
-		var N_IDX = $('#N_IDX').val();
+		var lab_id = $('#lab_id').val();
 		$.ajax({
 			type : "POST",
 			url : "/user/note/detail_update.do?",
 			cache : false,
 			data : ({
 				CONTENT : CONTENT,
-				N_IDX : N_IDX,
+				lab_id : lab_id,
 				P_IDX : P_IDX,
 			}),
 			dataType : "json",
@@ -248,7 +274,7 @@ if('${check}' == 'fail'){
 	
 	function PageUp(){
 		var P_IDX = ${model.Pagecount + 1};
-		var N_IDX = $('#N_IDX').val();
+		var lab_id = $('#lab_id').val();
 		var CONTENT = '';
 		$.ajax({
 			type : "POST",
@@ -256,7 +282,7 @@ if('${check}' == 'fail'){
 			cache : false,
 			data : ({
 				CONTENT : CONTENT,
-				N_IDX : N_IDX,
+				lab_id : lab_id,
 				P_IDX : P_IDX,
 			}),
 			dataType : "json",
@@ -276,6 +302,9 @@ if('${check}' == 'fail'){
 			})
 	}
 	
+	
+	// 07 - 26 코멘트 기능 삭제
+	/*
 	function comment_set(){
 		var N_IDX = $('#N_IDX').val();
 		var IDX = ${session_idx};
@@ -366,15 +395,6 @@ if('${check}' == 'fail'){
 			  }
 			})
 	}
-
-/*
-$(window).load(function(){
-	
-	jQuery(function() {
-        // ckeditor 적용
-        editor = CKEDITOR.replace("ckeditor", ckeditor_config);   
-    });
-});
 */
 </script>
 <!-- js 끝 -->

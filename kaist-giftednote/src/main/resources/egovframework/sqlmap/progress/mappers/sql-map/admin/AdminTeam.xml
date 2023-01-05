@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.giftednote.admin.team.Service.impl.AdminTeamMapper">
+	<select id="getALLList" resultType="hashMap" parameterType="egovframework.giftednote.admin.team.Model.AdminTeamVo">
+		SELECT * FROM TBL_PREURP_LABS
+		WHERE 1 = 1 
+		<if test="lab_prog_id != ''">
+		AND lab_prog_id = #{lab_prog_id}
+		</if>
+		<if test="lab_coll_cd != ''">
+		AND lab_coll_cd = #{lab_coll_cd}
+		</if>
+		<if test="SEARCH_TYPE != ''">
+			<if test="SEARCH_TYPE != 'ALL'">
+				AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%' 
+			</if>
+			<if test="SEARCH_TYPE == 'ALL'">
+				AND ( lab_ur_userid LIKE '%${SEARCH_TEXT}%' OR lab_study_title LIKE '%${SEARCH_TEXT}%')
+			</if>
+		</if>
+		AND
+		(select COUNT(*) FROM TBL_PREURP_STUDENTS WHERE TBL_PREURP_STUDENTS.std_selected_lab_id = TBL_PREURP_LABS.lab_id) > 0
+		ORDER BY lab_id desc
+		LIMIT ${LIMIT} OFFSET ${OFFSET}
+	</select>
+	<select id="getALLListCnt" resultType="int" parameterType="egovframework.giftednote.admin.team.Model.AdminTeamVo">
+		SELECT COUNT(*) FROM TBL_PREURP_LABS 
+		WHERE 1 = 1 
+		<if test="lab_prog_id != ''">
+		AND lab_prog_id = #{lab_prog_id}
+		</if>
+		<if test="lab_coll_cd != ''">
+		AND lab_coll_cd = #{lab_coll_cd}
+		</if>
+		<if test="SEARCH_TYPE != ''">
+			<if test="SEARCH_TYPE != 'ALL'">
+				AND ${SEARCH_TYPE} LIKE '%${SEARCH_TEXT}%' 
+			</if>
+			<if test="SEARCH_TYPE == 'ALL'">
+				AND ( lab_ur_userid LIKE '%${SEARCH_TEXT}%' OR lab_study_title LIKE '%${SEARCH_TEXT}%')
+			</if>
+		</if>
+		AND (select COUNT(*) FROM TBL_PREURP_STUDENTS WHERE TBL_PREURP_STUDENTS.std_selected_lab_id = TBL_PREURP_LABS.lab_id) > 0
+	</select>
+	
+	<select id="getStudentTeamList" resultType="hashMap" parameterType="egovframework.giftednote.admin.team.Model.AdminTeamVo">
+		SELECT STUDENTS.* , USERS.ur_id FROM TBL_PREURP_STUDENTS STUDENTS JOIN TBL_PREURP_USERS USERS WHERE STUDENTS.std_ur_userid = USERS.ur_userid AND STUDENTS.std_selected_lab_id = #{lab_id}
+	</select>
+	
+	<select id="getLeaderTeamList" resultType="hashMap" parameterType="egovframework.giftednote.admin.team.Model.AdminTeamVo">
+		SELECT UR_LAB.* , USERS.ur_id FROM TBL_PREURP_UR_LAB UR_LAB JOIN TBL_PREURP_USERS USERS WHERE UR_LAB.urlab_ur_userid = USERS.ur_userid AND UR_LAB.urlab_lab_id = #{lab_id}
+	</select>
+	
+	<delete id="setDelete" parameterType="egovframework.giftednote.admin.team.Model.AdminTeamVo">
+		DELETE FROM TBL_TEAM WHERE N_IDX = #{N_IDX} AND IDX = #{IDX}
+	</delete>
+	
+	<delete id="setDeleteRECORD" parameterType="egovframework.giftednote.admin.team.Model.AdminTeamVo">
+		DELETE FROM TBL_RECORD WHERE N_IDX = #{N_IDX} AND IDX = #{IDX}
+	</delete>
+	
+	<delete id="setDeleteEXPLORING" parameterType="egovframework.giftednote.admin.team.Model.AdminTeamVo">
+		DELETE  FROM TBL_EXPLORING WHERE N_IDX = #{N_IDX} AND IDX = #{IDX}
+	</delete>
+	
+	<delete id="setDeleteSRCE" parameterType="egovframework.giftednote.admin.team.Model.AdminTeamVo">
+		DELETE FROM TBL_SRCE WHERE N_IDX = #{N_IDX} AND IDX = #{IDX}
+	</delete>
+	<select id="getSrceAllList"  resultType="hashMap" parameterType="egovframework.giftednote.user.srce.model.UserSrceVo">
+		SELECT sr.lab_prog_id , sr.IDX , sr.NAME , sr.S_IDX , sr.SCORE , IFNULL(st.std_sch_id , 0) AS std_sch_id , IFNULL(st.std_grade , 0) AS std_grade , la.lab_num FROM TBL_SRCE sr JOIN TBL_PREURP_USERS us ON sr.IDX = us.ur_id JOIN TBL_PREURP_STUDENTS st on us.ur_userid = st.std_ur_userid JOIN TBL_PREURP_LABS la ON st.std_selected_lab_id = la.lab_id WHERE st.std_prog_id = #{lab_prog_id} AND sr.lab_prog_id = #{lab_prog_id} GROUP BY sr.NAME , sr.S_IDX
+	</select>
+	
+	
+</mapper>

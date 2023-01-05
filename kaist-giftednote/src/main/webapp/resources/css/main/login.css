@@ -217,6 +217,18 @@
     background-color: #fffce5;
 }
 
+#new_login .login_area .login_con .login_size .login_cont .login_form #admin_button_box > #admin_login_button{
+	width : 100%;
+	height : 2rem;
+	background-color : #737e95;
+	color : #fff;
+	font-weight : 300;
+	font-size : 0.813rem;
+	border : 1px solid gray;
+	margin-top : 1rem;
+}
+
+
 /*회원가입*/
 .join_modal {
     position: fixed;
@@ -365,3 +377,24 @@
 
 /*비밀번호 찾기 end*/
 
+
+/*로그인 타입 선택 start*/
+#member_login_form .login_input_size > ul > li{
+	float:left;
+}
+#member_login_form .login_input_size > ul > li:nth-child(2){
+	margin-left:1rem;
+}
+
+.button_box > #login_button{
+	width: 100%;
+    height: 100%;
+    border: 1px solid #cfd8e7;
+    background-color: #737e95;
+    color: #fff;
+    font-weight: 300;
+    font-size: 0.813rem;
+    padding: 0 8px;
+    margin-top : 1.5rem;
+}
+/*로그인 타입 선택 end*/

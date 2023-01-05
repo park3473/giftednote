@@ -2,17 +2,19 @@ package egovframework.giftednote.user.exploring.model;
 
 public class UserExploringVo {
 	String N_IDX = "";
-	String IDX = "";
-	String CLASS_TM = "";
-	String LEADER_TYPE = "";
-	String CLASS_PLACE = "";
-	String CLASS_TYPE = "";
-	String SCORE_JOIN = "";
-	String SCORE_UPTAKE = "";
-	String LEARN = "";
-	String FELT = "";
-	String OTHER ="";
-	
+	 String IDX = "";
+	 String CLASS_TM = "";
+	 String LEADER_TYPE = "";
+	 String CLASS_PLACE = "";
+	 String CLASS_TYPE = "";
+	 String SCORE_JOIN = "";
+	 String SCORE_UPTAKE = "";
+	 String LEARN = "";
+	 String FELT = "";
+	 String OTHER = "";
+	 String lab_prog_id = "";
+	 String lab_id = "";
+	 
 	public String getN_IDX() {
 		return N_IDX;
 	}
@@ -79,6 +81,20 @@ public class UserExploringVo {
 	public void setOTHER(String oTHER) {
 		OTHER = oTHER;
 	}
+	public String getLab_prog_id() {
+		return lab_prog_id;
+	}
+	public void setLab_prog_id(String lab_prog_id) {
+		this.lab_prog_id = lab_prog_id;
+	}
+	public String getLab_id() {
+		return lab_id;
+	}
+	public void setLab_id(String lab_id) {
+		this.lab_id = lab_id;
+	}
+	
+	
 	
 	
 	

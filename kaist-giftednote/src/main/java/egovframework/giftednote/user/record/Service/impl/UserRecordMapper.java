@@ -19,5 +19,17 @@ public interface UserRecordMapper {
 	int getDayCount(UserRecordVo userRecordVo);
 
 	void setRecord(UserRecordVo userRecordVo);
+
+	List<?> getForTeam(UserRecordVo userRecordVo);
+
+	int getClassCheck(UserRecordVo userRecordVo);
+
+	void setRecordUpdate(UserRecordVo userRecordVo);
+
+	void setRecordDelete(UserRecordVo userRecordVo);
+
+	List<?> getDateRecordList(UserRecordVo userRecordVo);
+
+	List<?> getNameList(UserRecordVo userRecordVo);
 	
 }

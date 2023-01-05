@@ -509,5 +509,105 @@ public class SUtil {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public static String getSchoolName(int std_sch_id)
+	  {
+	    String SchoolName = "";
+	    switch (std_sch_id)
+	    {
+	    case 0: 
+	      SchoolName = "X";
+	      break;
+	    case 1: 
+	      SchoolName = "세종과학고등학교";
+	      break;
+	    case 2: 
+	      SchoolName = "한성과학고등학교";
+	      break;
+	    case 3: 
+	      SchoolName = "부산과학고등학교";
+	      break;
+	    case 4: 
+	      SchoolName = "부산일과학고등학교";
+	      break;
+	    case 5: 
+	      SchoolName = "대구일과학고등학교";
+	      break;
+	    case 6: 
+	      SchoolName = "인천과학고등학교";
+	      break;
+	    case 7: 
+	      SchoolName = "인천진산과학고등학교";
+	      break;
+	    case 8: 
+	      SchoolName = "대전동신과학고등학교";
+	      break;
+	    case 9: 
+	      SchoolName = "울산과학고등학교";
+	      break;
+	    case 10: 
+	      SchoolName = "경기북과학고등학교";
+	      break;
+	    case 11: 
+	      SchoolName = "강원과학고등학교";
+	      break;
+	    case 12: 
+	      SchoolName = "충북과학고등학교";
+	      break;
+	    case 13: 
+	      SchoolName = "충남과학고등학교";
+	      break;
+	    case 14: 
+	      SchoolName = "전북과학고등학교";
+	      break;
+	    case 15: 
+	      SchoolName = "전남과학고등학교";
+	      break;
+	    case 16: 
+	      SchoolName = "경북과학고등학교";
+	      break;
+	    case 17: 
+	      SchoolName = "경산과학고등학교";
+	      break;
+	    case 18: 
+	      SchoolName = "경남과학고등학교";
+	      break;
+	    case 19: 
+	      SchoolName = "창원과학고등학교";
+	      break;
+	    case 20: 
+	      SchoolName = "제주과학고등학교";
+	      break;
+	    case 21: 
+	      SchoolName = "한국과학영재학교";
+	      break;
+	    case 22: 
+	      SchoolName = "서울과학고등학교(영)";
+	      break;
+	    case 23: 
+	      SchoolName = "경기과학고등학교(영)";
+	      break;
+	    case 24: 
+	      SchoolName = "대구과학고등학교(영)";
+	      break;
+	    case 25: 
+	      SchoolName = "대전과학고등학교(영)";
+	      break;
+	    case 26: 
+	      SchoolName = "광주과학고등학교(영)";
+	      break;
+	    case 27: 
+	      SchoolName = "세종과학예술영재학교";
+	      break;
+	    case 28: 
+	      SchoolName = "인천과학예술영재학교";
+	      break;
+	    case 29: 
+	      SchoolName = "일반고참여자";
+	    }
+	    System.out.println(SchoolName);
+	    
+	    return SchoolName;
+	  }
 
 }

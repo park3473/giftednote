@@ -18,4 +18,10 @@ public interface UserSrceMapper {
 
 	public void setUpdate(UserSrceVo userSrceVo);
 
+	public String getLabName(UserSrceVo userSrceVo);
+
+	public List<?> getTeamList(UserSrceVo userSrceVo);
+
+	public List<?> getScoreList(UserSrceVo userSrceVo);
+
 }

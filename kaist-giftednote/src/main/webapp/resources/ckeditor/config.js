@@ -16,7 +16,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.shiftEnterMode = CKEDITOR.ENTER_P;
 
  
-
+	config.extraPlugins='youyube';
 	config.allowedContent = true;
 	config.filebrowserUploadMethod = 'form';
 	config.pasteFilter = null;

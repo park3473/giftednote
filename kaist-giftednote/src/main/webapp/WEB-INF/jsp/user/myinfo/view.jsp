@@ -10,7 +10,7 @@
 
 <!--삭제금지-->
 <!--공통상단-->
-<%@ include file="../../include/header.jsp" %>
+<%@ include file="../include/header.jsp" %>
 <!--CSS-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/all.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" type="text/css">
@@ -27,7 +27,7 @@
 
 <style>
     a {
-        color: #ffffff !important;
+        color: #ffffff;
         text-decoration: none !important;
     }
 
@@ -169,7 +169,7 @@
     </section>
 
 <!--공통하단-->
-<%@ include file="../../include/footer.jsp" %>
+<%@ include file="../include/footer.jsp" %>
 <!--공통하단 끝-->
 
 <div id="meeting_form_modal" class="all_modal">

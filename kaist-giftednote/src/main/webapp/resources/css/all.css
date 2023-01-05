@@ -1510,11 +1510,28 @@ textarea {
 
 /*채팅박스 end*/
 
+.answer-complete{
+		background: #009ca5;
+	    color: #fff;
+	    padding: 2px 4px;
+	    border-radius: 2px;
+	    font-size: 12px;
+    }
+    
+    .answer-waiting{
+    	background: #807d77;
+	    color: #fff;
+	    padding: 2px 4px;
+	    border-radius: 2px;
+	    font-size: 12px;
+    }
+
+
 /*페이징*/
 .paging_con {
     width: 100%;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .paging_con .paging_box {

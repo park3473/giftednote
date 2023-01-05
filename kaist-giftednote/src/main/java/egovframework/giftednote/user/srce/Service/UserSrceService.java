@@ -16,4 +16,8 @@ public interface UserSrceService {
 
 	public void setUpdate(UserSrceVo userSrceVo);
 
+	public String getLabName(UserSrceVo userSrceVo);
+
+	public ModelMap getTeamList(UserSrceVo userSrceVo);
+
 }

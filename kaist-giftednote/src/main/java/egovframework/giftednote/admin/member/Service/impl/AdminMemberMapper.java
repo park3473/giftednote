@@ -12,5 +12,29 @@ public interface AdminMemberMapper {
 
 	public void setMember(AdminMemberVo adminMemberVo);
 
+	public List<?> getStudentList(AdminMemberVo adminMemberVo);
+
+	public int getStudentListCnt(AdminMemberVo adminMemberVo);
+
+	public List<?> getLeaderList(AdminMemberVo adminMemberVo);
+
+	public int getLeaderListCnt(AdminMemberVo adminMemberVo);
+
+	public void setDelete(AdminMemberVo adminMemberVo);
+
+	public void setTeamDelete(AdminMemberVo adminMemberVo);
+
+	public void setRecordDelete(AdminMemberVo adminMemberVo);
+
+	public void setSrceDelete(AdminMemberVo adminMemberVo);
+
+	public void setExploringDelete(AdminMemberVo adminMemberVo);
+
+	public int IdCheck(AdminMemberVo adminMemberVo);
+
+	public List<?> getALLMEMBER();
+
+	public void SetInsert(AdminMemberVo vo);
+
 	
 }

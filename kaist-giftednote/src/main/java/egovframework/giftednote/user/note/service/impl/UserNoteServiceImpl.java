@@ -24,28 +24,61 @@ public class UserNoteServiceImpl implements UserNoteService {
 	
 	@Override
 	public ModelMap getList(UserNoteVo UserNoteVo) {
-		// TODO Auto-generated method stub
 		ModelMap modelMap = new ModelMap();
-		List<?> list = usernotemapper.getList(UserNoteVo);
-		System.out.println(UserNoteVo.getEMAIL());
-		modelMap.addAttribute("list",list);
-		System.out.println("------------------size : " + list.size());
-		int itemtotalcount = usernotemapper.getListCnt(UserNoteVo);
-		int itemCount = UserNoteVo.getITEM_COUNT();
-		int itempage = UserNoteVo.getPAGE();
-		PageVO pageVo = new PageVO(itemCount, itemtotalcount, itempage);
-		if (pageVo.isItempagenext() == true) {
-			modelMap.put("itempagenext", "true");
-		} else {
-			modelMap.put("itempagenext", "false");
-		}
-		modelMap.put("page", pageVo.getItempage());
-		modelMap.put("itemCount", pageVo.getItemCount());
-		modelMap.put("itempagestart", pageVo.getItempagestart());
-		modelMap.put("itempageend", pageVo.getItempageend());
-		modelMap.put("itemtotalcount", pageVo.getItemtotalcount());
-		modelMap.put("itemtotalpage", pageVo.getItemtotalpage());
-		return modelMap;
+	    System.out.println(UserNoteVo.getType());
+	    if (UserNoteVo.getType().equals("student"))
+	    {
+	      List<?> list = this.usernotemapper.getStudentNoteList(UserNoteVo);
+	      
+	      modelMap.addAttribute("list", list);
+	      System.out.println("------------------size : " + list.size());
+	      
+	      System.out.println(UserNoteVo.getEMAIL());
+	      int itemtotalcount = usernotemapper.getStudentListCnt(UserNoteVo);
+	      int itemCount = UserNoteVo.getITEM_COUNT();
+	      int itempage = UserNoteVo.getPAGE();
+	      PageVO pageVo = new PageVO(itemCount, itemtotalcount, itempage);
+	      if (pageVo.isItempagenext()) {
+	        modelMap.put("itempagenext", "true");
+	      } else {
+	        modelMap.put("itempagenext", "false");
+	      }
+	      modelMap.put("page", Integer.valueOf(pageVo.getItempage()));
+	      modelMap.put("itemCount", Integer.valueOf(pageVo.getItemCount()));
+	      modelMap.put("itempagestart", Integer.valueOf(pageVo.getItempagestart()));
+	      modelMap.put("itempageend", Integer.valueOf(pageVo.getItempageend()));
+	      modelMap.put("itemtotalcount", Integer.valueOf(pageVo.getItemtotalcount()));
+	      modelMap.put("itemtotalpage", Integer.valueOf(pageVo.getItemtotalpage()));
+	      return modelMap;
+	    }
+	    if (UserNoteVo.getType().equals("mento"))
+	    {
+	      List<?> list = usernotemapper.getMentoNoteList(UserNoteVo);
+	      
+	      modelMap.addAttribute("list", list);
+	      System.out.println("------------------size : " + list.size());
+	      
+	      System.out.println(UserNoteVo.getEMAIL());
+	      int itemtotalcount = usernotemapper.getMentoListCnt(UserNoteVo);
+	      int itemCount = UserNoteVo.getITEM_COUNT();
+	      int itempage = UserNoteVo.getPAGE();
+	      PageVO pageVo = new PageVO(itemCount, itemtotalcount, itempage);
+	      if (pageVo.isItempagenext()) {
+	        modelMap.put("itempagenext", "true");
+	      } else {
+	        modelMap.put("itempagenext", "false");
+	      }
+	      modelMap.put("page", Integer.valueOf(pageVo.getItempage()));
+	      modelMap.put("itemCount", Integer.valueOf(pageVo.getItemCount()));
+	      modelMap.put("itempagestart", Integer.valueOf(pageVo.getItempagestart()));
+	      modelMap.put("itempageend", Integer.valueOf(pageVo.getItempageend()));
+	      modelMap.put("itemtotalcount", Integer.valueOf(pageVo.getItemtotalcount()));
+	      modelMap.put("itemtotalpage", Integer.valueOf(pageVo.getItemtotalpage()));
+	      return modelMap;
+	    }
+	    modelMap.put("note_list", Integer.valueOf(0));
+	    
+	    return modelMap;
 	}
 
 	@Override
@@ -66,15 +99,21 @@ public class UserNoteServiceImpl implements UserNoteService {
 	public ModelMap getDetail(UserNoteDetailVo userNoteDetailVo) {
 		// TODO Auto-generated method stub
 		ModelMap modelMap = new ModelMap();
-		List<?> list = usernotemapper.getDetail(userNoteDetailVo);
-		modelMap.addAttribute("list",list);
-		int PageCount = usernotemapper.getDetailCnt(userNoteDetailVo);
-		modelMap.put("Pagecount", PageCount);
-		
-		List<?> colist = usernotemapper.getComment(userNoteDetailVo);
-		modelMap.addAttribute("colist",colist);
-		
-		return modelMap;
+	    
+	    List<?> list = usernotemapper.getDetail(userNoteDetailVo);
+	    modelMap.addAttribute("list", list);
+	    int PageCount = usernotemapper.getDetailCnt(userNoteDetailVo);
+	    modelMap.put("Pagecount", Integer.valueOf(PageCount));
+	    
+	    List<?> AllList = usernotemapper.getDetailAll(userNoteDetailVo);
+	    
+	    String coll = usernotemapper.getCollCd(userNoteDetailVo);
+	    
+	    modelMap.put("coll", coll);
+	    
+	    modelMap.put("AllList", AllList);
+	    
+	    return modelMap;
 	}
 
 	@Override
@@ -117,6 +156,17 @@ public class UserNoteServiceImpl implements UserNoteService {
 	public void NoteComplete(UserNoteVo userNoteVo) {
 		// TODO Auto-generated method stub
 		usernotemapper.NoteComplete(userNoteVo);
+	}
+
+	@Override
+	public ModelMap getTeamList(UserNoteVo userNoteVo) {
+		ModelMap modelMap = new ModelMap();
+	    
+	    List<?> teamlist = usernotemapper.getTeamList(userNoteVo);
+	    
+	    modelMap.put("teamlist", teamlist);
+	    
+	    return modelMap;
 	}
 
 }

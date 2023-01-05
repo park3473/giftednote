@@ -31,4 +31,40 @@ public class UserExploringServiceImpl implements UserExploringService {
 		// TODO Auto-generated method stub
 		userExploringMapper.setExplor(userExploringVo);
 	}
+
+	@Override
+	public int getClassCheck(UserExploringVo userExploringVo) {
+		
+		return userExploringMapper.getClassCheck(userExploringVo);
+	}
+
+	@Override
+	public void setExploringDelete(UserExploringVo userExploringVo) {
+		
+		userExploringMapper.setExploringDelete(userExploringVo);
+		
+	}
+
+	@Override
+	public ModelMap getDateExploringList(UserExploringVo userExploringVo) {
+		
+		ModelMap modelMap = new ModelMap();
+	    List<?> exploringlist = this.userExploringMapper.getDateExploringList(userExploringVo);
+	    
+	    modelMap.put("exploringlist", exploringlist);
+	    
+	    return modelMap;
+		
+	}
+
+	@Override
+	public ModelMap getNameAll(UserExploringVo userExploringVo) {
+		ModelMap modelMap = new ModelMap();
+	    
+	    List<?> namelist = this.userExploringMapper.getAllNameList(userExploringVo);
+	    
+	    modelMap.put("namelist", namelist);
+	    
+	    return modelMap;
+	}
 }
